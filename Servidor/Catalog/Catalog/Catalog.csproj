@@ -106,19 +106,24 @@
   <ItemGroup>
     <Compile Include="DTO\DtoChave.cs" />
     <Compile Include="DTO\DtoEnderecoEstabelecimento.cs" />
+    <Compile Include="DTO\DtoRetornoErro.cs" />
     <Compile Include="DTO\DtoEstabelecimento.cs" />
     <Compile Include="DTO\DtoFabricante.cs" />
     <Compile Include="DTO\DtoItem.cs" />
     <Compile Include="DTO\DtoLista.cs" />
     <Compile Include="DTO\DtoProduto.cs" />
     <Compile Include="DTO\DtoProdutoDaLista.cs" />
+    <Compile Include="DTO\DtoRetornoObjeto.cs" />
     <Compile Include="DTO\DtoTipo.cs" />
     <Compile Include="DTO\DtoUsuario.cs" />
+    <Compile Include="DTO\DtoRetorno.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Interfaces\IChave.cs" />
+    <Compile Include="Models\Interfaces\IEstabelecimento.cs" />
     <Compile Include="Models\Interfaces\IFabricante.cs" />
+    <Compile Include="Models\Interfaces\IItem.cs" />
     <Compile Include="Models\Interfaces\ILista.cs" />
     <Compile Include="Models\Interfaces\ITipoProduto.cs" />
     <Compile Include="Models\Interfaces\IUsuario.cs" />
