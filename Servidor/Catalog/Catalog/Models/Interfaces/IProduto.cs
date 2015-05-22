@@ -14,6 +14,6 @@ namespace Catalog.Models
 		public DtoItem buscarItem(int idProduto, int idEstabelecimento);
 		public DtoItem[] buscarItem(int idProduto);
 		public DtoItem itemMaisBarato(int idProduto);
-		public DtoEndereEstabelecimento[] estabelecimentosPossuidores(int idProduto);
+		public DtoEnderecoEstabelecimento[] estabelecimentosPossuidores(int idProduto);
 	}
 }

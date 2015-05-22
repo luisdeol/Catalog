@@ -9,7 +9,7 @@ namespace Catalog.Models.Interfaces
 	public class ILista
 	{
 		public DtoLista criarLista(DtoLista lista);
-		public DtoLista abrirrLista(int idLista);
+		public DtoLista abrirLista(int idLista);
 		public void editarLista(int idLista, string novoNome);
 		public void excluirLista(int idLista);
 		public DtoLista[] pesquisarListas(int isUsuario);
