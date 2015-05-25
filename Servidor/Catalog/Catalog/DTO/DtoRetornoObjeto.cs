@@ -8,5 +8,6 @@ namespace Catalog.DTO
 	public class DtoRetornoObjeto : DtoRetorno
 	{
 		public Object objeto { get; set; }
+		public DtoChave chave { get; set; }
 	}
 }

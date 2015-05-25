@@ -8,5 +8,6 @@ namespace Catalog.DTO
 	public class DtoRetorno
 	{
 		public string tipoRetorno { get; set; }
+		public string destino { get; set; }
 	}
 }
