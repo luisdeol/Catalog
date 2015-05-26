@@ -1,0 +1,9 @@
+http://www.paletton.com/#uid=33-0u0k++-G++SG++IuUGt2yMjk
+
+Base:
+005bb3
+Triades:
+ffc300
+ff5300
+hue: 228º
+dist: 30º
