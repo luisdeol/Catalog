@@ -8,6 +8,6 @@ namespace Catalog.Models.Interfaces
 {
 	public class ITipoProduto
 	{
-		public DtoTipo abrirTipo(int idTipo);
+		//public DtoTipo abrirTipo(int idTipo);
 	}
 }

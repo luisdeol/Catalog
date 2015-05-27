@@ -28,15 +28,24 @@ namespace Catalog.Models
 		{
 			Chave mChave = new Chave();
 
-			if (email != senha)
-				throw new Exception();
+            var dataContext = new DBCatalogDataContext();
+            var usuarios = from users in dataContext.tb_Usuarios
+                           where users.email == email && users.senha == senha
+                           select users;
 
-			//cadastrar no banco e transformar o objeto em DTO
-			DtoUsuario usuario = new DtoUsuario();
+            if (usuarios.Count() == 1)
+            {
+                //cadastrar no banco e transformar o objeto em DTO
+                DtoUsuario usuario = new DtoUsuario();
 
-			DtoChave chave = mChave.criarChave(usuario.id);
+                DtoChave chave = mChave.criarChave(usuario.id);
 
-			return chave;
+                return chave;
+            }
+            else
+            {
+                throw new Exception();
+            }
 		}
 
 		public void deslogar(DtoChave chave)

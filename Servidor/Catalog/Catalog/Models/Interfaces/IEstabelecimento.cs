@@ -8,7 +8,7 @@ namespace Catalog.Models.Interfaces
 {
 	public class IEstabelecimento
 	{
-		public DtoEnderecoEstabelecimento cadastrarEstabelecimento(DtoEnderecoEstabelecimento estabelecimento);
-		public DtoItem[] procurarProduto(string[] parametros);
+		//public DtoEnderecoEstabelecimento cadastrarEstabelecimento(DtoEnderecoEstabelecimento estabelecimento);
+		//public DtoItem[] procurarProduto(string[] parametros);
 	}
 }
