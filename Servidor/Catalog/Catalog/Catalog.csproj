@@ -104,6 +104,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ControllerUsuario.cs" />
+    <Compile Include="Controllers\Interfaces\IControllerEstabelecimento.cs" />
+    <Compile Include="Controllers\Interfaces\IControllerLista.cs" />
+    <Compile Include="Controllers\Interfaces\IControllerProduto.cs" />
+    <Compile Include="Controllers\Interfaces\IControllerUsuario.cs" />
     <Compile Include="DTO\DtoChave.cs" />
     <Compile Include="DTO\DtoEnderecoEstabelecimento.cs" />
     <Compile Include="DTO\DtoRetornoErro.cs" />
@@ -120,6 +125,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Chave.cs" />
     <Compile Include="Models\Interfaces\IChave.cs" />
     <Compile Include="Models\Interfaces\IEstabelecimento.cs" />
     <Compile Include="Models\Interfaces\IFabricante.cs" />
@@ -128,7 +134,9 @@
     <Compile Include="Models\Interfaces\ITipoProduto.cs" />
     <Compile Include="Models\Interfaces\IUsuario.cs" />
     <Compile Include="Models\Interfaces\IProduto.cs" />
+    <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Webservices\WsUsuario.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -146,7 +154,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

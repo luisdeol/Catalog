@@ -9,5 +9,11 @@ namespace Catalog.DTO
 	{
 		public string tipoRetorno { get; set; }
 		public string destino { get; set; }
+
+		public DtoRetorno(string tipoRetorno, string destino = "this")
+		{
+			this.tipoRetorno = tipoRetorno;
+			this.destino = destino;
+		}
 	}
 }
