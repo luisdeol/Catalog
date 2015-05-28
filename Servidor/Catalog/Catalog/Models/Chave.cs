@@ -21,16 +21,23 @@ namespace Catalog.Models
 			{
 				chave.token = rnd.Next(1000, 9999).ToString();
 				chave.ultimoAcesso = new TimeSpan();
+				dataContext.SubmitChanges();
 			}
 			else
 			{
-				Linq.tb_Chave novaChave = new Linq.tb_Chave();
-				novaChave.idUsuario = idUsuario;
-				novaChave.token = rnd.Next(1000, 9999).ToString();
-				novaChave.ultimoAcesso = new TimeSpan();
-				dataContext.tb_Chaves.InsertOnSubmit(novaChave);
+				chave = new Linq.tb_Chave();
+				chave.idUsuario = idUsuario;
+				chave.token = rnd.Next(1000, 9999).ToString();
+				chave.ultimoAcesso = new TimeSpan();
+				dataContext.tb_Chaves.InsertOnSubmit(chave);
+
 			}
 			dataContext.SubmitChanges();
+
+			DtoChave.idUsuario = chave.idUsuario;
+			DtoChave.token = chave.token;
+			DtoChave.ultimoAcesso = chave.ultimoAcesso.ToString();
+
             return DtoChave;
 		}
 
