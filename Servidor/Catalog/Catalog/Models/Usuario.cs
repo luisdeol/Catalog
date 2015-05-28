@@ -28,18 +28,11 @@ namespace Catalog.Models
 		{
 			Chave mChave = new Chave();
 
-            var dataContext = new DBCatalogDataContext();
-            var usuarios = from users in dataContext.tb_Usuarios
-                           where users.email == email && users.senha == senha
-                           select users;
-
-            if (usuarios.Count() == 1)
+            Linq.DBCatalogDataContext dataContext = new Linq.DBCatalogDataContext();
+            var usuarios = dataContext.tb_Usuarios.FirstOrDefault(c => c.email == email && c.senha == senha);
+            if (usuarios != null)
             {
-                //cadastrar no banco e transformar o objeto em DTO
-                DtoUsuario usuario = new DtoUsuario();
-
-                DtoChave chave = mChave.criarChave(usuario.id);
-
+                DtoChave chave = mChave.criarChave(usuarios.id);
                 return chave;
             }
             else

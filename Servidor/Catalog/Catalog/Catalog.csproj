@@ -110,7 +110,7 @@
     <Compile Include="Controllers\Interfaces\IControllerLista.cs" />
     <Compile Include="Controllers\Interfaces\IControllerProduto.cs" />
     <Compile Include="Controllers\Interfaces\IControllerUsuario.cs" />
-    <Compile Include="DBCatalog.designer.cs">
+    <Compile Include="Linq\DBCatalog.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DBCatalog.dbml</DependentUpon>
@@ -170,7 +170,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DBCatalog.dbml">
+    <Content Include="Linq\DBCatalog.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>DBCatalog.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
@@ -180,7 +180,7 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DBCatalog.dbml.layout">
+    <None Include="Linq\DBCatalog.dbml.layout">
       <DependentUpon>DBCatalog.dbml</DependentUpon>
     </None>
   </ItemGroup>
