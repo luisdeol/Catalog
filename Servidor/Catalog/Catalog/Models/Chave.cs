@@ -14,23 +14,23 @@ namespace Catalog.Models
             Random rnd = new Random();
             DtoChave DtoChave = new DtoChave();
             Linq.DBCatalogDataContext dataContext = new Linq.DBCatalogDataContext();
-            var chave = from c in dataContext.tb_Chaves where c.idUsuario == idUsuario select c;
+            //var chave = (from c in dataContext.tb_Chaves where c.idUsuario == idUsuario select c).FirstOrDefault();
+			var chave = dataContext.tb_Chaves.FirstOrDefault(c => c.idUsuario == idUsuario);
 
-            if(chave.Count() == 0)
-            {
-                
-               
-            }
-            else
-            {
-                foreach (var chav in chave)
-                {
-                    chav.token = rnd.Next(1000, 9999).ToString();
-                    chav.ultimoAcesso = new TimeSpan();
-                    dataContext.tb_Chaves.InsertOnSubmit(chav);
-                    dataContext.SubmitChanges();
-                }
-            }
+			if(chave != null)
+			{
+				chave.token = rnd.Next(1000, 9999).ToString();
+				chave.ultimoAcesso = new TimeSpan();
+			}
+			else
+			{
+				Linq.tb_Chave novaChave = new Linq.tb_Chave();
+				novaChave.idUsuario = idUsuario;
+				novaChave.token = rnd.Next(1000, 9999).ToString();
+				novaChave.ultimoAcesso = new TimeSpan();
+				dataContext.tb_Chaves.InsertOnSubmit(novaChave);
+			}
+			dataContext.SubmitChanges();
             return DtoChave;
 		}
 

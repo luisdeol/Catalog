@@ -29,7 +29,7 @@ namespace Catalog.Models
 			Chave mChave = new Chave();
 
             Linq.DBCatalogDataContext dataContext = new Linq.DBCatalogDataContext();
-            var usuarios = dataContext.tb_Usuarios.FirstOrDefault(c => c.email == email && c.senha == senha);
+            var usuarios = dataContext.tb_Usuarios.FirstOrDefault(u => u.email == email && u.senha == senha);
             if (usuarios != null)
             {
                 DtoChave chave = mChave.criarChave(usuarios.id);
