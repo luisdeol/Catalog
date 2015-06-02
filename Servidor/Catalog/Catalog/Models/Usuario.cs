@@ -9,9 +9,31 @@ namespace Catalog.Models
 {
 	public class Usuario : IUsuario
 	{
-		public DtoChave cadastrarUsuario(DtoUsuario usuario)
+		public DtoChave cadastrarUsuario(string email, string senha, string nome)
 		{
-			return new DtoChave();
+            Chave mChave = new Chave();
+
+            Linq.DBCatalogDataContext dataContext = new Linq.DBCatalogDataContext();
+            var usuario = dataContext.tb_Usuarios.FirstOrDefault(u => u.email == email);
+
+            if(usuario == null) //nenhum email encontrado (cadastrar usuario)
+            {
+                usuario = new Linq.tb_Usuario();
+                usuario.email = email;
+                usuario.senha = senha;
+                usuario.nome = nome;
+                dataContext.tb_Usuarios.InsertOnSubmit(usuario);
+                dataContext.SubmitChanges();
+
+                //criando chave
+                var usuarioRecemCadastrado = dataContext.tb_Usuarios.FirstOrDefault(u => u.email == email);
+                DtoChave chave = mChave.criarChave(usuarioRecemCadastrado.id);
+                return chave;
+            }
+            else
+            {
+                throw new Exception();
+            }
 		}
 
 		public void alterarSenha(int idUsuario, string novaSenha)
