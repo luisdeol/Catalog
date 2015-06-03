@@ -3840,14 +3840,16 @@ a.subdued {
       opacity: 1; }
 .tabs-striped.tabs-color-assertive .tab-item {
   color: rgba(239, 71, 58, 0.4);
-  opacity: 1; }
+  opacity: 1; 
+  background: linear-gradient(rgb(246, 245, 245), rgb(235, 236, 236))}
   .tabs-striped.tabs-color-assertive .tab-item .badge {
     opacity: 0.4; }
   .tabs-striped.tabs-color-assertive .tab-item.tab-item-active, .tabs-striped.tabs-color-assertive .tab-item.active, .tabs-striped.tabs-color-assertive .tab-item.activated {
     margin-top: -2px;
     color: #ef473a;
     border: 0 solid #ef473a;
-    border-top-width: 2px; }
+    border-top-width: 2px; 
+	background: linear-gradient(rgb(246, 245, 245), rgb(235, 236, 236));}
     .tabs-striped.tabs-color-assertive .tab-item.tab-item-active .badge, .tabs-striped.tabs-color-assertive .tab-item.active .badge, .tabs-striped.tabs-color-assertive .tab-item.activated .badge {
       top: 2px;
       opacity: 1; }
@@ -4666,7 +4668,7 @@ ion-tabs.tabs-color-active-dark .tab-item {
     margin: 0 0 3px 0;
     font-size: 10px; }
   .item p {
-    color: #666;
+    color: #FFC300;
     font-size: 14px;
     margin-bottom: 2px; }
   .item h1:last-child, .item h2:last-child, .item h3:last-child, .item h4:last-child, .item h5:last-child, .item h6:last-child, .item p:last-child {
@@ -4769,7 +4771,8 @@ ion-tabs.tabs-color-active-dark .tab-item {
 
 a.item {
   color: inherit;
-  text-decoration: none; }
+  text-decoration: none;
+box-shadow: 2px 2px 7px -2px;  }
   a.item:hover, a.item:focus {
     text-decoration: none; }
 

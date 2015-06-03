@@ -20,3 +20,9 @@
   border: 0 solid orange;
   border-top-width: 2px;
 }
+
+.add-lista, .add-produto{
+  bottom: 60px;
+  position: fixed;
+  right: 10px;
+}

@@ -62,6 +62,7 @@ namespace Catalog.Controllers
 			return "";
 		}
 
+        //______________ LOGAR ________________//
 		public string logar(string dtoUsuario)
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();

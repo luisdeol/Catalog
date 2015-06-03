@@ -18,3 +18,9 @@ h1.titulo{
   border: 0 solid orange;
   border-top-width: 2px;
 }
+
+.add-estabelecimento {
+  bottom: 60px;
+  position: fixed;
+  right: 10px;
+}
