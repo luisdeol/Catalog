@@ -30,7 +30,7 @@ namespace Catalog.Controllers
                 try
                 {
                     DtoChave chave = mUsuario.cadastrarUsuario(usuario.email, usuario.senha, usuario.nome);
-                    retorno = new DtoRetornoObjeto(chave);
+                    retorno = new DtoRetornoObjeto(chave,"principal.html");
                 }
                 catch
                 {
@@ -72,7 +72,7 @@ namespace Catalog.Controllers
 			try
 			{
 				DtoChave chave = mUsuario.logar(usuario.email, usuario.senha);
-				retorno = new DtoRetornoObjeto(chave);
+				retorno = new DtoRetornoObjeto(chave,"principal.html");
 			}
 			catch
 			{

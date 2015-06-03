@@ -1,0 +1,69 @@
+<html ng-app="ionicApp">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Catalog</title>
+   
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+	
+    <link href="css/lista.css" rel="stylesheet">
+    <script src="js/lista.js"></script>
+	
+  </head>
+
+  <body ng-controller="MyCtrl">
+    
+    <ion-header-bar class="bar-positive">
+      <div class="buttons">
+        <button class="button button-icon icon ion-ios-minus-outline"
+          ng-click="data.showDelete = !data.showDelete; data.showReorder = false"></button>
+      </div>
+      <h1 class="title">Listas</h1>
+      <div class="buttons">
+        <button class="button" ng-click="data.showDelete = false; data.showReorder = !data.showReorder">
+            Ordenar
+        </button>
+      </div>
+    </ion-header-bar>
+
+    <ion-content>
+
+      <!-- The list directive is great, but be sure to also checkout the collection repeat directive when scrolling through large lists -->
+      
+      <ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
+
+        <ion-item ng-repeat="item in items" 
+                  item="item"
+                  href="produtos-lista.html" class="item-remove-animate">
+          {{ item.nome }}
+          <ion-delete-button class="ion-minus-circled" 
+                             ng-click="onItemDelete(item)">
+          </ion-delete-button>
+          <ion-option-button class="button-assertive"
+                             ng-click="edit(item)">
+            Editar
+          </ion-option-button>
+          <ion-reorder-button class="ion-navicon" on-reorder="moveItem(item, $fromIndex, $toIndex)"></ion-reorder-button>
+        </ion-item>
+
+      </ion-list>
+
+    </ion-content>
+	
+	<!-- fotter -->
+	<div class="tabs-striped tabs-color-assertive">
+		<div class="tabs">
+		  <a class="tab-item active" href="principal.html">
+			<img class="icon-footer" src="img/logo.png" width="35px" height="35px">
+		  </a>
+		  <a class="tab-item" href="estabelecimentos.html">
+			<img class="icon-footer-secundario" src="img/estabelecimento.png" width="35px" height="35px">
+		  </a>
+		  <a class="tab-item" href="produtos.html">
+			<img class="icon-footer-secundario" src="img/product.png" width="35px" height="35px">
+		  </a>
+		</div>
+	</div>
+      
+  </body>
+</html>

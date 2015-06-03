@@ -1,0 +1,107 @@
+/*-- ARQUIVO INDEX.HTML --*/
+img.logo-index {
+  margin-top: 130px;
+  margin-left: 18%;
+}
+
+/*-- ARQUIVO LOGIN.HTML --*/
+
+h1.titulo{
+  color: rgb(255, 255, 255);
+  font-family: segoe UI Black;
+  font-weight: bold;
+  font-size: 29px;
+  text-align: left;
+  margin-top: -3px;
+  margin-left: 10px;
+}
+
+img.icone-login {
+  margin-top: 90px;
+  margin-left: 40%;
+}
+
+
+img.face {
+  margin-left: 42%;
+}
+
+p.ng-binding {
+  margin-bottom: -30px;
+  margin-top: 10px;
+  margin-left: 25%;
+  color: #FF5300;
+  font-size: 17px;
+}
+/*-- ARQUIVO CADASTRAR.HTML --*/
+
+.erro-email{
+  border: 2px solid red !important;
+}
+
+/*-- ARQUIVO PRINCIPAL.HTML --*/
+a.item {
+  color: inherit;
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.57);
+  margin-top: -2px;
+  background: linear-gradient(rgb(246, 245, 245), rgb(235, 236, 236));
+}
+
+a.item.item-thumbnail-left {
+  box-shadow: 2px 2px 7px -2px;
+}
+
+p.sub-titulo {
+  color: #FFC300;
+  font-weight: bold;
+  font-size: 13px;
+  margin-left: -18px;
+}
+
+.item h2 {
+  margin: 0 0 2px 0;
+  font-size: 20px;
+  font-weight: normal;
+  margin-left: -18px;
+}
+
+label.item.item-input.item-stacked-label {
+  background-color: white;
+}
+
+.list {
+  margin-top: 45px;
+}
+
+img.icon-footer{
+  margin-top: 5px;
+}
+
+img.icon-footer-secundario {
+  opacity: 0.7;
+  margin-top: 5px;
+}
+
+img.icon-footer-secundario:active {
+  opacity: 1.0;
+  margin-top: 5px;
+}
+
+.tabs-striped.tabs-color-assertive .tab-item.tab-item-active, .tabs-striped.tabs-color-assertive .tab-item.active, .tabs-striped.tabs-color-assertive .tab-item.activated {
+  margin-top: -2px;
+  color: orange;
+  border: 0 solid orange;
+  border-top-width: 2px;
+}
+
+
+
+.button.button-block, .button.button-full {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 20px;
+}
+button.button-block, button.button-full, .button-full > button.button, input.button.button-block {
+  width: 90%;
+}
