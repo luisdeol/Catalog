@@ -1,5 +1,5 @@
 var app = angular.module("catalogApp",['ionic']);
-app.controller("EstabelecimentoController",function($scope,$http,$ionicModal){
+app.controller("EstabelecimentoController",function($scope,$http,$ionicModal,$ionicLoading, $compile){
   
 	//___________ VERIFICAR LOGIN _____________//
 	$scope.verificarLogin = function(lugarPagina)
@@ -21,6 +21,7 @@ app.controller("EstabelecimentoController",function($scope,$http,$ionicModal){
 		}	
 	}
 	
+	//_______________ ABRIR MODAL DE CADASTRO __________________//
 	 $ionicModal.fromTemplateUrl('templates/modal.html', {
 		scope: $scope
 	  }).then(function(modal) {
@@ -31,5 +32,13 @@ app.controller("EstabelecimentoController",function($scope,$http,$ionicModal){
 		$scope.contacts.push({ name: u.firstName + ' ' + u.lastName });
 		$scope.modal.hide();
 	  };
-	
+	 
+	//_______________ CHAMAR MAPA _________________// 
+	$scope.chamarMapa = function(latitudeEstabelecimento,longitudeEstabelecimento,nomeEstabelecimento)
+	{
+		window.localStorage.latitudeEstabelecimento = latitudeEstabelecimento;
+		window.localStorage.longitudeEstabelecimento = longitudeEstabelecimento;
+		window.localStorage.nomeEstabelecimento = nomeEstabelecimento;
+		window.location = "googleMaps.html";
+	}	
 });

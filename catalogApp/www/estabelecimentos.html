@@ -8,7 +8,7 @@
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <script src="cordova.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/estabelecimento.js"></script>
+    <script src="js/EstabelecimentoController.js"></script>
   </head>
   
 	<body ng-app="catalogApp" ng-controller="EstabelecimentoController" data-ng-init="verificarLogin('estabelecimentos.html')">
@@ -26,30 +26,35 @@
 			  <img src="img/estab1.png">
 			  <h2>Nordestão</h2>
 			  <p>Prudente de Morais</p>
+			  <img class="icone-mapa" src="img/mapa.png" width="30px" height="30px" ng-click="chamarMapa('-5.7936813','-35.2035056','Nordestão')">
 			</a>
 			
 			<a class="item item-avatar" href="#">
 			  <img src="img/estab2.png">
 			  <h2>Farmafórmula</h2>
 			  <p>Tirol</p>
+			  <img class="icone-mapa" src="img/mapa.png" width="30px" height="30px" ng-click="chamarMapa('-5.7865758','-35.2080757','Farmaformula')">
 			</a>
 			
 			<a class="item item-avatar" href="#">
 			  <img src="img/estab3.png">
 			  <h2>Auri Auto peças</h2>
 			  <p>Cidade Alta</p>
+			  <img class="icone-mapa" src="img/mapa.png" width="30px" height="30px" ng-click="chamarMapa('-5.81605','-35.23211','Auri auto peças')">
 			</a>
 			
 			<a class="item item-avatar" href="#">
 			  <img src="img/estab5.png">
 			  <h2>Carrefour</h2>
 			  <p>Salgado filho</p>
+			  <img class="icone-mapa" src="img/mapa.png" width="30px" height="30px" ng-click="chamarMapa('-5.8445742','-35.2105137','Carrefour')">
 			</a>
 			
 			<a class="item item-avatar" href="#">
 			  <img src="img/estab1.png">
 			  <h2>Nordestão</h2>
 			  <p>Zona Norte</p>
+			  <img class="icone-mapa" src="img/mapa.png" width="30px" height="30px" ng-click="chamarMapa('-5.7936813','-35.2035056','Nordestão')">
 			</a>
 		</div>
 		
@@ -73,12 +78,24 @@
 						  <input ng-model="estabelecimento.nome" type="text">
 						</label>
 						<label class="item item-input">
-						  <span class="input-label">Endereço</span>
-						  <input ng-model="estabelecimento.endereco" type="text">
+						  <span class="input-label">Rua</span>
+						  <input ng-model="estabelecimento.rua" type="text">
 						</label>
 						<label class="item item-input">
-						  <span class="input-label">Tipo Estabelecimento</span>
-						  <input ng-model="estabelecimento.tipo" type="text">
+						  <span class="input-label">Cidade</span>
+						  <input ng-model="estabelecimento.cidade" type="text">
+						</label>
+						<label class="item item-input">
+						  <span class="input-label">Estado</span>
+						  <input ng-model="estabelecimento.estado" type="text">
+						</label>
+						<label class="item item-input">
+						  <span class="input-label">Numero</span>
+						  <input ng-model="estabelecimento.numero" type="number">
+						</label>
+						<label class="item item-input">
+						  <span class="input-label">CEP</span>
+						  <input ng-model="estabelecimento.cep" type="text">
 						</label>
 						<button class="button button-full button-positive" ng-click="createContact(estabelecimento)">Cadastrar</button>
 					</div>
@@ -100,7 +117,6 @@
 				<img class="icon-footer-secundario" src="img/product.png" width="35px" height="35px">
 			  </a>
 			</div>
-		</div>
-		
+		</div>	
 	</body>
 </html>

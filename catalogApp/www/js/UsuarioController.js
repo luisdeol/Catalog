@@ -4,49 +4,47 @@ app.controller("UsuarioController",function($scope,$http, $ionicPopup, $timeout)
     //___________________ LOGAR__________________//
 	$scope.logar = function(usuario)
 	{
-		var email = usuario.email;
-		var senha = usuario.senha;
-		var json = "{email:'"+email+"',senha:'"+senha+"'}";
-		
-		
-		if(email != "" && senha != "") //campos foram preenchidos
+		if(usuario != undefined)//campos foram preenchidos
 		{
+			var email = usuario.email;
+			var senha = usuario.senha;
+			var json = "{email:'"+email+"',senha:'"+senha+"'}";
+
 			$http.post('http://localhost:51786/Webservices/WsUsuario.asmx/logar', {dtoUsuario:json}).
 			  success(function(data, status, headers, config)
 			{
-				var retorno = $.parseJSON(data.d);	
+				var retorno = angular.fromJson(data.d);	
 				if(retorno.tipoRetorno == "ACK") //logado
 				{
 					window.localStorage.idUsuario = retorno.chave.idUsuario;
 					window.localStorage.token = retorno.chave.token;
 					window.localStorage.ultimoAcesso = retorno.chave.ultimoAcesso;
-					alert("Logado com sucesso!");			
-					window.location = retorno.destino;		
+					$scope.alerta("Sucesso","Logado com sucesso!",retorno.destino);	
 				}
 				else //erro
 				{
-					$scope.alerta("Ocorreu um erro",retorno.mensagem);
+					$scope.alerta("Ocorreu um erro",retorno.mensagem,"");
 				}
 			});
 		}
 		else //campos vazios
 		{
-			$scope.alerta("Ocorreu um erro","Preencha todos os campos!");
+			$scope.alerta("Ocorreu um erro","Preencha todos os campos!","");
 		}
 	}
 	
 	//___________________ CADASTRAR___________________//
 	$scope.cadastrar = function(user)
 	{
-		var usuario = user.nome;
-		var email =  user.email;
-		var senha = user.senha;
-		var confirmarSenha = user.confirmarSenha;
-		var json = "{email:'"+email+"',senha:'"+senha+"',nome:'"+usuario+"'}";
-		
-		if(senha == confirmarSenha) //senhas conferem
-		{
-			if(email != "" && senha != "" && usuario != "") //campos foram preenchidos
+		if(user != undefined) //campos foram preenchidos
+		{	
+			var usuario = user.nome;
+			var email =  user.email;
+			var senha = user.senha;
+			var confirmarSenha = user.confirmarSenha;
+			var json = "{email:'"+email+"',senha:'"+senha+"',nome:'"+usuario+"'}";
+			
+			if(senha == confirmarSenha) //senhas conferem
 			{
 				var filtro = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 				if(filtro.test(email))//email valido
@@ -54,18 +52,18 @@ app.controller("UsuarioController",function($scope,$http, $ionicPopup, $timeout)
 					$http.post('http://localhost:51786/Webservices/WsUsuario.asmx/realizarCadastro', {dtoUsuario:json}).
 					  success(function(data, status, headers, config)
 					{
-						var retorno = $.parseJSON(data.d);	
+						var retorno = angular.fromJson(data.d);	
 						if(retorno.tipoRetorno == "ACK") //cadastrado
 						{
 							window.localStorage.idUsuario = retorno.chave.idUsuario;
 							window.localStorage.token = retorno.chave.token;
 							window.localStorage.ultimoAcesso = retorno.chave.ultimoAcesso;
-							alert("Cadastro realizado com sucesso!");			
-							window.location = retorno.destino;
+							$scope.alerta("Sucesso","Cadastro realizado",retorno.destino);			
+							
 						}
 						else //erro
 						{
-							$scope.alerta("Ocorreu um erro",retorno.mensagem);
+							$scope.alerta("Ocorreu um erro",retorno.mensagem,"");
 						}
 					});
 				}
@@ -75,15 +73,15 @@ app.controller("UsuarioController",function($scope,$http, $ionicPopup, $timeout)
 					document.getElementById("email").value = "Email incorreto!";
 				}
 			}
-			else //campos vazios
+			else //senhas nao conferem
 			{
-				$scope.alerta("Ocorreu um erro","Preencha todos os campos!");
-			}
+				$scope.alerta("Ocorreu um erro","Senhas não conferem!","");
+			}	
 		}
-		else //senhas nao conferem
+		else
 		{
-			$scope.alerta("Ocorreu um erro","Senhas não conferem!");
-		}	
+			$scope.alerta("Ocorreu um erro","Preencha todos os campos!","");
+		}
 	}	
 	
 	//___________ VERIFICAR LOGIN _____________//
@@ -117,12 +115,33 @@ app.controller("UsuarioController",function($scope,$http, $ionicPopup, $timeout)
 	};
 	
 	//____________ ALERTA ____________//
-	$scope.alerta = function(mensagem,subMensagem)
+	$scope.alerta = function(mensagem,subMensagem,destino)
 	{
 		var alertPopup = $ionicPopup.alert({
 		title: mensagem,
 		template: subMensagem
 		});
+		
+		 $timeout(function() 
+		{
+		  window.location = destino;
+		  alertPopup.close();
+		}, 3000);
 	};
 	
 });
+
+//_______________ GEOLOCALIZAÇÃO ___________________//
+function localizacao()
+{
+	window.localStorage.latitudeUsuario = -5.8123501;
+	window.localStorage.longitudeUsuario = -35.2025723;
+	
+	if (navigator.geolocation)
+		navigator.geolocation.getCurrentPosition(showPosition);
+}
+function showPosition(position) 
+{
+	window.localStorage.latitudeUsuario = position.coords.latitude;
+	window.localStorage.longitudeUsuario = position.coords.longitude;
+}

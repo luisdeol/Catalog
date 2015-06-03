@@ -1,0 +1,27 @@
+<html ng-app="catalogApp">
+  <head>
+    <meta charset="utf-8">
+    <title>Map</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link href="css/estabelecimento.css" rel="stylesheet">
+      <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+     <script src="lib/ionic/js/ionic.bundle.js"></script>
+	  <script src="js/googleMapsController.js"></script>
+
+    <!-- google maps javascript -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
+  </head>
+  <body ng-controller="googleMapsController">
+    <ion-header-bar class="bar-dark" >
+	  <img src="img/back.png" width="35px" height="35px" onclick="window.location = 'estabelecimentos.html'">
+      <h1 class="title">{{nomeEstabelecimento}}</h1>
+    </ion-header-bar>
+    <ion-content>
+      <div id="map" data-tap-disabled="true"></div>
+    </ion-content>
+    <ion-footer-bar class="bar-dark">
+      <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate">Minha localização</a>
+    </ion-footer-bar>
+  </body>
+</html>
