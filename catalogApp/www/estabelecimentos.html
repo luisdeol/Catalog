@@ -8,9 +8,10 @@
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <script src="cordova.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/estabelecimento.js"></script>
   </head>
   
-	<body ng-app="starter">
+	<body ng-app="catalogApp" ng-controller="EstabelecimentoController" data-ng-init="verificarLogin('estabelecimentos.html')">
 	
 		<!-- header -->	
 		<div class="bar bar-header bar-positive">
@@ -52,9 +53,38 @@
 			</a>
 		</div>
 		
-		<div class="add-estabelecimento">
+		<div class="add-estabelecimento" ng-click="modal.show()">
 			<img src="img/add.png" height="60px" width="60px">
 		</div>
+		
+		<!-- modal para adicionar estabelecimento -->
+		<script id="templates/modal.html" type="text/ng-template">
+			 <ion-modal-view>
+			  
+				<ion-header-bar class="bar bar-header bar-positive">
+				   <h1 class="title">Cadastrar Estabelecimento</h1>
+				   <button class="button button-clear button-primary" ng-click="modal.hide()">Cancelar</button>
+				</ion-header-bar>
+				
+				<ion-content class="padding">
+					<div class="list">
+						<label class="item item-input">
+						  <span class="input-label">Nome do Estabelecimento</span>
+						  <input ng-model="estabelecimento.nome" type="text">
+						</label>
+						<label class="item item-input">
+						  <span class="input-label">Endereço</span>
+						  <input ng-model="estabelecimento.endereco" type="text">
+						</label>
+						<label class="item item-input">
+						  <span class="input-label">Tipo Estabelecimento</span>
+						  <input ng-model="estabelecimento.tipo" type="text">
+						</label>
+						<button class="button button-full button-positive" ng-click="createContact(estabelecimento)">Cadastrar</button>
+					</div>
+				</ion-content>
+			 </ion-modal-view>
+		</script>
 				
 	
 		<!-- fotter -->

@@ -10,52 +10,55 @@
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <script src="cordova.js"></script>
     <script src="js/app.js"></script>
+	<script src="js/principal.js"></script>
   </head>
-	<body ng-app="starter" >
+	<body>
 	
 		<!-- header -->	
 		<div class="bar bar-header bar-positive">
 			<img src="img/iconeCatalog.png" height="30px" width="30px">
 			<h1 class="titulo">Catalog</h1>
 		</div>
-		
-		<!-- conteudo -->
-		<div class="list">
-			<a class="item item-thumbnail-left" href="#">
-			  <img src="img/check.png">
-			  <h2>Checkin</h2>
-			  <p class="sub-titulo">Realize seu checkin</p>
-			</a>
-			
-			<a class="item item-thumbnail-left" href="listas.html">
-			  <img src="img/list.png">
-			  <h2>Listas</h2>
-			  <p class="sub-titulo">Crie suas listas</p>
-			</a>
-			
-			<a class="item item-thumbnail-left" href="estabelecimentos.html">
-			  <img src="img/estabelecimento.png">
-			  <h2>Estabelecimentos</h2>
-			  <p class="sub-titulo">Encontre estabelecimentos</p>
-			</a>
-			
-			<a class="item item-thumbnail-left" href="#">
-			  <img src="img/product.png">
-			  <h2>Produtos</h2>
-			  <p class="sub-titulo">Procure por produtos</p>
-			</a>
-		</div>
-		
-		<!-- fotter -->
-		<div class="tabs-striped tabs-color-assertive">
-			<div class="tabs">
-			  <a class="tab-item active" href="#">
-				<img class="icon-footer" src="img/user.png" width="35px" height="35px">
-			  </a>
-			  <a class="tab-item" href="#">
-				<img class="icon-footer-secundario" src="img/sair.png" width="35px" height="35px">
-			  </a>
-		</div>
+	
+		<div ng-app="catalogApp" ng-controller="UsuarioController" data-ng-init="verificarLogin('principal.html')">	
+			<!-- conteudo -->
+			<div class="list">
+				<a class="item item-thumbnail-left" href="#">
+				  <img src="img/check.png">
+				  <h2>Checkin</h2>
+				  <p class="sub-titulo">Realize seu checkin</p>
+				</a>
 				
+				<a class="item item-thumbnail-left" href="listas.html">
+				  <img src="img/list.png">
+				  <h2>Listas</h2>
+				  <p class="sub-titulo">Crie suas listas</p>
+				</a>
+				
+				<a class="item item-thumbnail-left" href="estabelecimentos.html">
+				  <img src="img/estabelecimento.png">
+				  <h2>Estabelecimentos</h2>
+				  <p class="sub-titulo">Encontre estabelecimentos</p>
+				</a>
+				
+				<a class="item item-thumbnail-left" href="#">
+				  <img src="img/product.png">
+				  <h2>Produtos</h2>
+				  <p class="sub-titulo">Procure por produtos</p>
+				</a>
+			</div>
+		
+			<!-- fotter -->
+			<div class="tabs-striped tabs-color-assertive">
+				<div class="tabs">
+				  <a class="tab-item active" href="#">
+					<img class="icon-footer" src="img/user.png" width="35px" height="35px">
+				  </a>
+				  <a class="tab-item" href="#" ng-click="logout()">
+					<img class="icon-footer-secundario" src="img/sair.png" width="35px" height="35px">
+				  </a>
+			</div>
+			
+		</div>					
 	</body>
 </html>

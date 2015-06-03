@@ -1,6 +1,6 @@
 angular.module('ionicApp', ['ionic'])
 
-.controller('MyCtrl', function($scope) {
+.controller('ProdutosListaController', function($scope) {
   
   $scope.data = {
     showDelete: false
@@ -51,5 +51,25 @@ angular.module('ionicApp', ['ionic'])
     { id: 1 ,nome:"Xarope" },
     { id: 2 ,nome:"Termômetro" }
   ];
+  
+  
+  $scope.verificarLogin = function(lugarPagina)
+	{
+		var idUsuario = window.localStorage.idUsuario;
+		var token = window.localStorage.token;
+		var ultimoAcesso = window.localStorage.ultimoAcesso;
+		
+		if((idUsuario != undefined && idUsuario != "") && 
+			(token != undefined && token != "") && 
+			(ultimoAcesso != undefined && ultimoAcesso != "")) //ta logado
+		{
+			if(lugarPagina != "produtos-lista.html")
+				window.location = lugarPagina;	
+		}
+		else //nao esta logado
+		{
+			window.location = "login.html";
+		}	
+	}
   
 });

@@ -1,11 +1,11 @@
-var app = angular.module("catalogApp",[]);
-app.controller("UsuarioController",function($scope,$http){
+var app = angular.module("catalogApp",['ionic']);
+app.controller("UsuarioController",function($scope,$http, $ionicPopup, $timeout){
 
     //___________________ LOGAR__________________//
-	$scope.logar = function()
+	$scope.logar = function(usuario)
 	{
-		var email = $( "#email" ).val();
-		var senha = $( "#senha" ).val();
+		var email = usuario.email;
+		var senha = usuario.senha;
 		var json = "{email:'"+email+"',senha:'"+senha+"'}";
 		
 		
@@ -25,23 +25,23 @@ app.controller("UsuarioController",function($scope,$http){
 				}
 				else //erro
 				{
-					alert(retorno.mensagem);
+					$scope.alerta("Ocorreu um erro",retorno.mensagem);
 				}
 			});
 		}
 		else //campos vazios
 		{
-			$scope.campoVazio = "Preencha todos os campos!";
+			$scope.alerta("Ocorreu um erro","Preencha todos os campos!");
 		}
 	}
 	
 	//___________________ CADASTRAR___________________//
-	$scope.cadastrar = function()
+	$scope.cadastrar = function(user)
 	{
-		var usuario = $( "#usuario" ).val();
-		var email = $( "#email" ).val();		
-		var senha = $( "#senha" ).val();
-		var confirmarSenha = $( "#confirmarSenha" ).val();
+		var usuario = user.nome;
+		var email =  user.email;
+		var senha = user.senha;
+		var confirmarSenha = user.confirmarSenha;
 		var json = "{email:'"+email+"',senha:'"+senha+"',nome:'"+usuario+"'}";
 		
 		if(senha == confirmarSenha) //senhas conferem
@@ -65,7 +65,7 @@ app.controller("UsuarioController",function($scope,$http){
 						}
 						else //erro
 						{
-							alert(retorno.mensagem);
+							$scope.alerta("Ocorreu um erro",retorno.mensagem);
 						}
 					});
 				}
@@ -77,13 +77,52 @@ app.controller("UsuarioController",function($scope,$http){
 			}
 			else //campos vazios
 			{
-				$scope.campoVazio = "Preencha todos os campos!";
+				$scope.alerta("Ocorreu um erro","Preencha todos os campos!");
 			}
 		}
 		else //senhas nao conferem
 		{
-			$scope.campoVazio = "Senhas não conferem!";
+			$scope.alerta("Ocorreu um erro","Senhas não conferem!");
 		}	
 	}	
-
+	
+	//___________ VERIFICAR LOGIN _____________//
+	$scope.verificarLogin = function(lugarPagina)
+	{
+		var idUsuario = window.localStorage.idUsuario;
+		var token = window.localStorage.token;
+		var ultimoAcesso = window.localStorage.ultimoAcesso;
+		
+		if((idUsuario != undefined && idUsuario != "") && 
+			(token != undefined && token != "") && 
+			(ultimoAcesso != undefined && ultimoAcesso != "")) //ta logado
+		{
+			if(lugarPagina != "principal.html")
+				window.location = "principal.html";				
+		}
+		else //nao esta logado
+		{
+			if(lugarPagina == "principal.html")
+			window.location = "login.html";
+		}	
+	};
+	
+	//______________ LOGOUT _____________//
+	$scope.logout = function()
+	{
+		window.localStorage.idUsuario = "";
+		window.localStorage.token = "";
+		window.localStorage.ultimoAcesso = "";
+		window.location = "login.html";
+	};
+	
+	//____________ ALERTA ____________//
+	$scope.alerta = function(mensagem,subMensagem)
+	{
+		var alertPopup = $ionicPopup.alert({
+		title: mensagem,
+		template: subMensagem
+		});
+	};
+	
 });

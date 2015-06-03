@@ -5,13 +5,12 @@
    
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <script src="lib/ionic/js/ionic.bundle.js"></script>
-	
     <link href="css/lista.css" rel="stylesheet">
     <script src="js/lista.js"></script>
 	
   </head>
 
-  <body ng-controller="MyCtrl">
+  <body ng-controller="ListaController" data-ng-init="verificarLogin('listas.html')">
     
     <ion-header-bar class="bar-positive">
       <div class="buttons">
