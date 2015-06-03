@@ -1,5 +1,5 @@
 var app = angular.module("catalogApp",['ionic']);
-app.controller("UsuarioController",function($scope,$http, $ionicPopup, $timeout){
+app.controller("UsuarioController",function($scope,$ionicModal,$http,$ionicPopup,$timeout){
 
     //___________________ LOGAR__________________//
 	$scope.logar = function(usuario)
@@ -129,7 +129,15 @@ app.controller("UsuarioController",function($scope,$http, $ionicPopup, $timeout)
 		}, 3000);
 	};
 	
+	//_______________ ABRIR MODAL DE CADASTRO __________________//
+	$ionicModal.fromTemplateUrl('templates/modal.html', {
+		scope: $scope
+	}).then(function(modal) {
+		$scope.modal = modal;
+	});
+	
 });
+
 
 //_______________ GEOLOCALIZAÇÃO ___________________//
 function localizacao()

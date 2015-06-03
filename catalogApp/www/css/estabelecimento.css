@@ -38,3 +38,12 @@ img.icone-mapa{
 .scroll {
   height: 100%;
 }
+
+img.icon-estab-atualizar {
+  margin-top: 15px;
+  margin-left: 41%;
+}
+
+.list-estab-atualizar{
+  margin-top: 20px;
+}

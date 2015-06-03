@@ -12,7 +12,7 @@
     <script src="js/app.js"></script>
 	<script src="js/UsuarioController.js"></script>
   </head>
-	<body>
+	<body ng-app="catalogApp" ng-controller="UsuarioController" data-ng-init="verificarLogin('principal.html')">
 	
 		<!-- header -->	
 		<div class="bar bar-header bar-positive">
@@ -20,7 +20,6 @@
 			<h1 class="titulo">Catalog</h1>
 		</div>
 	
-		<div ng-app="catalogApp" ng-controller="UsuarioController" data-ng-init="verificarLogin('principal.html')">	
 			<!-- conteudo -->
 			<ion-content>
 			<div class="list">
@@ -49,20 +48,50 @@
 				</a>
 			</div>
 			</ion-content>
-		
+			
 			<!-- fotter -->
 			<div class="tabs-striped tabs-color-assertive">
 				<div class="tabs">
-				  <a class="tab-item active" href="#">
+				  <a class="tab-item active" ng-click="modal.show()">
 					<img class="icon-footer" src="img/user.png" width="35px" height="35px">
 				  </a>
-				  <a class="tab-item" href="#" ng-click="logout()">
+				  <a class="tab-item" ng-click="logout()">
 					<img class="icon-footer-secundario" src="img/sair.png" width="35px" height="35px">
 				  </a>
 			</div>
 			
-		</div>		
-		
+			
+			<!-- modal para atualizar usuario -->
+			<script id="templates/modal.html" type="text/ng-template">
+				 <ion-modal-view>
+				  
+					<ion-header-bar class="bar bar-header bar-positive">
+					   <h1 class="title">Atualizar Senha</h1>
+					   <button class="button button-clear button-primary" ng-click="modal.hide()">Cancelar</button>
+					</ion-header-bar>
+					
+					
+					<ion-content class="padding">
+					<img class="icon-user-atualizar" src="img/user.png" width="20%" height="80px">
+						<div class="list-user-atualizar">
+							<label class="item item-input">
+							  <span class="input-label">Senha Antiga</span>
+							  <input ng-model="usuario.senha" type="text">
+							</label>
+							<label class="item item-input">
+							  <span class="input-label">Nova Senha</span>
+							  <input ng-model="usuario.novaSenha" type="password">
+							</label>				
+							<label class="item item-input">
+							  <span class="input-label">Confirmar Senha</span>
+							  <input ng-model="usuario.confirmarNovaSenha" type="password">
+							</label>
+							<button class="button button-full button-positive" ng-click="createContact(usuario)">Atualizar</button>
+						</div>
+					</ion-content>
+				 </ion-modal-view>
+			</script>
+
 		<script type="text/javascript">
 			window.onload = function(){
 				localizacao();
