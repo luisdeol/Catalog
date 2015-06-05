@@ -5,11 +5,11 @@ using System.Web;
 
 namespace Catalog.Controllers.Interfaces
 {
-	public class IControllerEstabelecimento
+	public interface IControllerEstabelecimento
 	{
-		//public string criarEstabelecimento(string dtoChave, string dtoEstabelecimento);
-		//public string pesquisarEstabelecimentos(string dtoChave, string parametros);
-		//public string listarProdutos(string dtoChave, string dtoEstabelecimento);
-		//public string pesquisarProdutos(string dtoChave, string dtoEstabelecimento);
+		public string criarestabelecimento(string dtochave, string dtoestabelecimento);
+		public string pesquisarestabelecimentos(string dtochave, string parametros);
+		public string listarprodutos(string dtochave, string dtoestabelecimento);
+		public string pesquisarprodutos(string dtochave, string dtoestabelecimento);
 	}
 }

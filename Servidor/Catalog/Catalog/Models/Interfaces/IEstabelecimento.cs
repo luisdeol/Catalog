@@ -6,9 +6,9 @@ using System.Web;
 
 namespace Catalog.Models.Interfaces
 {
-	public class IEstabelecimento
+	public interface IEstabelecimento
 	{
-		//public DtoEnderecoEstabelecimento cadastrarEstabelecimento(DtoEnderecoEstabelecimento estabelecimento);
-		//public DtoItem[] procurarProduto(string[] parametros);
+		public DtoEnderecoEstabelecimento cadastrarEstabelecimento(DtoEnderecoEstabelecimento estabelecimento);
+		public DtoItem[] procurarProduto(string[] parametros);
 	}
 }

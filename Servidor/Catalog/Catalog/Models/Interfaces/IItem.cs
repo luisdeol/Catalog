@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Catalog.Models.Interfaces
 {
-	public class IItem
+	public interface IItem
 	{
 	}
 }

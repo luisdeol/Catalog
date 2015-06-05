@@ -6,10 +6,10 @@ using System.Web;
 
 namespace Catalog.Models.Interfaces
 {
-	public class IFabricante
+	public interface IFabricante
 	{
-		//public DtoFabricante cadastrarFabricante(DtoFabricante fabricante);
-		//public DtoFabricante abrirFabricante(int idFabricante);
-		//public DtoFabricante[] procurarFabricante(string fabricante);
+		public DtoFabricante cadastrarFabricante(DtoFabricante fabricante);
+		public DtoFabricante abrirFabricante(int idFabricante);
+		public DtoFabricante[] procurarFabricante(string fabricante);
 	}
 }
