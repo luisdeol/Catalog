@@ -17,3 +17,4 @@ C:\Users\Nudes\Desktop\Catalog\Servidor\Catalog\Catalog\bin\System.Web.WebPages.
 C:\Users\Nudes\Desktop\Catalog\Servidor\Catalog\Catalog\bin\System.Web.WebPages.Razor.xml
 C:\Users\Nudes\Desktop\Catalog\Servidor\Catalog\Catalog\obj\Release\Catalog.dll
 C:\Users\Nudes\Desktop\Catalog\Servidor\Catalog\Catalog\obj\Release\Catalog.pdb
+C:\Users\Nudes\Desktop\Catalog\Servidor\Catalog\Catalog\obj\Release\Catalog.csprojResolveAssemblyReference.cache

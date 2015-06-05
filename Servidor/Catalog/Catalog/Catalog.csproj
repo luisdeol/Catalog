@@ -183,6 +183,7 @@
     <None Include="Linq\DBCatalog.dbml.layout">
       <DependentUpon>DBCatalog.dbml</DependentUpon>
     </None>
+    <None Include="Properties\PublishProfiles\catalog.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
