@@ -21,6 +21,10 @@ img.icone-login {
   margin-left: 40%;
 }
 
+.logar{
+  margin-left: 20px;
+  margin-right: 20px;
+}
 
 img.face {
   margin-left: 42%;
@@ -30,6 +34,11 @@ img.face {
 
 .erro-email{
   border: 2px solid red !important;
+}
+
+.cadastro{
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 /*-- ARQUIVO PRINCIPAL.HTML --*/
@@ -62,6 +71,10 @@ p.sub-titulo {
   font-size: 20px;
   font-weight: normal;
   margin-left: -18px;
+}
+
+.largura-footer{
+max-width: 220px;
 }
 
 label.item.item-input.item-stacked-label {

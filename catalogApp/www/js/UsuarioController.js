@@ -1,5 +1,42 @@
-var app = angular.module("catalogApp",['ionic']);
-app.controller("UsuarioController",function($scope,$ionicModal,$http,$ionicPopup,$timeout){
+var app = angular.module("catalogApp",['ionic'])
+.config(function($stateProvider, $urlRouterProvider) {
+
+  $stateProvider
+    .state('tabs', {
+      url: "/tab",
+      abstract: true,
+      templateUrl: "templates/tabs.html"
+    })
+    .state('tabs.home', {
+      url: "/home",
+      views: {
+        'home-tab': {
+          templateUrl: "templates/home.html",
+          controller: 'UsuarioController'
+        }
+      }
+    })
+    .state('tabs.login', {
+      url: "/login",
+      views: {
+        'home-tab': {
+          templateUrl: "templates/login.html"
+        }
+      }
+    })
+    .state('tabs.cadastro', {
+      url: "/cadastro",
+      views: {
+        'home-tab': {
+          templateUrl: "templates/cadastro.html"
+        }
+      }
+    });
+   $urlRouterProvider.otherwise("/tab/home");
+
+})
+
+.controller("UsuarioController",function($scope,$ionicModal,$http,$ionicPopup,$timeout){
 
     //___________________ LOGAR__________________//
 	$scope.logar = function(usuario)
@@ -19,17 +56,17 @@ app.controller("UsuarioController",function($scope,$ionicModal,$http,$ionicPopup
 					window.localStorage.idUsuario = retorno.chave.idUsuario;
 					window.localStorage.token = retorno.chave.token;
 					window.localStorage.ultimoAcesso = retorno.chave.ultimoAcesso;
-					$scope.alerta("Sucesso","Logado com sucesso!",retorno.destino);	
+					$scope.alerta("Sucesso","Logado com sucesso!","principal.html#/tab/home");	
 				}
 				else //erro
 				{
-					$scope.alerta("Ocorreu um erro",retorno.mensagem,"");
+					$scope.alerta("Ocorreu um erro",retorno.mensagem,"index.html#/tab/login");
 				}
 			});
 		}
 		else //campos vazios
 		{
-			$scope.alerta("Ocorreu um erro","Preencha todos os campos!","");
+			$scope.alerta("Ocorreu um erro","Preencha todos os campos!","index.html#/tab/login");
 		}
 	}
 	
@@ -58,12 +95,12 @@ app.controller("UsuarioController",function($scope,$ionicModal,$http,$ionicPopup
 							window.localStorage.idUsuario = retorno.chave.idUsuario;
 							window.localStorage.token = retorno.chave.token;
 							window.localStorage.ultimoAcesso = retorno.chave.ultimoAcesso;
-							$scope.alerta("Sucesso","Cadastro realizado",retorno.destino);			
+							$scope.alerta("Sucesso","Cadastro realizado","principal.html#/tab/home");			
 							
 						}
 						else //erro
 						{
-							$scope.alerta("Ocorreu um erro",retorno.mensagem,"");
+							$scope.alerta("Ocorreu um erro",retorno.mensagem,"index.html#/tab/cadastro");
 						}
 					});
 				}
@@ -75,12 +112,12 @@ app.controller("UsuarioController",function($scope,$ionicModal,$http,$ionicPopup
 			}
 			else //senhas nao conferem
 			{
-				$scope.alerta("Ocorreu um erro","Senhas não conferem!","");
+				$scope.alerta("Ocorreu um erro","Senhas não conferem!","index.html#/tab/cadastro");
 			}	
 		}
 		else
 		{
-			$scope.alerta("Ocorreu um erro","Preencha todos os campos!","");
+			$scope.alerta("Ocorreu um erro","Preencha todos os campos!","index.html#/tab/cadastro");
 		}
 	}	
 	
@@ -111,7 +148,7 @@ app.controller("UsuarioController",function($scope,$ionicModal,$http,$ionicPopup
 		window.localStorage.idUsuario = "";
 		window.localStorage.token = "";
 		window.localStorage.ultimoAcesso = "";
-		window.location = "login.html";
+		window.location = "index.html#/tab/home";
 	};
 	
 	//____________ ALERTA ____________//

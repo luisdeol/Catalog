@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/Catalog.dll">
+      <publishTime>06/03/2015 17:38:03</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.Infrastructure.dll">
+      <publishTime>06/03/2015 17:26:50</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>06/03/2015 17:26:50</publishTime>
+    </File>
+    <File Include="bin/System.Web.Helpers.dll">
+      <publishTime>06/03/2015 17:26:50</publishTime>
+    </File>
+    <File Include="bin/System.Web.Mvc.dll">
+      <publishTime>06/03/2015 17:26:50</publishTime>
+    </File>
+    <File Include="bin/System.Web.Razor.dll">
+      <publishTime>06/03/2015 17:26:50</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.dll">
+      <publishTime>06/03/2015 17:26:50</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.dll">
+      <publishTime>06/03/2015 17:26:50</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Razor.dll">
+      <publishTime>06/03/2015 17:26:50</publishTime>
+    </File>
+    <File Include="favicon.ico">
+      <publishTime>06/03/2015 17:26:50</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>06/03/2015 17:26:50</publishTime>
+    </File>
+    <File Include="Linq/DBCatalog.dbml">
+      <publishTime>06/03/2015 17:26:50</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>06/03/2015 17:26:50</publishTime>
+    </File>
+    <File Include="Views/Web.config">
+      <publishTime>06/03/2015 17:26:50</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>06/03/2015 17:38:04</publishTime>
+    </File>
+    <File Include="Webservices/WsUsuario.asmx">
+      <publishTime>06/03/2015 17:26:50</publishTime>
+    </File>
+  </ItemGroup>
+</Project>
