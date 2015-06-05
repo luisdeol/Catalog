@@ -96,11 +96,12 @@ var app = angular.module("catalogApp",['ionic'])
 							window.localStorage.token = retorno.chave.token;
 							window.localStorage.ultimoAcesso = retorno.chave.ultimoAcesso;
 							$scope.alerta("Sucesso","Cadastro realizado","principal.html#/tab/home");			
-							
+							return true;
 						}
 						else //erro
 						{
 							$scope.alerta("Ocorreu um erro",retorno.mensagem,"index.html#/tab/cadastro");
+							return false;
 						}
 					});
 				}
@@ -108,16 +109,19 @@ var app = angular.module("catalogApp",['ionic'])
 				{
 					$scope.erro = true;
 					document.getElementById("email").value = "Email incorreto!";
+					return false;
 				}
 			}
 			else //senhas nao conferem
 			{
 				$scope.alerta("Ocorreu um erro","Senhas não conferem!","index.html#/tab/cadastro");
+				return false;
 			}	
 		}
 		else
 		{
 			$scope.alerta("Ocorreu um erro","Preencha todos os campos!","index.html#/tab/cadastro");
+			return false;
 		}
 	}	
 	
@@ -174,7 +178,6 @@ var app = angular.module("catalogApp",['ionic'])
 	});
 	
 });
-
 
 //_______________ GEOLOCALIZAÇÃO ___________________//
 function localizacao()
