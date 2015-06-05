@@ -14,6 +14,6 @@ namespace Catalog.DTO
 		public int idProduto { get; set; }
 		public DtoProduto produto { get; set; }
 		public int idEstabelecimento { get; set; }
-		public DtoEstabelecimento estabelecimento { get; set; }
+		public DtoEnderecoEstabelecimento estabelecimento { get; set; }
 	}
 }

@@ -13,8 +13,8 @@ namespace Catalog.Controllers.Interfaces
 		public string excluirLista(string dtoChave, string dtoLista);
 		public string pesquisarLista(string dtoChave, string parametros);
 		public string listarProdutos(string dtoChave, string dtoLista);
-		public string listarItensEm(string dtoChave, string dtoLista, string dtoEstabelecimento);
-		public string adicionarProduto(string dtoChave, string dtoLista, string dtoProduto);
+		public string listarItensEm(string dtoChave, string dtoLista, string dtoEnderecoEstabelecimento);
+		public string adicionarProduto(string dtoChave, string dtoLista, string dtoProdutoDaLista);
 		public string removerProduto(string dtoChave, string dtoLista, string dtoProduto);
 	}
 }

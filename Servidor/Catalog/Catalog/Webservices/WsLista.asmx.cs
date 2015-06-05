@@ -60,17 +60,17 @@ namespace Catalog.Webservices
 		}
 
 		[WebMethod]
-		public string listarItensEm(string dtoChave, string dtoLista, string dtoEstabelecimento)
+		public string listarItensEm(string dtoChave, string dtoLista, string dtoEnderecoEstabelecimento)
 		{
 			ControllerLista cLista = new ControllerLista();
-			return cLista.listarItensEm(dtoChave, dtoLista, dtoEstabelecimento);
+			return cLista.listarItensEm(dtoChave, dtoLista, dtoEnderecoEstabelecimento);
 		}
 
 		[WebMethod]
-		public string adicionarProduto(string dtoChave, string dtoLista, string dtoProduto)
+		public string adicionarProduto(string dtoChave, string dtoLista, string dtoProdutoDaLista)
 		{
 			ControllerLista cLista = new ControllerLista();
-			return cLista.adicionarProduto(dtoChave, dtoLista, dtoProduto);
+			return cLista.adicionarProduto(dtoChave, dtoLista, dtoProdutoDaLista);
 		}
 
 		[WebMethod]
