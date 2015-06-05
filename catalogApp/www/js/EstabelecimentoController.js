@@ -7,6 +7,7 @@ app.controller("EstabelecimentoController",function($scope,$http,$ionicModal,$io
 		var idUsuario = window.localStorage.idUsuario;
 		var token = window.localStorage.token;
 		var ultimoAcesso = window.localStorage.ultimoAcesso;
+		document.getElementById("imgAdd").className = "img-add-estab";
 		
 		if((idUsuario != undefined && idUsuario != "") && 
 			(token != undefined && token != "") && 

@@ -26,3 +26,9 @@
   position: fixed;
   right: 10px;
 }
+
+img.img-add-lista{
+  transition: height 2s, width 2s;
+  height: 65px;
+  width: 65px;
+}

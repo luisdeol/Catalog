@@ -25,6 +25,12 @@ h1.titulo{
   right: 10px;
 }
 
+img.img-add-estab{
+  transition: height 1s, width 1s;
+  height: 65px;
+  width: 65px;
+}
+
 img.icone-mapa{
   float: right;
   margin-top: -40px;

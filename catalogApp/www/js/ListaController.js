@@ -41,6 +41,7 @@ angular.module('ionicApp', ['ionic'])
 		var idUsuario = window.localStorage.idUsuario;
 		var token = window.localStorage.token;
 		var ultimoAcesso = window.localStorage.ultimoAcesso;
+		document.getElementById("imgAdd").className = "img-add-lista";
 		
 		if((idUsuario != undefined && idUsuario != "") && 
 			(token != undefined && token != "") && 
