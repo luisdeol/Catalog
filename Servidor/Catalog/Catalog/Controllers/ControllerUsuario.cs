@@ -29,7 +29,7 @@ namespace Catalog.Controllers
             {
                 try
                 {
-                    DtoChave chave = mUsuario.cadastrarUsuario(usuario.email, usuario.senha, usuario.nome);
+					DtoChave chave = mUsuario.cadastrarUsuario(usuario);
                     retorno = new DtoRetornoObjeto(chave,"principal.html");
                 }
                 catch

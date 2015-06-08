@@ -12,6 +12,10 @@ namespace Catalog.Models
 	{
 		public DtoFabricante cadastrarFabricante(DtoFabricante fabricante)
 		{
+			fabricante.fabricante = fabricante.fabricante.Trim();
+			if (fabricante.fabricante == "")
+				throw new Exception(); //nome do fabricante inválido
+
 			DBCatalogDataContext dataContext = new DBCatalogDataContext();
 			tb_Fabricante fabricanteEmBanco = dataContext.tb_Fabricantes.FirstOrDefault(f => f.fabricante.ToLower() == fabricante.fabricante.ToLower());
 			if (fabricanteEmBanco != null)
@@ -32,12 +36,44 @@ namespace Catalog.Models
 
 		public DtoFabricante abrirFabricante(int idFabricante)
 		{
-			return new DtoFabricante();
+			if (idFabricante < 1)
+				throw new Exception(); //id do fabricante inválido
+
+			DtoFabricante fabricante;
+			DBCatalogDataContext dataContext = new DBCatalogDataContext();
+			try
+			{
+				tb_Fabricante fabricanteBanco = dataContext.tb_Fabricantes.First(f => f.id == idFabricante);
+
+				fabricante = new DtoFabricante();
+				fabricante.fabricante = fabricanteBanco.fabricante;
+				fabricante.id = fabricanteBanco.id;
+			}
+			catch (Exception ex)
+			{
+				throw ex; //fabricante inexistente
+			}
+
+			return fabricante;
 		}
 
 		public DtoFabricante[] procurarFabricante(string fabricante)
 		{
-			return new DtoFabricante[5];
+			List<DtoFabricante> fabricantes = new List<DtoFabricante>();
+
+			DBCatalogDataContext dataContext = new DBCatalogDataContext();
+			var fabricantesBanco = from f in dataContext.tb_Fabricantes where f.fabricante.Contains(fabricante) select f;
+
+			DtoFabricante fab;
+			foreach(tb_Fabricante fabBanco in fabricantesBanco)
+			{
+				fab = new DtoFabricante();
+				fab.id = fabBanco.id;
+				fab.fabricante = fabBanco.fabricante;
+				fabricantes.Add(fab);
+			}
+
+			return fabricantes.ToArray();
 		}
 	}
 }

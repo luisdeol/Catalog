@@ -28,5 +28,16 @@ namespace Catalog.Webservices
 			dtoFab = fab.cadastrarFabricante(dtoFab);
 			return "idFabricante = " + dtoFab.id;
 		}
+
+		[WebMethod]
+		public string pesquisarFabricante(string fabricante)
+		{
+			Fabricante fab = new Fabricante();
+			DtoFabricante[] fabs = fab.procurarFabricante(fabricante);
+			string retorno = "";
+			foreach (DtoFabricante f in fabs)
+				retorno += "id: " + f.id + " - nome: " + f.fabricante + "\n";
+			return retorno;
+		}
 	}
 }
