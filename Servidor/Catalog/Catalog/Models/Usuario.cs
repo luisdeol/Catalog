@@ -8,26 +8,26 @@ using System.Web;
 
 namespace Catalog.Models
 {
-	public class Usuario// : IUsuario
+	public class Usuario : IUsuario
 	{
-		public DtoChave cadastrarUsuario(string email, string senha, string nome)
+		public DtoChave cadastrarUsuario(DtoUsuario usuario)
 		{
             Chave mChave = new Chave();
 
             DBCatalogDataContext dataContext = new DBCatalogDataContext();
-            var usuario = dataContext.tb_Usuarios.FirstOrDefault(u => u.email == email);
+			var usuarioBanco = dataContext.tb_Usuarios.FirstOrDefault(u => u.email == usuario.email);
 
-            if(usuario == null) //nenhum email encontrado (cadastrar usuario)
+            if(usuarioBanco == null) //nenhum email encontrado (cadastrar usuario)
             {
-                usuario = new Linq.tb_Usuario();
-                usuario.email = email;
-                usuario.senha = senha;
-                usuario.nome = nome;
-                dataContext.tb_Usuarios.InsertOnSubmit(usuario);
+                usuarioBanco = new Linq.tb_Usuario();
+				usuarioBanco.email = usuario.email;
+				usuarioBanco.senha = usuario.senha;
+				usuarioBanco.nome = usuario.nome;
+                dataContext.tb_Usuarios.InsertOnSubmit(usuarioBanco);
                 dataContext.SubmitChanges();
 
                 //criando chave
-                var usuarioRecemCadastrado = dataContext.tb_Usuarios.FirstOrDefault(u => u.email == email);
+				var usuarioRecemCadastrado = dataContext.tb_Usuarios.FirstOrDefault(u => u.email == usuario.email);
                 DtoChave chave = mChave.criarChave(usuarioRecemCadastrado.id);
                 return chave;
             }
