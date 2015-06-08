@@ -8,12 +8,12 @@ namespace Catalog.Models.Interfaces
 {
 	public interface IProduto
 	{
-		public DtoProduto cadastrarProduto(DtoProduto produto);
-		public DtoProduto abrirProduto(int idProduto);
-		public DtoProduto[] pesquisarProduto(string[] parametros);
-		public DtoItem buscarItem(int idProduto, int idEstabelecimento);
-		public DtoItem[] buscarItem(int idProduto);
-		public DtoItem itemMaisBarato(int idProduto);
-		public DtoEnderecoEstabelecimento[] estabelecimentosPossuidores(int idProduto);
+		DtoProduto cadastrarProduto(DtoProduto produto);
+		DtoProduto abrirProduto(int idProduto);
+		DtoProduto[] pesquisarProduto(string[] parametros);
+		DtoItem buscarItem(int idProduto, int idEstabelecimento);
+		DtoItem[] buscarItem(int idProduto);
+		DtoItem itemMaisBarato(int idProduto);
+		DtoEnderecoEstabelecimento[] estabelecimentosPossuidores(int idProduto);
 	}
 }

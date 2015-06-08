@@ -9,7 +9,15 @@ namespace Catalog.Models
 {
 	public class TipoProduto : ITipoProduto
 	{
-		public DtoTipo abrirTipo(int idTipo);
-		public DtoTipo abrirTipo(string tipo);
+		public DtoTipo abrirTipo(int idTipo)
+		{
+			return new DtoTipo();
+		}
+
+		public DtoTipo abrirTipo(string tipo)
+		{
+			return new DtoTipo();
+		}
+
 	}
 }

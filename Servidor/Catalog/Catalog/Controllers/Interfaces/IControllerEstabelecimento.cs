@@ -7,9 +7,9 @@ namespace Catalog.Controllers.Interfaces
 {
 	public interface IControllerEstabelecimento
 	{
-		public string criarestabelecimento(string dtochave, string dtoestabelecimento);
-		public string pesquisarestabelecimentos(string dtochave, string parametros);
-		public string listarprodutos(string dtochave, string dtoestabelecimento);
-		public string pesquisarprodutos(string dtochave, string dtoestabelecimento);
+		string criarestabelecimento(string dtochave, string dtoestabelecimento);
+		string pesquisarestabelecimentos(string dtochave, string parametros);
+		string listarprodutos(string dtochave, string dtoestabelecimento);
+		string pesquisarprodutos(string dtochave, string dtoestabelecimento);
 	}
 }

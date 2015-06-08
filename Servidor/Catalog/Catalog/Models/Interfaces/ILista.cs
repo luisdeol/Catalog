@@ -8,14 +8,14 @@ namespace Catalog.Models.Interfaces
 {
 	public interface ILista
 	{
-		public DtoLista criarLista(DtoLista lista);
-		public DtoLista abrirLista(int idLista);
-		public void editarLista(int idLista, string novoNome);
-		public void excluirLista(int idLista);
-		public DtoLista[] pesquisarListas(int isUsuario);
-		public DtoLista listarProdutos(int idLista);
-		public DtoLista listarItensEm(int idLista, int idEstabelecimento);
-		public DtoProdutoDaLista adicionarProduto(DtoProdutoDaLista produto);
-		public void removerProduto(int idProduto);
+		DtoLista criarLista(DtoLista lista);
+		DtoLista abrirLista(int idLista);
+		void editarLista(int idLista, string novoNome);
+		void excluirLista(int idLista);
+		DtoLista[] pesquisarListas(int isUsuario);
+		DtoLista listarProdutos(int idLista);
+		DtoLista listarItensEm(int idLista, int idEstabelecimento);
+		DtoProdutoDaLista adicionarProduto(DtoProdutoDaLista produto);
+		void removerProduto(int idProduto);
 	}
 }

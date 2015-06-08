@@ -8,7 +8,7 @@ namespace Catalog.Models.Interfaces
 {
 	public interface ITipoProduto
 	{
-		public DtoTipo abrirTipo(int idTipo);
-		public DtoTipo abrirTipo(string tipo);
+		DtoTipo abrirTipo(int idTipo);
+		DtoTipo abrirTipo(string tipo);
 	}
 }

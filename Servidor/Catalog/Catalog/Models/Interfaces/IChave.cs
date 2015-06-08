@@ -8,9 +8,9 @@ namespace Catalog.Models.Interfaces
 {
 	public interface IChave
 	{
-		public DtoChave criarChave(int isUsuario);
-		public bool validarChave(DtoChave chave);
-		public DtoChave atualizarChave(DtoChave chave);
-		public void destruirChave(int idUsuario);
+		DtoChave criarChave(int isUsuario);
+		bool validarChave(DtoChave chave);
+		DtoChave atualizarChave(DtoChave chave);
+		void destruirChave(int idUsuario);
 	}
 }

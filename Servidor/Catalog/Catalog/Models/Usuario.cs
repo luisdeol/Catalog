@@ -1,4 +1,5 @@
 ﻿using Catalog.DTO;
+using Catalog.Linq;
 using Catalog.Models.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -7,13 +8,13 @@ using System.Web;
 
 namespace Catalog.Models
 {
-	public class Usuario : IUsuario
+	public class Usuario// : IUsuario
 	{
 		public DtoChave cadastrarUsuario(string email, string senha, string nome)
 		{
             Chave mChave = new Chave();
 
-            Linq.DBCatalogDataContext dataContext = new Linq.DBCatalogDataContext();
+            DBCatalogDataContext dataContext = new DBCatalogDataContext();
             var usuario = dataContext.tb_Usuarios.FirstOrDefault(u => u.email == email);
 
             if(usuario == null) //nenhum email encontrado (cadastrar usuario)
@@ -50,7 +51,7 @@ namespace Catalog.Models
 		{
 			Chave mChave = new Chave();
 
-            Linq.DBCatalogDataContext dataContext = new Linq.DBCatalogDataContext();
+            DBCatalogDataContext dataContext = new DBCatalogDataContext();
             var usuarios = dataContext.tb_Usuarios.FirstOrDefault(u => u.email == email && u.senha == senha);
             if (usuarios != null)
             {

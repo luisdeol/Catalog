@@ -8,8 +8,8 @@ namespace Catalog.Models.Interfaces
 {
 	public interface IFabricante
 	{
-		public DtoFabricante cadastrarFabricante(DtoFabricante fabricante);
-		public DtoFabricante abrirFabricante(int idFabricante);
-		public DtoFabricante[] procurarFabricante(string fabricante);
+		DtoFabricante cadastrarFabricante(DtoFabricante fabricante);
+		DtoFabricante abrirFabricante(int idFabricante);
+		DtoFabricante[] procurarFabricante(string fabricante);
 	}
 }
