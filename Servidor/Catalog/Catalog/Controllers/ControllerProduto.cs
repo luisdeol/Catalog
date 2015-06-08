@@ -1,5 +1,6 @@
 ﻿using Catalog.Controllers.Interfaces;
 using Catalog.DTO;
+using Catalog.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,24 @@ namespace Catalog.Controllers
 		public string criarProduto(string dtoChave, string dtoProduto)
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
-			DtoRetorno retorno = new DtoRetorno("ACK");
+			DtoRetorno retorno;
 			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
-			DtoProduto produto = js.Deserialize<DtoProduto>(dtoProduto);
+			Chave mChave = new Chave();
 
-			/*Objeto: */
+			try
+			{
+				mChave.validarChave(chave);
+				DtoProduto produto = js.Deserialize<DtoProduto>(dtoProduto);
+				Produto mProduto = new Produto();
+				produto = mProduto.cadastrarProduto(produto);
+				chave = mChave.atualizarChave(chave);
+				retorno = new DtoRetornoObjeto(chave, produto);
+			}
+			catch (Exception ex)
+			{
+				retorno = new DtoRetornoErro("Chave Invalida");
+			}
+			/*Objeto: DtoProduto com DtoTipoProduto e DtoFabricante*/
 			return js.Serialize(retorno);
 		}
 
