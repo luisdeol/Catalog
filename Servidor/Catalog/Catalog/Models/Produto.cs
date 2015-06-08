@@ -1,12 +1,13 @@
 ﻿using Catalog.DTO;
+using Catalog.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Catalog.Models.Interfaces
+namespace Catalog.Models
 {
-	public interface IProduto
+	public class Produto : IProduto
 	{
 		public DtoProduto cadastrarProduto(DtoProduto produto);
 		public DtoProduto abrirProduto(int idProduto);
