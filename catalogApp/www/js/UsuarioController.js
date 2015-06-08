@@ -56,7 +56,7 @@ var app = angular.module("catalogApp",['ionic'])
 					window.localStorage.idUsuario = retorno.chave.idUsuario;
 					window.localStorage.token = retorno.chave.token;
 					window.localStorage.ultimoAcesso = retorno.chave.ultimoAcesso;
-					$scope.alerta("Sucesso","Logado com sucesso!","principal.html#/tab/home");	
+					$scope.alerta("Sucesso","Logado com sucesso!","principal.html");	
 				}
 				else //erro
 				{
@@ -95,7 +95,7 @@ var app = angular.module("catalogApp",['ionic'])
 							window.localStorage.idUsuario = retorno.chave.idUsuario;
 							window.localStorage.token = retorno.chave.token;
 							window.localStorage.ultimoAcesso = retorno.chave.ultimoAcesso;
-							$scope.alerta("Sucesso","Cadastro realizado","principal.html#/tab/home");			
+							$scope.alerta("Sucesso","Cadastro realizado","principal.html");			
 							return true;
 						}
 						else //erro
@@ -142,18 +142,10 @@ var app = angular.module("catalogApp",['ionic'])
 		else //nao esta logado
 		{
 			if(lugarPagina == "principal.html")
-			window.location = "login.html";
+			window.location = "index.html#/tab/login";
 		}	
 	};
-	
-	//______________ LOGOUT _____________//
-	$scope.logout = function()
-	{
-		window.localStorage.idUsuario = "";
-		window.localStorage.token = "";
-		window.localStorage.ultimoAcesso = "";
-		window.location = "index.html#/tab/home";
-	};
+
 	
 	//____________ ALERTA ____________//
 	$scope.alerta = function(mensagem,subMensagem,destino)
@@ -169,27 +161,4 @@ var app = angular.module("catalogApp",['ionic'])
 		  alertPopup.close();
 		}, 3000);
 	};
-	
-	//_______________ ABRIR MODAL DE CADASTRO __________________//
-	$ionicModal.fromTemplateUrl('templates/modal.html', {
-		scope: $scope
-	}).then(function(modal) {
-		$scope.modal = modal;
-	});
-	
 });
-
-//_______________ GEOLOCALIZAÇÃO ___________________//
-function localizacao()
-{
-	window.localStorage.latitudeUsuario = -5.8123501;
-	window.localStorage.longitudeUsuario = -35.2025723;
-	
-	if (navigator.geolocation)
-		navigator.geolocation.getCurrentPosition(showPosition);
-}
-function showPosition(position) 
-{
-	window.localStorage.latitudeUsuario = position.coords.latitude;
-	window.localStorage.longitudeUsuario = position.coords.longitude;
-}

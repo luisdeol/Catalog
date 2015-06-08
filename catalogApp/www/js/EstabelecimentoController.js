@@ -18,7 +18,7 @@ app.controller("EstabelecimentoController",function($scope,$http,$ionicModal,$io
 		}
 		else //nao esta logado
 		{
-			window.location = "login.html";
+			window.location = "index.html#/tab/login";
 		}	
 	}
 	
