@@ -67,6 +67,7 @@ var app = angular.module("catalogApp",['ionic'])
 		else //campos vazios
 		{
 			$scope.alerta("Ocorreu um erro","Preencha todos os campos!","index.html#/tab/login");
+			return false;
 		}
 	}
 	
@@ -142,7 +143,7 @@ var app = angular.module("catalogApp",['ionic'])
 		else //nao esta logado
 		{
 			if(lugarPagina == "principal.html")
-			window.location = "index.html#/tab/login";
+				window.location = "index.html#/tab/login";
 		}	
 	};
 

@@ -52,7 +52,7 @@ angular.module('ionicApp', ['ionic'])
 		}
 		else //nao esta logado
 		{
-			window.location = "login.html";
+			window.location = "index.html#/tab/login";
 		}	
 	}
   

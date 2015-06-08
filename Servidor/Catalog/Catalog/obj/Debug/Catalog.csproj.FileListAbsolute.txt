@@ -85,6 +85,7 @@ F:\GitHub\Catalog\Servidor\Catalog\Catalog\bin\System.Web.WebPages.Razor.xml
 F:\GitHub\Catalog\Servidor\Catalog\Catalog\obj\Debug\Catalog.csprojResolveAssemblyReference.cache
 F:\GitHub\Catalog\Servidor\Catalog\Catalog\obj\Debug\Catalog.dll
 F:\GitHub\Catalog\Servidor\Catalog\Catalog\obj\Debug\Catalog.pdb
+<<<<<<< HEAD
 C:\Users\Marcos\Desktop\Catalogue\Catalog\Servidor\Catalog\Catalog\obj\Debug\Catalog.csprojResolveAssemblyReference.cache
 C:\Users\Marcos\Desktop\Catalogue\Catalog\Servidor\Catalog\Catalog\obj\Debug\Catalog.dll
 C:\Users\Marcos\Desktop\Catalogue\Catalog\Servidor\Catalog\Catalog\obj\Debug\Catalog.pdb
@@ -111,3 +112,26 @@ C:\Users\Marcos\Desktop\Catalogue\Catalog\Servidor\Catalog\Catalog\bin\System.We
 C:\Users\Marcos\Desktop\Catalogue\Catalog\Servidor\Catalog\Catalog\bin\System.Web.WebPages.xml
 C:\Users\Marcos\Desktop\Catalogue\Catalog\Servidor\Catalog\Catalog\bin\System.Web.WebPages.Deployment.xml
 C:\Users\Marcos\Desktop\Catalogue\Catalog\Servidor\Catalog\Catalog\bin\System.Web.WebPages.Razor.xml
+=======
+C:\Users\jonnatha\Desktop\PDS\Catalog\Servidor\Catalog\Catalog\bin\Catalog.dll.config
+C:\Users\jonnatha\Desktop\PDS\Catalog\Servidor\Catalog\Catalog\bin\Catalog.dll
+C:\Users\jonnatha\Desktop\PDS\Catalog\Servidor\Catalog\Catalog\bin\Catalog.pdb
+C:\Users\jonnatha\Desktop\PDS\Catalog\Servidor\Catalog\Catalog\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\jonnatha\Desktop\PDS\Catalog\Servidor\Catalog\Catalog\bin\Newtonsoft.Json.dll
+C:\Users\jonnatha\Desktop\PDS\Catalog\Servidor\Catalog\Catalog\bin\System.Web.Helpers.dll
+C:\Users\jonnatha\Desktop\PDS\Catalog\Servidor\Catalog\Catalog\bin\System.Web.Mvc.dll
+C:\Users\jonnatha\Desktop\PDS\Catalog\Servidor\Catalog\Catalog\bin\System.Web.Razor.dll
+C:\Users\jonnatha\Desktop\PDS\Catalog\Servidor\Catalog\Catalog\bin\System.Web.WebPages.Deployment.dll
+C:\Users\jonnatha\Desktop\PDS\Catalog\Servidor\Catalog\Catalog\bin\System.Web.WebPages.dll
+C:\Users\jonnatha\Desktop\PDS\Catalog\Servidor\Catalog\Catalog\bin\System.Web.WebPages.Razor.dll
+C:\Users\jonnatha\Desktop\PDS\Catalog\Servidor\Catalog\Catalog\bin\Newtonsoft.Json.xml
+C:\Users\jonnatha\Desktop\PDS\Catalog\Servidor\Catalog\Catalog\bin\System.Web.Helpers.xml
+C:\Users\jonnatha\Desktop\PDS\Catalog\Servidor\Catalog\Catalog\bin\System.Web.Mvc.xml
+C:\Users\jonnatha\Desktop\PDS\Catalog\Servidor\Catalog\Catalog\bin\System.Web.Razor.xml
+C:\Users\jonnatha\Desktop\PDS\Catalog\Servidor\Catalog\Catalog\bin\System.Web.WebPages.xml
+C:\Users\jonnatha\Desktop\PDS\Catalog\Servidor\Catalog\Catalog\bin\System.Web.WebPages.Deployment.xml
+C:\Users\jonnatha\Desktop\PDS\Catalog\Servidor\Catalog\Catalog\bin\System.Web.WebPages.Razor.xml
+C:\Users\jonnatha\Desktop\PDS\Catalog\Servidor\Catalog\Catalog\obj\Debug\Catalog.csprojResolveAssemblyReference.cache
+C:\Users\jonnatha\Desktop\PDS\Catalog\Servidor\Catalog\Catalog\obj\Debug\Catalog.dll
+C:\Users\jonnatha\Desktop\PDS\Catalog\Servidor\Catalog\Catalog\obj\Debug\Catalog.pdb
+>>>>>>> origin/TestesJasmine
