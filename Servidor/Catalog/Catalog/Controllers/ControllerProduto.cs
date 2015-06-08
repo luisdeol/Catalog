@@ -27,13 +27,20 @@ namespace Catalog.Controllers
 				chave = mChave.atualizarChave(chave);
 				retorno = new DtoRetornoObjeto(chave, produto);
 			}
+			catch (DtoExcecao ex)
+			{
+				retorno = ex.ToDto();
+			}
 			catch (Exception ex)
 			{
-				retorno = new DtoRetornoErro("Chave Invalida");
+				retorno = new DtoRetornoErro(ex.Message);
 			}
+
 			/*Objeto: DtoProduto com DtoTipoProduto e DtoFabricante*/
 			return js.Serialize(retorno);
 		}
+
+		/*---------------Não Implementados---------------*/
 
 		public string abrirProduto(string dtoChave, string dtoProduto)
 		{

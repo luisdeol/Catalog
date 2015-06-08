@@ -31,15 +31,23 @@ namespace Catalog.Controllers
                 {
 					DtoChave chave = mUsuario.cadastrarUsuario(usuario);
                     retorno = new DtoRetornoObjeto(chave,"principal.html");
-                }
-                catch
-                {
-                    retorno = new DtoRetornoErro("E-mail já cadastrado!");
-                }
+				}
+				catch (DtoExcecao ex)
+				{
+					retorno = ex.ToDto();
+				}
+				catch (Exception ex)
+				{
+					retorno = new DtoRetornoErro(ex.Message);
+				}
             }
             else
             {
-                return js.Serialize(new DtoRetornoErro("Existem campos inválidos!"));
+				string camposInvalidos = "";
+				if (usuario.nome.Length >= 3) camposInvalidos += "Nome\n";
+	            if (rg.IsMatch(usuario.email)) camposInvalidos += "E-mail\n";
+				if (usuario.senha.Length > 3) camposInvalidos += "Senha";
+				retorno = (new DtoExcecao(DTO.Enum.CampoInvalido, camposInvalidos)).ToDto();
             }
 
             return js.Serialize(retorno);
@@ -75,9 +83,13 @@ namespace Catalog.Controllers
 				DtoChave chave = mUsuario.logar(usuario.email, usuario.senha);
 				retorno = new DtoRetornoObjeto(chave,"principal.html");
 			}
-			catch
+			catch (DtoExcecao ex)
 			{
-				retorno = new DtoRetornoErro("Combinação Email e Senha inválida!");
+				retorno = ex.ToDto();
+			}
+			catch (Exception ex)
+			{
+				retorno = new DtoRetornoErro(ex.Message);
 			}
 
 			return js.Serialize(retorno);

@@ -112,6 +112,8 @@
     <Compile Include="Controllers\Interfaces\IControllerLista.cs" />
     <Compile Include="Controllers\Interfaces\IControllerProduto.cs" />
     <Compile Include="Controllers\Interfaces\IControllerUsuario.cs" />
+    <Compile Include="DTO\DtoExcecao.cs" />
+    <Compile Include="DTO\Enum.cs" />
     <Compile Include="Linq\DBCatalog.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
