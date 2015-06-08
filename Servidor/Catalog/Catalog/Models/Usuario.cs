@@ -33,7 +33,7 @@ namespace Catalog.Models
             }
             else
             {
-                throw new Exception();
+				throw new DtoExcecao(DTO.Enum.CampoInvalido, "Email ja existente");
             }
 		}
 
@@ -60,7 +60,7 @@ namespace Catalog.Models
             }
             else
             {
-                throw new Exception();
+				throw new DtoExcecao(DTO.Enum.CampoInvalido, "Email e Senha não conferem");
             }
 		}
 

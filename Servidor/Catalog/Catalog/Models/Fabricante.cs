@@ -14,7 +14,7 @@ namespace Catalog.Models
 		{
 			fabricante.fabricante = fabricante.fabricante.Trim();
 			if (fabricante.fabricante == "")
-				throw new Exception(); //nome do fabricante inválido
+				throw new DtoExcecao(DTO.Enum.CampoInvalido, "Marca/Fabricante");
 
 			DBCatalogDataContext dataContext = new DBCatalogDataContext();
 			tb_Fabricante fabricanteEmBanco = dataContext.tb_Fabricantes.FirstOrDefault(f => f.fabricante.ToLower() == fabricante.fabricante.ToLower());
@@ -37,7 +37,7 @@ namespace Catalog.Models
 		public DtoFabricante abrirFabricante(int idFabricante)
 		{
 			if (idFabricante < 1)
-				throw new Exception(); //id do fabricante inválido
+				throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado, "Fabricante");
 
 			DtoFabricante fabricante;
 			DBCatalogDataContext dataContext = new DBCatalogDataContext();
@@ -49,9 +49,9 @@ namespace Catalog.Models
 				fabricante.fabricante = fabricanteBanco.fabricante;
 				fabricante.id = fabricanteBanco.id;
 			}
-			catch (Exception ex)
+			catch
 			{
-				throw ex; //fabricante inexistente
+				throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado, "Fabricante");
 			}
 
 			return fabricante;
@@ -65,7 +65,7 @@ namespace Catalog.Models
 			var fabricantesBanco = from f in dataContext.tb_Fabricantes where f.fabricante.Contains(fabricante) select f;
 
 			if (fabricantesBanco.Count() < 1)
-				throw new Exception(); //nenhum fabricante encontrado
+				throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado, "Fabricante");
 
 			DtoFabricante fab;
 			foreach(tb_Fabricante fabBanco in fabricantesBanco)

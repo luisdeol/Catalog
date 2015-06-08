@@ -22,9 +22,13 @@ namespace Catalog.Models
 				produto.fabricante = (new Fabricante()).cadastrarFabricante(produto.fabricante);
 				produto.idFabricante = produto.fabricante.id;
 			}
-			catch (Exception ex)
+			catch (DtoExcecao ex)
 			{
-				throw ex; // tipo inválido;
+				throw ex;
+			}
+			catch
+			{
+				throw new DtoExcecao(DTO.Enum.CampoInvalido, "Tipo do Produto");
 			}
 
 			DBCatalogDataContext dataContext = new DBCatalogDataContext();

@@ -1,4 +1,5 @@
 ﻿using Catalog.DTO;
+using Catalog.Linq;
 using Catalog.Models.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace Catalog.Models
 		{
             Random rnd = new Random();
             DtoChave DtoChave = new DtoChave();
-            Linq.DBCatalogDataContext dataContext = new Linq.DBCatalogDataContext();
+            DBCatalogDataContext dataContext = new DBCatalogDataContext();
             //var chave = (from c in dataContext.tb_Chaves where c.idUsuario == idUsuario select c).FirstOrDefault();
 			var chave = dataContext.tb_Chaves.FirstOrDefault(c => c.idUsuario == idUsuario);
 
@@ -43,6 +44,15 @@ namespace Catalog.Models
 
 		public bool validarChave(DtoChave chave)
 		{
+			DBCatalogDataContext dataContext = new DBCatalogDataContext();
+			try
+			{
+				dataContext.tb_Chaves.First(c => c.idUsuario == chave.idUsuario && c.token == chave.token && c.ultimoAcesso.Equals(chave.ultimoAcesso));
+			}
+			catch
+			{
+				throw new DtoExcecao(DTO.Enum.ChaveInvalida);
+			}
 			return true;
 		}
 

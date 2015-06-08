@@ -13,7 +13,7 @@ namespace Catalog.Models
 		public DtoTipo abrirTipo(int idTipo)
 		{
 			if (idTipo < 1)
-				throw new Exception(); // id inválido;
+				throw new DtoExcecao(DTO.Enum.CampoInvalido, "Tipo do produto");
 
 			DtoTipo tipo;
 			DBCatalogDataContext dataContext = new DBCatalogDataContext();
@@ -24,9 +24,9 @@ namespace Catalog.Models
 				tipo.id = tipoBanco.id;
 				tipo.tipo = tipoBanco.tipo;
 			}
-			catch (Exception ex)
+			catch
 			{
-				throw ex; //tipo não encontrado;
+				throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado, "Tipo do produto");
 			}
 
 			return tipo;
@@ -44,9 +44,9 @@ namespace Catalog.Models
 				dtoTipo.id = tipoBanco.id;
 				dtoTipo.tipo = tipoBanco.tipo;
 			}
-			catch (Exception ex)
+			catch
 			{
-				throw ex; //tipo não encontrado;
+				throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado, "Tipo do produto");
 			}
 
 			return dtoTipo;
