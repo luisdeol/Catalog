@@ -64,6 +64,9 @@ namespace Catalog.Models
 			DBCatalogDataContext dataContext = new DBCatalogDataContext();
 			var fabricantesBanco = from f in dataContext.tb_Fabricantes where f.fabricante.Contains(fabricante) select f;
 
+			if (fabricantesBanco.Count() < 1)
+				throw new Exception(); //nenhum fabricante encontrado
+
 			DtoFabricante fab;
 			foreach(tb_Fabricante fabBanco in fabricantesBanco)
 			{
