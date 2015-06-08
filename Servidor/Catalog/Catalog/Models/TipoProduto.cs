@@ -35,9 +35,6 @@ namespace Catalog.Models
 		public DtoTipo abrirTipo(string tipo)
 		{
 			tipo = tipo.Trim();
-			if (tipo == "")
-				throw new Exception(); // id inválido;
-
 			DtoTipo dtoTipo;
 			DBCatalogDataContext dataContext = new DBCatalogDataContext();
 			try
