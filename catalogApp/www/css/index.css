@@ -30,6 +30,12 @@ img.face {
   margin-left: 42%;
 }
 
+p.svg {
+  position: absolute;
+  top: 30px;
+  left: 60px;
+}
+
 /*-- ARQUIVO CADASTRAR.HTML --*/
 
 .erro-email{

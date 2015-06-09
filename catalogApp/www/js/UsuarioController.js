@@ -56,17 +56,17 @@ var app = angular.module("catalogApp",['ionic'])
 					window.localStorage.idUsuario = retorno.chave.idUsuario;
 					window.localStorage.token = retorno.chave.token;
 					window.localStorage.ultimoAcesso = retorno.chave.ultimoAcesso;
-					$scope.alerta("Sucesso","Logado com sucesso!","principal.html");	
+					$scope.sucesso("Login","Logando...","principal.html");	
 				}
 				else //erro
 				{
-					$scope.alerta("Ocorreu um erro",retorno.mensagem,"index.html#/tab/login");
+					$scope.alerta("Ocorreu um erro",retorno.mensagem);
 				}
 			});
 		}
 		else //campos vazios
 		{
-			$scope.alerta("Ocorreu um erro","Preencha todos os campos!","index.html#/tab/login");
+			$scope.alerta("Ocorreu um erro","Preencha todos os campos!");
 			return false;
 		}
 	}
@@ -96,12 +96,12 @@ var app = angular.module("catalogApp",['ionic'])
 							window.localStorage.idUsuario = retorno.chave.idUsuario;
 							window.localStorage.token = retorno.chave.token;
 							window.localStorage.ultimoAcesso = retorno.chave.ultimoAcesso;
-							$scope.alerta("Sucesso","Cadastro realizado","principal.html");			
+							$scope.sucesso("Cadastro","Cadastrando...","principal.html");			
 							return true;
 						}
 						else //erro
 						{
-							$scope.alerta("Ocorreu um erro",retorno.mensagem,"index.html#/tab/cadastro");
+							$scope.alerta("Ocorreu um erro",retorno.mensagem);
 							return false;
 						}
 					});
@@ -115,13 +115,13 @@ var app = angular.module("catalogApp",['ionic'])
 			}
 			else //senhas nao conferem
 			{
-				$scope.alerta("Ocorreu um erro","Senhas não conferem!","index.html#/tab/cadastro");
+				$scope.alerta("Ocorreu um erro","Senhas não conferem!");
 				return false;
 			}	
 		}
 		else
 		{
-			$scope.alerta("Ocorreu um erro","Preencha todos os campos!","index.html#/tab/cadastro");
+			$scope.alerta("Ocorreu um erro","Preencha todos os campos!");
 			return false;
 		}
 	}	
@@ -149,11 +149,26 @@ var app = angular.module("catalogApp",['ionic'])
 
 	
 	//____________ ALERTA ____________//
-	$scope.alerta = function(mensagem,subMensagem,destino)
+	$scope.alerta = function(mensagem,subMensagem)
 	{
 		var alertPopup = $ionicPopup.alert({
 		title: mensagem,
 		template: subMensagem
+		});
+		
+		 $timeout(function() 
+		{
+		  alertPopup.close();
+		}, 3000);
+	};
+	
+	//____________ ALERTA ____________//
+	$scope.sucesso = function(mensagem,subMensagem,destino)
+	{
+		var alertPopup = $ionicPopup.alert({
+			 title: mensagem,
+			 subTitle: subMensagem,
+			 template: '<p class="svg"><ion-spinner icon="android"></ion-spinner></p>'
 		});
 		
 		 $timeout(function() 
