@@ -1,39 +1,28 @@
 var app = angular.module("catalogApp",['ionic'])
 .config(function($stateProvider, $urlRouterProvider) {
-
-  $stateProvider
-    .state('tabs', {
-      url: "/tab",
-      abstract: true,
-      templateUrl: "templates/tabs.html"
-    })
-    .state('tabs.home', {
-      url: "/home",
-      views: {
-        'home-tab': {
-          templateUrl: "templates/home.html",
-          controller: 'UsuarioController'
-        }
-      }
-    })
-    .state('tabs.login', {
-      url: "/login",
-      views: {
-        'home-tab': {
-          templateUrl: "templates/login.html"
-        }
-      }
-    })
-    .state('tabs.cadastro', {
-      url: "/cadastro",
-      views: {
-        'home-tab': {
-          templateUrl: "templates/cadastro.html"
-        }
-      }
+	
+    $stateProvider
+		.state('home', {
+			url: "/home",
+			controller: "UsuarioController",
+			templateUrl: "home.html"
     });
-   $urlRouterProvider.otherwise("/tab/home");
-
+	
+	$stateProvider
+		.state('logar', {
+			url: "/logar",
+			controller: "UsuarioController",
+			templateUrl: "logar.html"
+    });
+	
+	$stateProvider
+		.state('cadastrar', {
+			url: "/cadastrar",
+			controller: "UsuarioController",
+			templateUrl: "cadastrar.html"
+    });
+	
+	$urlRouterProvider.otherwise('/home')
 })
 
 .controller("UsuarioController",function($scope,$ionicModal,$http,$ionicPopup,$timeout){

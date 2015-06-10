@@ -21,30 +21,18 @@
              
     <ion-nav-view></ion-nav-view>
 
-
-    <script id="templates/tabs.html" type="text/ng-template">
-      <ion-tabs class="tabs-icon-top tabs-positive">
-
-        <ion-tab title="Catalog" icon="ion-ios-checkmark-outline" href="#/tab/sobre">
-          <ion-nav-view name="home-tab"></ion-nav-view>
-        </ion-tab>
-
-      </ion-tabs>
-    </script>
-
-	<!-- ________________________________________ HOME _________________________________________ -->
-    <script id="templates/home.html" type="text/ng-template">
+    <script id="home.html" type="text/ng-template">
       <ion-view view-title="CATALOG">
         <ion-content class="padding">
           <p>
 			<!-- conteudo -->		
 			<img class="logo-index" src="img/CATALOG.png" width="250px" height="130px">
 			
-			<button class="button button-block button-positive" onclick="location.href='#/tab/login'">
+			<button class="button button-block button-positive" onclick="location.href='#logar'">
 			  Logar
 			</button>
 			
-			<button class="button button-block button-energized" onclick="location.href='#/tab/cadastro'">
+			<button class="button button-block button-energized" onclick="location.href='#/cadastrar'">
 			  Cadastrar-se
 			</button>
           </p>
@@ -52,86 +40,6 @@
         </ion-content>
       </ion-view>
     </script>
-
-	<!-- ________________________________________ LOGAR _________________________________________ -->
-    <script id="templates/login.html" type="text/ng-template">
-      <ion-view view-title="Entrar">
-        <ion-content class="padding">
-			
-			<!-- conteudo -->
-			<img class="icone-login" src="img/iconeCatalog.png" width="80px" height="80px">
-		
-			<!--angular-->
-			<div ng-controller="UsuarioController" data-ng-init="verificarLogin('login.html')">
-
-				<div class="list">
-				  <label class="item item-input logar">
-					<span class="input-label">Email</span>
-					<input type="email" id="email" ng-model="usuario.email">
-				  </label>
-				  <label class="item item-input logar">
-					<span class="input-label">Senha</span>
-					<input type="password" id="senha" ng-model="usuario.senha">
-				  </label>
-				</div>
-			
-				<button class="button button-block button-positive" ng-click="logar(usuario)">
-				  Logar
-				</button>
-				
-				<button class="button button-block button-energized" onclick="location.href='principal.html'">
-				  Esqueceu a senha?
-				</button>
-				
-			</div>	<!--angular-->	
-		
-			<img class="face" src="img/bt_facebook.png" width="30px" height="30px">
-			<img class="gmail "src="img/google-plus-icon.png" width="30px" height="30px">
-        </ion-content>
-      </ion-view>
-    </script>
-
 	
-	
-	<!-- ________________________________________ CADASTRAR _________________________________________ -->
-    <script id="templates/cadastro.html" type="text/ng-template">
-      <ion-view view-title="Cadastre-se">
-        <ion-content class="padding">
-			<!-- conteudo -->
-			<img class="icone-login" src="img/iconeCatalog.png" width="80px" height="80px">
-			<div ng-controller="UsuarioController" data-ng-init="verificarLogin('cadastro.html')">	<!--angular-->
-			
-				<div class="list">
-					 <label class="item item-input item-stacked-label cadastro">
-						<span class="input-label">Usuario</span>
-						<input type="text" placeholder="Catalog" id="usuario" ng-model="usuario.nome">
-					 </label>
-					 
-					<label class="item item-input item-stacked-label cadastro">
-						<span class="input-label">Email</span> 
-						<input  ng-class="{'erro-email': erro}" type="email" placeholder="catalog@gmail.com" id="email" ng-model="usuario.email">
-					</label>
-					
-					<label class="item item-input item-stacked-label cadastro">
-						<span class="input-label">Senha</span>
-						<input type="password" placeholder="senha" id="senha" ng-model="usuario.senha">
-					</label>	
-					
-					<label class="item item-input item-stacked-label cadastro">
-						<span class="input-label">Confirmar Senha</span>
-						<input type="password" placeholder="Confirmar senha" id="confirmarSenha" ng-model="usuario.confirmarSenha">
-					</label>	
-				</div>
-				
-				<button class="button button-block button-positive" ng-click="cadastrar(usuario)">
-				  Cadastrar
-				</button>
-				
-			</div>
-         
-        </ion-content>
-      </ion-view>
-    </script>
-
   </body>
 </html>
