@@ -1,13 +1,10 @@
 angular.module('catalogApp', ['ionic'])
 .controller('ListaController', function($scope,$ionicModal,$http,$ionicPopup,$timeout) {
   
+	//chave e listas
 	var chave = "{idUsuario:'"+window.localStorage.idUsuario+"',token:'"+window.localStorage.token+"',ultimoAcesso:'"+window.localStorage.ultimoAcesso+"'}";
 	$scope.listas = [];
-  
-	$scope.data = {
-		showDelete: false
-	};
-  
+
 	//________________ EDITAR LISTAS _____________//
 	$scope.editarLista = function(lista,indiceLista) {
 		for(var i=0; i< $scope.listas.length; i++)
@@ -40,7 +37,25 @@ angular.module('catalogApp', ['ionic'])
     //___________________ DELETAR LISTA ______________//
 	$scope.deletarLista = function(lista) 
 	{
-		$scope.listas.splice($scope.listas.indexOf(lista), 1);
+		
+		var confirmPopup = $ionicPopup.confirm
+		({
+			title: 'Deletar lista',
+			template: "Você tem certeza que quer deletar "+lista.titulo+" ?"
+		});
+		confirmPopup.then(function(res) {
+		   if(res)
+		   {
+				$scope.listas.splice($scope.listas.indexOf(lista), 1);
+				var dtoLista = "{idLista:'"+lista.idLista+"',idUsuario:'"+lista.idUsuario+"',titulo:'"+lista.titulo+"'}";
+				
+				$http.post('http://localhost:51786/Webservices/WsLista.asmx/excluirLista', {dtoChave:chave,dtoLista:dtoLista}).
+				success(function(data, status, headers, config)
+				{
+					var retorno = angular.fromJson(data.d);	
+				});
+		   } 
+		});
 	};
   	
 	//________________ PESQUISAR LISTAS _____________//
@@ -65,9 +80,16 @@ angular.module('catalogApp', ['ionic'])
 	$scope.criarLista = function(lista)
 	{
 		if(lista != undefined){
-			$scope.listas.push({ nome: lista.nome});
+			$scope.listas.push({ titulo: lista.nome});
 			$scope.modal.hide();	
-			$scope.alerta("Lista","Lista criada com sucesso!");
+			var dtoLista = "{idUsuario:'"+window.localStorage.idUsuario+"',titulo:'"+lista.nome+"'}";
+			
+			$http.post('http://localhost:51786/Webservices/WsLista.asmx/criarLista', {dtoChave:chave,dtoLista:dtoLista}).
+			success(function(data, status, headers, config)
+			{
+				var retorno = angular.fromJson(data.d);	
+				$scope.alerta("Lista","Lista criada com sucesso!");
+			});
 		}
 		else
 		{
