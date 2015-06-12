@@ -1,39 +1,23 @@
 var app = angular.module("catalogApp",['ionic'])
 .config(function($stateProvider, $urlRouterProvider) {
-
-  $stateProvider
-    .state('tabs', {
-      url: "/tab",
-      abstract: true,
-      templateUrl: "templates/tabs.html"
-    })
-    .state('tabs.home', {
-      url: "/home",
-      views: {
-        'home-tab': {
-          templateUrl: "templates/home.html",
-          controller: 'UsuarioController'
-        }
-      }
-    })
-    .state('tabs.login', {
-      url: "/login",
-      views: {
-        'home-tab': {
-          templateUrl: "templates/login.html"
-        }
-      }
-    })
-    .state('tabs.cadastro', {
-      url: "/cadastro",
-      views: {
-        'home-tab': {
-          templateUrl: "templates/cadastro.html"
-        }
-      }
-    });
-   $urlRouterProvider.otherwise("/tab/home");
-
+	
+     $stateProvider
+            .state('home', {
+                url: '/home',
+                templateUrl: 'index.html',
+                controller: 'UsuarioController'
+            })
+            .state('logar', {
+                url: '/logar',
+                templateUrl: 'logar.html',
+                controller: 'UsuarioController'
+            })
+			.state('cadastrar', {
+                url: '/cadastrar',
+                templateUrl: 'cadastrar.html',
+                controller: 'UsuarioController'
+            })
+        $urlRouterProvider.otherwise('/home');
 })
 
 .controller("UsuarioController",function($scope,$ionicModal,$http,$ionicPopup,$timeout){
@@ -56,17 +40,17 @@ var app = angular.module("catalogApp",['ionic'])
 					window.localStorage.idUsuario = retorno.chave.idUsuario;
 					window.localStorage.token = retorno.chave.token;
 					window.localStorage.ultimoAcesso = retorno.chave.ultimoAcesso;
-					$scope.sucesso("Login","Logando...","principal.html");	
+					$scope.alerta("Sucesso","Logado com sucesso!","principal.html");	
 				}
 				else //erro
 				{
-					$scope.alerta("Ocorreu um erro",retorno.mensagem);
+					$scope.alerta("Ocorreu um erro",retorno.mensagem,"index.html#/tab/login");
 				}
 			});
 		}
 		else //campos vazios
 		{
-			$scope.alerta("Ocorreu um erro","Preencha todos os campos!");
+			$scope.alerta("Ocorreu um erro","Preencha todos os campos!","index.html#/tab/login");
 			return false;
 		}
 	}
@@ -96,12 +80,12 @@ var app = angular.module("catalogApp",['ionic'])
 							window.localStorage.idUsuario = retorno.chave.idUsuario;
 							window.localStorage.token = retorno.chave.token;
 							window.localStorage.ultimoAcesso = retorno.chave.ultimoAcesso;
-							$scope.sucesso("Cadastro","Cadastrando...","principal.html");			
+							$scope.alerta("Sucesso","Cadastro realizado","principal.html");			
 							return true;
 						}
 						else //erro
 						{
-							$scope.alerta("Ocorreu um erro",retorno.mensagem);
+							$scope.alerta("Ocorreu um erro",retorno.mensagem,"index.html#/tab/cadastro");
 							return false;
 						}
 					});
@@ -115,13 +99,13 @@ var app = angular.module("catalogApp",['ionic'])
 			}
 			else //senhas nao conferem
 			{
-				$scope.alerta("Ocorreu um erro","Senhas não conferem!");
+				$scope.alerta("Ocorreu um erro","Senhas não conferem!","index.html#/tab/cadastro");
 				return false;
 			}	
 		}
 		else
 		{
-			$scope.alerta("Ocorreu um erro","Preencha todos os campos!");
+			$scope.alerta("Ocorreu um erro","Preencha todos os campos!","index.html#/tab/cadastro");
 			return false;
 		}
 	}	
@@ -149,26 +133,11 @@ var app = angular.module("catalogApp",['ionic'])
 
 	
 	//____________ ALERTA ____________//
-	$scope.alerta = function(mensagem,subMensagem)
+	$scope.alerta = function(mensagem,subMensagem,destino)
 	{
 		var alertPopup = $ionicPopup.alert({
 		title: mensagem,
 		template: subMensagem
-		});
-		
-		 $timeout(function() 
-		{
-		  alertPopup.close();
-		}, 3000);
-	};
-	
-	//____________ ALERTA ____________//
-	$scope.sucesso = function(mensagem,subMensagem,destino)
-	{
-		var alertPopup = $ionicPopup.alert({
-			 title: mensagem,
-			 subTitle: subMensagem,
-			 template: '<p class="svg"><ion-spinner icon="android"></ion-spinner></p>'
 		});
 		
 		 $timeout(function() 

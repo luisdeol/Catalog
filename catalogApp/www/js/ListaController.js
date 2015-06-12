@@ -1,4 +1,4 @@
-angular.module('ionicApp', ['ionic'])
+angular.module('catalogApp', ['ionic'])
 
 .controller('ListaController', function($scope,$ionicModal,$http,$ionicPopup,$timeout) {
   
@@ -6,8 +6,9 @@ angular.module('ionicApp', ['ionic'])
     showDelete: false
   };
   
-  $scope.editarLista = function(lista) {
-    $scope.listas[0].nome = lista.nome;
+  $scope.editarLista = function(lista,indiceLista) {
+    $scope.listas[indiceLista].titulo = lista.nome;
+	console.log($scope.listas);
   };
   
   $scope.share = function(lista) {
@@ -25,7 +26,30 @@ angular.module('ionicApp', ['ionic'])
   };
   
   
-	$scope.listas = [{id:"2",nome:"Semanal"},{id:"3",nome:"Mensal"},{id:"4",nome:"Anual"}];
+	$scope.listas = [];
+	
+	//________________ PESQUISAR LISTAS _____________//
+	$scope.pesquisarLista = function()
+	{
+		var idUsuario = window.localStorage.idUsuario;
+		var token = window.localStorage.token;
+		var ultimoAcesso = window.localStorage.ultimoAcesso;
+		var chave = "{idUsuario:'"+idUsuario+"',token:'"+token+"',ultimoAcesso:'"+ultimoAcesso+"'}";
+		
+		$http.post('http://localhost:51786/Webservices/WsLista.asmx/pesquisarLista', {dtoChave:chave,parametros:""}).
+			  success(function(data, status, headers, config)
+			{
+				var retorno = angular.fromJson(data.d);	
+				for(var l=0; retorno.objeto.length > l; l++)
+				{
+					var idLista = retorno.objeto[l].id;
+					var idUsuario = retorno.objeto[l].idUsuario;
+					var titulo = retorno.objeto[l].titulo;
+					
+					$scope.listas[l] = {idLista:idLista,idUsuario:idUsuario,titulo:titulo,indice:l};
+				}
+			});
+	}
 
 	//________________ CRIAR LISTA _________________//
 	$scope.criarLista = function(lista)
@@ -53,6 +77,7 @@ angular.module('ionicApp', ['ionic'])
 			(token != undefined && token != "") && 
 			(ultimoAcesso != undefined && ultimoAcesso != "")) //ta logado
 		{
+			$scope.pesquisarLista(); //chama as listas
 			if(lugarPagina != "listas.html")
 				window.location = lugarPagina;	
 		}
@@ -70,8 +95,9 @@ angular.module('ionicApp', ['ionic'])
 	});
 	
 	//_______________ MODAL EDITAR LISTA __________________//
-	$scope.modalEditarLista = function() {
-	   $scope.lista = {}
+	$scope.modalEditarLista = function(indiceLista) {
+	   $scope.lista = {};
+	   
 
 	   var myPopup = $ionicPopup.show
 	   ({
@@ -89,7 +115,7 @@ angular.module('ionicApp', ['ionic'])
 				 e.preventDefault();
 			   } else {
 				 myPopup.close;  
-				 $scope.editarLista($scope.lista);
+				 $scope.editarLista($scope.lista,indiceLista);
 			   }
 			 }
 		   },

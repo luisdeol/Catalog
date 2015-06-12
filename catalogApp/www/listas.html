@@ -1,4 +1,4 @@
-<html ng-app="ionicApp">
+<html ng-app="catalogApp">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Catalog</title>
@@ -35,15 +35,15 @@
         <ion-item ng-repeat="lista in listas" 
                   lista="lista"
                   href="produtos-lista.html" class="item-remove-animate">
-          {{ lista.nome}}
-          <ion-delete-button class="ion-minus-circled" 
+          {{ lista.titulo}}
+			<ion-delete-button class="ion-minus-circled" 
                              ng-click="deletarLista(lista)">
-          </ion-delete-button>
-          <ion-option-button class="button-assertive"
-                             ng-click="modalEditarLista()">
-            Editar
-          </ion-option-button>
-          <ion-reorder-button class="ion-navicon" on-reorder="moverLista(lista, $fromIndex, $toIndex)"></ion-reorder-button>
+			</ion-delete-button>
+			<ion-option-button class="button-assertive"
+                             ng-click="modalEditarLista( {{$index}} )">
+				Editar
+			</ion-option-button>
+			<ion-reorder-button class="ion-navicon" on-reorder="moverLista(lista, $fromIndex, $toIndex)"></ion-reorder-button>
         </ion-item>
 
       </ion-list>

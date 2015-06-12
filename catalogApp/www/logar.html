@@ -1,7 +1,7 @@
 <ion-view view-title="Entrar">
     <ion-content class="padding">		
 		<img class="icone-login" src="img/iconeCatalog.png" width="80px" height="80px">
-		<div data-ng-init="verificarLogin('login.html')">
+		<div ng-controller="UsuarioController" data-ng-init="verificarLogin('login.html')">
 
 			<div class="list">
 			  <label class="item item-input logar">

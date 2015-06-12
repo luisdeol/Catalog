@@ -2,7 +2,7 @@ var app = angular.module("catalogApp",['ionic']);
 app.controller("EstabelecimentoController",function($scope,$http,$ionicModal,$ionicLoading, $compile){
   
 	//___________ VERIFICAR LOGIN _____________//
-	$scope.verificarLogin = function(lugarPagina)
+	/*$scope.verificarLogin = function(lugarPagina)
 	{
 		var idUsuario = window.localStorage.idUsuario;
 		var token = window.localStorage.token;
@@ -20,7 +20,7 @@ app.controller("EstabelecimentoController",function($scope,$http,$ionicModal,$io
 		{
 			window.location = "index.html#/tab/login";
 		}	
-	}
+	}*/
 	
 	//_______________ ABRIR MODAL DE CADASTRO __________________//
 	 $ionicModal.fromTemplateUrl('templates/modal.html', {
