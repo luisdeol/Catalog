@@ -1,4 +1,4 @@
-<html ng-app="ionicApp">
+<html ng-app="catalogApp">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Catalog</title>
@@ -31,27 +31,51 @@
       
       <ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
 
-        <ion-item ng-repeat="item in items" 
-                  item="item"
+		<div class="sem-lista-cadastrada" ng-show="listas.length == 0">Nenhuma Lista Cadastrada</div>   
+        <ion-item ng-repeat="lista in listas" 
+                  lista="lista"
                   href="produtos-lista.html" class="item-remove-animate">
-          {{ item.nome }}
-          <ion-delete-button class="ion-minus-circled" 
-                             ng-click="onItemDelete(item)">
-          </ion-delete-button>
-          <ion-option-button class="button-assertive"
-                             ng-click="edit(item)">
-            Editar
-          </ion-option-button>
-          <ion-reorder-button class="ion-navicon" on-reorder="moveItem(item, $fromIndex, $toIndex)"></ion-reorder-button>
+          {{ lista.titulo}}
+			<ion-delete-button class="ion-minus-circled" 
+                             ng-click="deletarLista(lista)">
+			</ion-delete-button>
+			<ion-option-button class="button-assertive"
+                             ng-click="modalEditarLista( {{$index}} )">
+				Editar
+			</ion-option-button>
+			<ion-reorder-button class="ion-navicon" on-reorder="moverLista(lista, $fromIndex, $toIndex)"></ion-reorder-button>
         </ion-item>
 
       </ion-list>
 
     </ion-content>
 	
-	<div class="add-lista">
+	<div class="add-lista" ng-click="modal.show()">
 		<img src="img/add.png" height="0px" width="0px" id="imgAdd">
 	</div>
+	
+	<!-- modal para adicionar lista -->
+	<script id="templates/modal.html" type="text/ng-template">
+		 <ion-modal-view>
+		  
+			<ion-header-bar class="bar bar-header bar-positive">
+			   <h1 class="title">Criar Lista</h1>
+			   <button class="button button-clear button-primary" ng-click="modal.hide()">Cancelar</button>
+			</ion-header-bar>
+			
+			
+			<ion-content class="padding">
+			<img class="icon-lista-atualizar" src="img/list.png" width="20%" height="100px">
+				<div class="list-lista-atualizar">
+					<label class="item item-input">
+					  <span class="input-label">Nome Da Lista</span>
+					  <input ng-model="lista.nome" type="text">
+					</label>
+					<button class="button button-full button-positive" ng-click="criarLista(lista)">Criar</button>
+				</div>
+			</ion-content>
+		 </ion-modal-view>
+	</script>
 	
 	<!-- fotter -->
 	<div class="tabs-striped tabs-color-assertive">
