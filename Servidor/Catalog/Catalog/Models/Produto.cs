@@ -79,7 +79,31 @@ namespace Catalog.Models
 
 		public DtoProduto abrirProduto(int idProduto)
 		{
-			return new DtoProduto();
+			if (idProduto < 1)
+				throw new DtoExcecao(DTO.Enum.CampoInvalido, "id do produto");
+
+			DtoProduto produto;
+			try
+			{
+				DBCatalogDataContext dataContext = new DBCatalogDataContext();
+				tb_Produto produtoBanco = dataContext.tb_Produtos.First(p => p.id == idProduto);
+				produto = new DtoProduto();
+				produto.id = produtoBanco.id;
+				produto.nome = produtoBanco.nome;
+				produto.codigoDeBarras = produtoBanco.codigoDeBarras;
+				produto.tipo = new DtoTipo();
+				produto.tipo.id = produto.idTipo = Convert.ToInt32(produtoBanco.idTipo);
+				produto.tipo.tipo = produtoBanco.tb_Tipo.tipo;
+				produto.fabricante = new DtoFabricante();
+				produto.idFabricante = produto.fabricante.id = Convert.ToInt32(produtoBanco.idFabricante);
+				produto.fabricante.fabricante = produtoBanco.tb_Fabricante.fabricante;
+			}
+			catch (Exception ex)
+			{
+				throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado, "produto com id " + idProduto);
+			}
+
+			return produto;
 		}
 
 		public DtoProduto[] pesquisarProduto(string[] parametros)

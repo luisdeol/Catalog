@@ -47,9 +47,27 @@ namespace Catalog.Controllers
 			JavaScriptSerializer js = new JavaScriptSerializer();
 			DtoRetorno retorno = new DtoRetorno("ACK");
 			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
-			DtoProduto produto = js.Deserialize<DtoProduto>(dtoProduto);
+			Chave mChave = new Chave();
 
-			/*Objeto: */
+			try
+			{
+				mChave.validarChave(chave);
+				DtoProduto produto = js.Deserialize<DtoProduto>(dtoProduto);
+				Produto mProduto = new Produto();
+				produto = mProduto.abrirProduto(produto.id);
+				chave = mChave.atualizarChave(chave);
+				retorno = new DtoRetornoObjeto(chave, produto);
+			}
+			catch (DtoExcecao ex)
+			{
+				retorno = ex.ToDto();
+			}
+			catch (Exception ex)
+			{
+				retorno = new DtoRetornoErro(ex.Message);
+			}
+
+			/*Objeto: DtoProduto com DtoTipoProduto e DtoFabricante*/
 			return js.Serialize(retorno);
 		}
 
