@@ -28,6 +28,9 @@ namespace Catalog.DTO
 				case Enum.ChaveInvalida:
 					mensagem = "É nescessário realizar login para utilizar o aplicativo!";
 					break;
+				case Enum.CriteriosDeBuscaInsuficientes:
+					mensagem = "É nescessário que pelo menos um dos campos de busca contenha pelo menos 4 caracteres"
+					break;
 			}
 		}
 

@@ -106,9 +106,63 @@ namespace Catalog.Models
 			return produto;
 		}
 
-		public DtoProduto[] pesquisarProduto(string[] parametros)
+		public DtoProduto[] pesquisarProduto(DtoProduto parametros)
 		{
-			return new DtoProduto[5];
+			List<DtoProduto> produtos = new List<DtoProduto>();
+
+			if (parametros.fabricante == null)
+				parametros.fabricante = new DtoFabricante();
+			if (parametros.tipo == null)
+				parametros.tipo = new DtoTipo();
+
+			DBCatalogDataContext dataContext = new DBCatalogDataContext();
+			DtoProduto produto;
+			if (parametros.codigoDeBarras != "")
+			{
+				var produtosBanco = from p in dataContext.tb_Produtos where p.codigoDeBarras == parametros.codigoDeBarras select p;
+
+				foreach (tb_Produto produtoBanco in produtosBanco)
+				{
+					produto = new DtoProduto();
+					produto.id = produtoBanco.id;
+					produto.nome = produtoBanco.nome;
+					produto.codigoDeBarras = produtoBanco.codigoDeBarras;
+					produto.tipo = new DtoTipo();
+					produto.tipo.id = produto.idTipo = Convert.ToInt32(produtoBanco.idTipo);
+					produto.tipo.tipo = produtoBanco.tb_Tipo.tipo;
+					produto.fabricante = new DtoFabricante();
+					produto.idFabricante = produto.fabricante.id = Convert.ToInt32(produtoBanco.idFabricante);
+					produto.fabricante.fabricante = produtoBanco.tb_Fabricante.fabricante;
+					produtos.Add(produto);
+				}
+			}
+			else
+			{
+				var produtosBanco = from p in dataContext.tb_Produtos where
+										p.nome.StartsWith(parametros.nome) &&
+										p.tb_Fabricante.fabricante.StartsWith(parametros.fabricante.fabricante) &&
+										p.tb_Tipo.tipo.StartsWith(parametros.tipo.tipo)
+									orderby
+										p.nome
+									select p;
+
+				foreach (tb_Produto produtoBanco in produtosBanco)
+				{
+					produto = new DtoProduto();
+					produto.id = produtoBanco.id;
+					produto.nome = produtoBanco.nome;
+					produto.codigoDeBarras = produtoBanco.codigoDeBarras;
+					produto.tipo = new DtoTipo();
+					produto.tipo.id = produto.idTipo = Convert.ToInt32(produtoBanco.idTipo);
+					produto.tipo.tipo = produtoBanco.tb_Tipo.tipo;
+					produto.fabricante = new DtoFabricante();
+					produto.idFabricante = produto.fabricante.id = Convert.ToInt32(produtoBanco.idFabricante);
+					produto.fabricante.fabricante = produtoBanco.tb_Fabricante.fabricante;
+					produtos.Add(produto);
+				}
+			}
+
+			return produtos.ToArray();
 		}
 
 		public DtoItem buscarItem(int idProduto, int idEstabelecimento)

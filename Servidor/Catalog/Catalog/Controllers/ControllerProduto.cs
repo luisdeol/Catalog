@@ -74,10 +74,39 @@ namespace Catalog.Controllers
 		public string pesquisarProduto(string dtoChave, string parametros)
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
-			DtoRetorno retorno = new DtoRetorno("ACK");
-			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
+			DtoRetorno retorno;
+			DtoProduto param = js.Deserialize<DtoProduto>(parametros);
 
-			/*Objeto: */
+			if (param.nome.Length < 3 &&
+				param.tipoCodigoDeBarras.Length < 3 &&
+				(param.tipo == null || param.tipo.tipo.Length < 3) &&
+				(param.fabricante == null || param.fabricante.fabricante.Length < 3))
+			{
+				retorno = (new DtoExcecao(DTO.Enum.CriteriosDeBuscaInsuficientes)).ToDto();
+				return js.Serialize(retorno);
+			}
+
+			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
+			Chave mChave = new Chave();
+
+			try
+			{
+				mChave.validarChave(chave);
+				Produto mProduto = new Produto();
+				DtoProduto[] produtos = mProduto.pesquisarProduto(param);
+				chave = mChave.atualizarChave(chave);
+				retorno = new DtoRetornoObjeto(chave, produtos);
+			}
+			catch (DtoExcecao ex)
+			{
+				retorno = ex.ToDto();
+			}
+			catch (Exception ex)
+			{
+				retorno = new DtoRetornoErro(ex.Message);
+			}
+
+			/*Objeto: Array de DtoProdutos com DtoTipoProduto e DtoFabricante*/
 			return js.Serialize(retorno);
 		}
 

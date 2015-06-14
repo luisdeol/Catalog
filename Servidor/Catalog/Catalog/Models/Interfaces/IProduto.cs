@@ -10,7 +10,7 @@ namespace Catalog.Models.Interfaces
 	{
 		DtoProduto cadastrarProduto(DtoProduto produto);
 		DtoProduto abrirProduto(int idProduto);
-		DtoProduto[] pesquisarProduto(string[] parametros);
+		DtoProduto[] pesquisarProduto(DtoProduto parametros);
 		DtoItem buscarItem(int idProduto, int idEstabelecimento);
 		DtoItem[] buscarItem(int idProduto);
 		DtoItem itemMaisBarato(int idProduto);

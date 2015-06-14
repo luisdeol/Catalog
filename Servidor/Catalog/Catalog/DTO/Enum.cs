@@ -10,6 +10,7 @@ namespace Catalog.DTO
 		ChaveInvalida = 100,
 		ErroCriacao = 102,
 		ObjetoNaoEncontrado = 103,
-		CampoInvalido = 104
+		CampoInvalido = 104,
+		CriteriosDeBuscaInsuficientes = 105
 	}
 }
