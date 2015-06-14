@@ -15,13 +15,20 @@ namespace Catalog.Controllers
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
 			DtoRetorno retorno;
+			DtoProduto produto = js.Deserialize<DtoProduto>(dtoProduto);
+
+			if (produto.nome.Length < 3 || produto.idTipo < 1)
+			{
+				retorno = (new DtoExcecao(DTO.Enum.CriteriosDeCadastroInsuficientes, "Nome do produto e Tipo do Produto")).ToDto();
+				return js.Serialize(retorno);
+			}
+
 			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
 			Chave mChave = new Chave();
 
 			try
 			{
 				mChave.validarChave(chave);
-				DtoProduto produto = js.Deserialize<DtoProduto>(dtoProduto);
 				Produto mProduto = new Produto();
 				produto = mProduto.cadastrarProduto(produto);
 				chave = mChave.atualizarChave(chave);

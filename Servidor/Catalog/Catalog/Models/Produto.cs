@@ -14,7 +14,7 @@ namespace Catalog.Models
 		{
 			produto.nome = produto.nome.Trim();
 			if (produto.nome == "")
-				throw new Exception(); //nome do produto inválido
+				throw new DtoExcecao(DTO.Enum.CampoInvalido, "Nome do Produto");
 
 			try
 			{

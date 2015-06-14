@@ -29,7 +29,10 @@ namespace Catalog.DTO
 					mensagem = "É nescessário realizar login para utilizar o aplicativo!";
 					break;
 				case Enum.CriteriosDeBuscaInsuficientes:
-					mensagem = "É nescessário que pelo menos um dos campos de busca contenha pelo menos 4 caracteres"
+					mensagem = "É nescessário que pelo menos um dos campos de busca contenha pelo menos 4 caracteres";
+					break;
+				case Enum.CriteriosDeBuscaInsuficientes:
+					mensagem = "É nescessário que pelo menos o(s) campo(s) sejam preenchidos:\n" + especificacao;
 					break;
 			}
 		}

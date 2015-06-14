@@ -11,6 +11,7 @@ namespace Catalog.DTO
 		ErroCriacao = 102,
 		ObjetoNaoEncontrado = 103,
 		CampoInvalido = 104,
-		CriteriosDeBuscaInsuficientes = 105
+		CriteriosDeBuscaInsuficientes = 105,
+		CriteriosDeCadastroInsuficientes = 106
 	}
 }
