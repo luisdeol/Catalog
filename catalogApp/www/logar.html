@@ -1,27 +1,25 @@
 <ion-view view-title="Entrar">
     <ion-content class="padding">		
-		<p class="logo"><img class="logo-index" src="img/CATALOG.png" width="250px" height="130px"></p>
-		<div ng-controller="UsuarioController" data-ng-init="verificarLogin('login.html')">
-
+		<p class="logo"><img class="logo-index" src="img/CATALOG.png" width="300px" height="80px"></p>
+		<div data-ng-init="verificarLogin('login.html')">
 			<div class="list">
-			  <label class="item item-input logar">
-				<span class="input-label">Email</span>
-				<input type="email" id="email" ng-model="usuario.email">
-			  </label>
-			  <label class="item item-input logar">
-				<span class="input-label">Senha</span>
-				<input type="password" id="senha" ng-model="usuario.senha">
-			  </label>
+				<label class="item item-input campo-texto">
+					<span class="input-label">Email:</span>
+					<input type="email" id="email" ng-model="usuario.email">
+				</label>
+				<label class="item item-input campo-texto">
+					<span class="input-label">Senha:</span>
+					<input type="password" id="senha" ng-model="usuario.senha">
+				</label>
 			</div>
 		
 			<button class="button button-block button-positive" ng-click="logar(usuario)">
-			  Logar
+				Logar
 			</button>
 			
 			<button class="button button-block button-energized" onclick="location.href='principal.html'">
-			  Esqueceu a senha?
-			</button>
-			
+				Esqueceu a senha?
+			</button>		
 		</div>
 	
 		<img class="face" src="img/bt_facebook.png" width="30px" height="30px">

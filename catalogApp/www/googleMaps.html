@@ -1,12 +1,12 @@
-<html ng-app="catalogApp">
+<html ng-app="googleMapsControllers">
   <head>
     <meta charset="utf-8">
     <title>Map</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <link href="css/estabelecimento.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
       <link href="lib/ionic/css/ionic.css" rel="stylesheet">
      <script src="lib/ionic/js/ionic.bundle.js"></script>
-	  <script src="js/googleMapsController.js"></script>
+	  <script src="js/controllers/googleMapsController.js"></script>
 
     <!-- google maps javascript -->
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
@@ -14,7 +14,7 @@
   </head>
   <body ng-controller="googleMapsController">
     <ion-header-bar class="bar-dark" >
-	  <img src="img/back.png" width="35px" height="35px" onclick="window.location = 'estabelecimentos.html'">
+	  <img src="img/back.png" width="35px" height="35px" onclick="window.location = 'index.html#/estabelecimentos'">
       <h1 class="title">{{nomeEstabelecimento}}</h1>
     </ion-header-bar>
     <ion-content>
@@ -25,3 +25,4 @@
     </ion-footer-bar>
   </body>
 </html>
+		

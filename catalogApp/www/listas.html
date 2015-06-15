@@ -1,97 +1,80 @@
-<html ng-app="catalogApp">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Catalog</title>
-   
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
-    <link href="css/lista.css" rel="stylesheet">
-    <script src="js/ListaController.js"></script>
+<ion-nav-view>
+	<ion-view ng-init="verificarLogin('listas.html')">
+		<ion-header-bar class="bar-positive">
+			<div class="buttons">
+				<button class="button button-icon icon ion-gear-b"
+					ng-click="data.showDelete = !data.showDelete; data.showReorder = false">
+				</button>
+			</div>
+			<h1 class="title">Listas</h1>
+			<div class="buttons">
+				<button class="button" ng-click="data.showDelete = false; data.showReorder = !data.showReorder">
+					Ordenar
+				</button>
+			</div>
+		</ion-header-bar>
+
+		<ion-content>      
+			<ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
+				<div class="sem-lista-cadastrada" ng-show="listas.length == 0">Nenhuma Lista Cadastrada</div>   
+				<ion-item ng-repeat="lista in listas" lista="lista" href="produtos-lista.html" class="item-remove-animate">
+					{{ lista.titulo}}
+					 
+					<ion-delete-button class="ion-close-round" 
+						ng-click="deletarLista(lista)">
+					</ion-delete-button>
+					
+					<ion-option-button class="button-assertive"
+						ng-click="modalEditarLista( {{$index}} )">
+						Editar
+					</ion-option-button>
+					
+					<ion-reorder-button class="ion-navicon" on-reorder="moverLista(lista, $fromIndex, $toIndex)"></ion-reorder-button>
+				</ion-item>
+			</ion-list>
+		</ion-content>
 	
-  </head>
-
-  <body ng-controller="ListaController" data-ng-init="verificarLogin('listas.html')">
-    
-    <ion-header-bar class="bar-positive">
-      <div class="buttons">
-        <button class="button button-icon icon ion-ios-minus-outline"
-          ng-click="data.showDelete = !data.showDelete; data.showReorder = false"></button>
-      </div>
-      <h1 class="title">Listas</h1>
-      <div class="buttons">
-        <button class="button" ng-click="data.showDelete = false; data.showReorder = !data.showReorder">
-            Ordenar
-        </button>
-      </div>
-    </ion-header-bar>
-
-    <ion-content>
-
-      <!-- The list directive is great, but be sure to also checkout the collection repeat directive when scrolling through large lists -->
-      
-      <ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
-
-		<div class="sem-lista-cadastrada" ng-show="listas.length == 0">Nenhuma Lista Cadastrada</div>   
-        <ion-item ng-repeat="lista in listas" 
-                  lista="lista"
-                  href="produtos-lista.html" class="item-remove-animate">
-          {{ lista.titulo}}
-			<ion-delete-button class="ion-minus-circled" 
-                             ng-click="deletarLista(lista)">
-			</ion-delete-button>
-			<ion-option-button class="button-assertive"
-                             ng-click="modalEditarLista( {{$index}} )">
-				Editar
-			</ion-option-button>
-			<ion-reorder-button class="ion-navicon" on-reorder="moverLista(lista, $fromIndex, $toIndex)"></ion-reorder-button>
-        </ion-item>
-
-      </ion-list>
-
-    </ion-content>
-	
-	<div class="botao-flutuante" ng-click="modal.show()">
-		<div class="ion-plus-round" id="iconAdd"></div>
-	</div>
-
-	
-	<!-- modal para adicionar lista -->
-	<script id="templates/modal.html" type="text/ng-template">
-		 <ion-modal-view>
-		  
-			<ion-header-bar class="bar bar-header bar-positive">
-			   <h1 class="title">Criar Lista</h1>
-			   <button class="button button-clear button-primary" ng-click="modal.hide()">Cancelar</button>
-			</ion-header-bar>
-			
-			
-			<ion-content class="padding">
-			<img class="icon-lista-atualizar" src="img/list.png" width="20%" height="100px">
-				<div class="list-lista-atualizar">
-					<label class="item item-input">
-					  <span class="input-label">Nome Da Lista</span>
-					  <input ng-model="lista.nome" type="text">
-					</label>
-					<button class="button button-full button-positive" ng-click="criarLista(lista)">Criar</button>
-				</div>
-			</ion-content>
-		 </ion-modal-view>
-	</script>
-	
-	<!-- fotter -->
-	<div class="tabs-striped tabs-color-assertive">
-		<div class="tabs">
-		  <a class="tab-item" href="estabelecimentos.html">
-			<img class="icon-footer-secundario" src="img/estabelecimento.png" width="35px" height="35px">
-		  </a>
-		  <a class="tab-item active" href="principal.html">
-			<img class="icon-footer" src="img/logo.png" width="35px" height="35px">
-		  </a>
-		  <a class="tab-item" href="produtos.html">
-			<img class="icon-footer-secundario" src="img/product.png" width="35px" height="35px">
-		  </a>
+		<div class="botao-flutuante" ng-click="modal.show()">
+			<div class="ion-plus-round"></div>
 		</div>
-	</div>
-      
-  </body>
-</html>
+		
+		<!-- fotter -->
+		<div class="tabs-striped tabs-color-assertive">
+			<div class="tabs">
+				<a class="tab-item" href="#/estabelecimentos">
+					<img class="icon-footer-secundario" src="img/estabelecimento.png" width="35px" height="35px">
+				</a>
+				<a class="tab-item active" href="#/menu">
+					<img class="icon-footer" src="img/logo.png" width="35px" height="35px">
+				</a>
+				<a class="tab-item" href="produtos.html">
+					<img class="icon-footer-secundario" src="img/product.png" width="35px" height="35px">
+				</a>
+			</div>
+		</div>
+	</ion-view>
+</ion-nav-view>	
+	
+<!-- modal para adicionar lista -->
+<script id="templates/modal.html" type="text/ng-template">
+	 <ion-modal-view>
+	  
+		<ion-header-bar class="bar bar-header bar-positive">
+		   <h1 class="title">Criar Lista</h1>
+		   <button class="button button-clear button-primary" ng-click="modal.hide()">Cancelar</button>
+		</ion-header-bar>
+		
+		
+		<ion-content class="padding">
+		<img class="icon-lista-atualizar" src="img/list.png" width="20%" height="100px">
+			<div class="list-lista-atualizar">
+				<label class="item item-input">
+				  <span class="input-label">Nome Da Lista</span>
+				  <input ng-model="lista.nome" type="text">
+				</label>
+				<button class="button button-full button-positive" ng-click="criarLista(lista)">Criar</button>
+			</div>
+		</ion-content>
+	 </ion-modal-view>
+</script>
+
