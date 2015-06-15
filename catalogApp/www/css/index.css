@@ -120,8 +120,8 @@ img.icon-footer-secundario:active {
 .button.button-block, .button.button-full {
   margin-top: 10px;
   margin-bottom: 10px;
-  margin-left: 20px;
+  margin-left: 0px;
 }
 button.button-block, button.button-full, .button-full > button.button, input.button.button-block {
-  width: 90%;
+  width: 100%;
 }
