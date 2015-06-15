@@ -53,25 +53,3 @@ img.icon-estab-atualizar {
 .list-estab-atualizar{
   margin-top: 20px;
 }
-
-.botao-flutuante {
-  background-color: orange;
-  width: 56px;
-  height: 56px;
-  position: fixed;
-  bottom: 8%;
-  right: 2%;
-  border-radius: 50%;
-  padding: 20px;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-}
-
-.ion-plus-round {
-  color: white;
-  line-height: 56px;
-  font-size: 1.5em;
-}
-
-.botao-flutuante:hover {
-  box-shadow: 0 0 10px 1px rgba(10, 10, 10, 0.32);
-}

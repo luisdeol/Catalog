@@ -32,3 +32,21 @@ img.img-add-lista{
   height: 65px;
   width: 65px;
 }
+
+
+img.icon-lista-atualizar {
+  margin-top: 15px;
+  margin-left: 41%;
+}
+
+.list-lista-atualizar{
+  margin-top: 20px;
+}
+
+.sem-lista-cadastrada {
+  font-size: 18px;
+  color: #FF5300;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
