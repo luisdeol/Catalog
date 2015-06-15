@@ -1,24 +1,8 @@
 var app = angular.module("catalogApp",['ionic'])
-.config(function($stateProvider, $urlRouterProvider) {
-	
-     $stateProvider
-            .state('principal', {
-                url: '/home',
-                templateUrl: 'principal.html',
-                controller: 'PrincipalController'
-            })
-			.state('estabelecimentos', {
-                url: '/estabelecimentos',
-                templateUrl: 'estabelecimentos.html',
-            })
-
-        $urlRouterProvider.otherwise('/home');
-})
-
 .controller("PrincipalController",function($scope,$ionicModal,$ionicPopup,$timeout){
 	
 	//___________ VERIFICAR LOGIN _____________//
-	/*$scope.verificarLogin = function(lugarPagina)
+	$scope.verificarLogin = function(lugarPagina)
 	{
 		var idUsuario = window.localStorage.idUsuario;
 		var token = window.localStorage.token;
@@ -36,7 +20,7 @@ var app = angular.module("catalogApp",['ionic'])
 			if(lugarPagina == "principal.html")
 			window.location = "index.html#/tab/login";
 		}	
-	};*/
+	};
 	
 	//______________ LOGOUT _____________//
 	$scope.logout = function()

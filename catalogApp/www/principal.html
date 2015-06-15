@@ -1,5 +1,5 @@
-<!DOCTYPE html >
-<html ng-app="catalogApp">
+<!DOCTYPE html>
+<html>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
@@ -12,92 +12,94 @@
     <script src="js/app.js"></script>
 	<script src="js/PrincipalController.js"></script>
   </head>
-	<body>
-		<ion-nav-view></ion-nav-view>
-		<ion-view view-title="CATALOG">
-			<div class="bar bar-header bar-positive" data-ng-init="verificarLogin('principal.html')">
-				<img src="img/iconeCatalog2.png" height="30px" width="30px">
-				<h1 class="titulo">Catalog</h1>
+	<body ng-app="catalogApp" ng-controller="PrincipalController" data-ng-init="verificarLogin('principal.html')">
+	
+		<!-- header -->	
+		<div class="bar bar-header bar-positive">
+			<img src="img/iconeCatalog2.png" height="30px" width="30px">
+			<h1 class="titulo">Catalog</h1>
+		</div>
+	
+			<!-- conteudo -->
+			<ion-content>
+			<div class="list">
+				<a class="item item-thumbnail-left" href="#">
+				  <img src="img/check.png">
+				  <h2>Checkin</h2>
+				  <p class="sub-titulo">Realize seu checkin</p>
+				</a>
+				
+				<a class="item item-thumbnail-left" href="listas.html">
+				  <img src="img/list.png">
+				  <h2>Listas</h2>
+				  <p class="sub-titulo">Crie suas listas</p>
+				</a>
+				
+				<a class="item item-thumbnail-left" href="estabelecimentos.html">
+				  <img src="img/estabelecimento.png">
+				  <h2>Estabelecimentos</h2>
+				  <p class="sub-titulo">Encontre estabelecimentos</p>
+				</a>
+				
+				<a class="item item-thumbnail-left" href="#">
+				  <img src="img/product.png">
+				  <h2>Produtos</h2>
+				  <p class="sub-titulo">Procure por produtos</p>
+				</a>
 			</div>
-		
-				<!-- conteudo -->
-				<ion-content>
-				<div class="list">
-					<a class="item item-thumbnail-left" href="#">
-					  <img src="img/check.png">
-					  <h2>Checkin</h2>
-					  <p class="sub-titulo">Realize seu checkin</p>
-					</a>
+			</ion-content>
+			
+			<!-- fotter -->
+			<div class="tabs-striped tabs-color-assertive">
+				<div class="tabs">
+				  <a class="tab-item active largura-footer" ng-click="modal.show()">
+					<img class="icon-footer" src="img/user.png" width="35px" height="35px">
+				  </a>
+				  <a class="tab-item largura-footer" ng-click="logout()">
+					<img class="icon-footer-secundario" src="img/sair.png" width="35px" height="35px">
+				  </a>
+			</div>
+			
+			
+			<!-- modal para atualizar usuario -->
+			<script id="templates/modal.html" type="text/ng-template">
+				 <ion-modal-view>
+				  
+					<ion-header-bar class="bar bar-header bar-positive">
+					   <h1 class="title">Atualizar Senha</h1>
+					   <button class="button button-clear button-primary" ng-click="modal.hide()">Cancelar</button>
+					</ion-header-bar>
 					
-					<a class="item item-thumbnail-left" href="listas.html">
-					  <img src="img/list.png">
-					  <h2>Listas</h2>
-					  <p class="sub-titulo">Crie suas listas</p>
-					</a>
 					
-					<a class="item item-thumbnail-left" ui-sref="estabelecimentos">
-					  <img src="img/estabelecimento.png">
-					  <h2>Estabelecimentos</h2>
-					  <p class="sub-titulo">Encontre estabelecimentos</p>
-					</a>
-					
-					<a class="item item-thumbnail-left" href="#">
-					  <img src="img/product.png">
-					  <h2>Produtos</h2>
-					  <p class="sub-titulo">Procure por produtos</p>
-					</a>
-				</div>
-				</ion-content>
-				
-				<!-- fotter -->
-				<div class="tabs-striped tabs-color-assertive">
-					<div class="tabs">
-					  <a class="tab-item active largura-footer" ng-click="modal.show()">
-						<img class="icon-footer" src="img/user.png" width="35px" height="35px">
-					  </a>
-					  <a class="tab-item largura-footer" ng-click="logout()">
-						<img class="icon-footer-secundario" src="img/sair.png" width="35px" height="35px">
-					  </a>
-				</div>
-				
-				
-				<!-- modal para atualizar usuario -->
-				<script id="templates/modal.html" type="text/ng-template">
-					 <ion-modal-view>
-					  
-						<ion-header-bar class="bar bar-header bar-positive">
-						   <h1 class="title">Atualizar Senha</h1>
-						   <button class="button button-clear button-primary" ng-click="modal.hide()">Cancelar</button>
-						</ion-header-bar>
-						
-						
-						<ion-content class="padding">
-						<img class="icon-user-atualizar" src="img/user.png" width="20%" height="80px">
-							<div class="list-user-atualizar">
-								<label class="item item-input">
-								  <span class="input-label">Senha Antiga</span>
-								  <input ng-model="usuario.senha" type="text">
-								</label>
-								<label class="item item-input">
-								  <span class="input-label">Nova Senha</span>
-								  <input ng-model="usuario.novaSenha" type="password">
-								</label>				
-								<label class="item item-input">
-								  <span class="input-label">Confirmar Senha</span>
-								  <input ng-model="usuario.confirmarNovaSenha" type="password">
-								</label>
-								<button class="button button-full button-positive" ng-click="createContact(usuario)">Atualizar</button>
-							</div>
-						</ion-content>
-					 </ion-modal-view>
-				</script>
+					<ion-content class="padding">
+					<img class="icon-user-atualizar" src="img/user.png" width="20%" height="80px">
+						<div class="list-user-atualizar">
+							<label class="item item-input">
+							  <span class="input-label">Senha Antiga</span>
+							  <input ng-model="usuario.senha" type="text">
+							</label>
+							<label class="item item-input">
+							  <span class="input-label">Nova Senha</span>
+							  <input ng-model="usuario.novaSenha" type="password">
+							</label>				
+							<label class="item item-input">
+							  <span class="input-label">Confirmar Senha</span>
+							  <input ng-model="usuario.confirmarNovaSenha" type="password">
+							</label>
+							<button class="button button-full button-positive" ng-click="createContact(usuario)">Atualizar</button>
+						</div>
+					</ion-content>
+				 </ion-modal-view>
+			</script>
 
-			<script type="text/javascript">
-				window.onload = function(){
-					localizacao();
-				}
-			</script> 
-		</ion-view>	
+		<script type="text/javascript">
+			window.onload = function(){
+				localizacao();
+			}
+		</script> 
+		<script>
+			
+		</script>
 	</body>
 
 </html>
