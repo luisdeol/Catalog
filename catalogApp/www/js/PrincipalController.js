@@ -1,20 +1,4 @@
 var app = angular.module("catalogApp",['ionic'])
-.config(function($stateProvider, $urlRouterProvider) {
-	
-     $stateProvider
-            .state('principal', {
-                url: '/home',
-                templateUrl: 'principal.html',
-                controller: 'PrincipalController'
-            })
-			.state('estabelecimentos', {
-                url: '/estabelecimentos',
-                templateUrl: 'estabelecimentos.html',
-            })
-
-        $urlRouterProvider.otherwise('/home');
-})
-
 .controller("PrincipalController",function($scope,$ionicModal,$ionicPopup,$timeout){
 	
 	//___________ VERIFICAR LOGIN _____________//

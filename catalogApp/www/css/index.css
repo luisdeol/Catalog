@@ -4,6 +4,11 @@ img.logo-index {
   margin-left: 18%;
 }
 
+p.logo {
+  text-align: center;
+  margin-right: 15%;
+}
+
 /*-- ARQUIVO LOGIN.HTML --*/
 
 h1.titulo{

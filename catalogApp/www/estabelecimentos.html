@@ -1,30 +1,123 @@
-<ion-view view-title="Entrar">
-    <ion-content class="padding">		
-		<img class="icone-login" src="img/iconeCatalog.png" width="80px" height="80px">
-		<div data-ng-init="verificarLogin('login.html')">
-
-			<div class="list">
-			  <label class="item item-input logar">
-				<span class="input-label">Email</span>
-				<input type="email" id="email" ng-model="usuario.email">
-			  </label>
-			  <label class="item item-input logar">
-				<span class="input-label">Senha</span>
-				<input type="password" id="senha" ng-model="usuario.senha">
-			  </label>
-			</div>
-		
-			<button class="button button-block button-positive" ng-click="logar(usuario)">
-			  Logar
-			</button>
-			
-			<button class="button button-block button-energized" onclick="location.href='principal.html'">
-			  Esqueceu a senha?
-			</button>
-			
-		</div>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>Catalog</title>
+	 <meta charset="utf-8">
+	<!--links-->
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/estabelecimento.css" rel="stylesheet">
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="cordova.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/EstabelecimentoController.js"></script>
+  </head>
+  
+	<body ng-app="catalogApp" ng-controller="EstabelecimentoController" data-ng-init="verificarLogin('estabelecimentos.html')">
 	
-		<img class="face" src="img/bt_facebook.png" width="30px" height="30px">
-		<img class="gmail "src="img/google-plus-icon.png" width="30px" height="30px">
-	</ion-content>
-</ion-view>
+		<!-- header -->	
+		<div class="bar bar-header bar-positive">
+			<img src="img/back.png" onclick="location.href='principal.html'" height="30px" width="30px">
+			<h1 class="titulo">Catalog</h1>
+		</div>
+		<!-- conteudo -->
+		 <ion-content>
+		<div class="list">
+			<a class="item item-avatar" href="#">
+			  <img src="img/estab1.png">
+			  <h2>Nordestao</h2>
+			  <p>Prudente de Morais</p>
+			  <img class="icone-mapa" src="img/mapa.png" width="30px" height="30px" ng-click="chamarMapa('-5.7936813','-35.2035056','Nordestao')">
+			</a>
+			
+			<a class="item item-avatar" href="#">
+			  <img src="img/estab2.png">
+			  <h2>Farmaformula</h2>
+			  <p>Tirol</p>
+			  <img class="icone-mapa" src="img/mapa.png" width="30px" height="30px" ng-click="chamarMapa('-5.7865758','-35.2080757','Farmaformula')">
+			</a>
+			
+			<a class="item item-avatar" href="#">
+			  <img src="img/estab3.png">
+			  <h2>Auri Auto peças</h2>
+			  <p>Cidade Alta</p>
+			  <img class="icone-mapa" src="img/mapa.png" width="30px" height="30px" ng-click="chamarMapa('-5.81605','-35.23211','Auri auto pecas')">
+			</a>
+			
+			<a class="item item-avatar" href="#">
+			  <img src="img/estab5.png">
+			  <h2>Carrefour</h2>
+			  <p>Salgado filho</p>
+			  <img class="icone-mapa" src="img/mapa.png" width="30px" height="30px" ng-click="chamarMapa('-5.8445742','-35.2105137','Carrefour')">
+			</a>
+			
+			<a class="item item-avatar" href="#">
+			  <img src="img/estab1.png">
+			  <h2>Nordestao</h2>
+			  <p>Zona Norte</p>
+			  <img class="icone-mapa" src="img/mapa.png" width="30px" height="30px" ng-click="chamarMapa('-5.7936813','-35.2035056','Nordestao')">
+			</a>
+		</div>
+		</ion-content>
+		
+		<div class="botao-flutuante" ng-click="modal.show()">
+			<div class="ion-plus-round" id="iconAdd"></div>
+		</div>
+		
+		<!-- modal para adicionar estabelecimento -->
+		<script id="templates/modal.html" type="text/ng-template">
+		 <ion-modal-view>
+		  
+			<ion-header-bar class="bar bar-header bar-positive">
+			   <h1 class="title">Cadastrar Estabelecimento</h1>
+			   <button class="button button-clear button-primary" ng-click="modal.hide()">Cancelar</button>
+			</ion-header-bar>
+			
+			
+			<ion-content class="padding">
+			<img class="icon-estab-atualizar" src="img/estabelecimento.png" width="20%" height="80px">
+				<div class="list-estab-atualizar">
+					<label class="item item-input">
+					  <span class="input-label">Nome do Estabelecimento</span>
+					  <input ng-model="estabelecimento.nome" type="text">
+					</label>
+					<label class="item item-input">
+					  <span class="input-label">Rua</span>
+					  <input ng-model="estabelecimento.rua" type="text">
+					</label>
+					<label class="item item-input">
+					  <span class="input-label">Cidade</span>
+					  <input ng-model="estabelecimento.cidade" type="text">
+					</label>
+					<label class="item item-input">
+					  <span class="input-label">Estado</span>
+					  <input ng-model="estabelecimento.estado" type="text">
+					</label>
+					<label class="item item-input">
+					  <span class="input-label">Numero</span>
+					  <input ng-model="estabelecimento.numero" type="number">
+					</label>
+					<label class="item item-input">
+					  <span class="input-label">CEP</span>
+					  <input ng-model="estabelecimento.cep" type="text">
+					</label>
+					<button class="button button-full button-positive" ng-click="createContact(estabelecimento)">Cadastrar</button>
+				</div>
+			</ion-content>
+		 </ion-modal-view>
+		</script>
+		<!-- fotter -->
+		<div class="tabs-striped tabs-color-assertive">
+			<div class="tabs">
+				<a class="tab-item" href="listas.html">
+					<img class="icon-footer-secundario" src="img/list.png" width="35px" height="35px">
+				</a>
+				<a class="tab-item active" href="principal.html">
+					<img class="icon-footer" src="img/logo.png" width="35px" height="35px">
+				</a>
+				<a class="tab-item" href="produtos.html">
+					<img class="icon-footer-secundario" src="img/product.png" width="35px" height="35px">
+				</a>
+			</div>
+		</div>	
+	</body>
+</html>
