@@ -13,8 +13,8 @@ namespace Catalog.DTO
 		public string estado { get; set; }
 		public string numero { get; set; }
 		public string cep { get; set; }
-		public long latitude { get; set; }
-		public long longitude { get; set; }
+		public float latitude { get; set; }
+		public float longitude { get; set; }
 		public int idEstabelecimento { get; set; }
 		public DtoEstabelecimento estabelecimento { get; set; }
 	}

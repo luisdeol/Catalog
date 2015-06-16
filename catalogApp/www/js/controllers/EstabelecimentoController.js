@@ -1,4 +1,4 @@
-angular.module("EstabelecimentoControllers",['ionic','services.verificarLogin'])
+angular.module("EstabelecimentoControllers",['ionic','services.verificarLogin','services.googleMaps'])
 .config(function($stateProvider, $urlRouterProvider) {
 	
     $stateProvider
@@ -8,8 +8,9 @@ angular.module("EstabelecimentoControllers",['ionic','services.verificarLogin'])
 			controller: 'EstabelecimentoController'
 		})
 })
-.controller("EstabelecimentoController",function($scope,$http,$ionicModal,$ionicLoading, $compile,verificarLogin){
-  
+.controller("EstabelecimentoController",function($scope,$http,$ionicModal,$ionicLoading,$compile,verificarLogin,googleMaps){
+	$scope.estabelecimentos = [];
+	
 	//___________ VERIFICAR LOGIN _____________//
 	$scope.verificarLogin = function(lugarPagina)
 	{
@@ -22,12 +23,7 @@ angular.module("EstabelecimentoControllers",['ionic','services.verificarLogin'])
 	  }).then(function(modal) {
 		$scope.modal = modal;
 	  });
-  
-	  $scope.createContact = function(u) {        
-		$scope.contacts.push({ name: u.firstName + ' ' + u.lastName });
-		$scope.modal.hide();
-	  };
-	 
+
 	//_______________ CHAMAR MAPA _________________// 
 	$scope.chamarMapa = function(latitudeEstabelecimento,longitudeEstabelecimento,nomeEstabelecimento)
 	{
@@ -35,5 +31,40 @@ angular.module("EstabelecimentoControllers",['ionic','services.verificarLogin'])
 		window.localStorage.longitudeEstabelecimento = longitudeEstabelecimento;
 		window.localStorage.nomeEstabelecimento = nomeEstabelecimento;
 		window.location = "googleMaps.html";
+	}	
+	
+	//_______________ CADASTRAR ESTABELECIMENTO _________________// 
+	$scope.cadastrarEstabelecimento = function(estab)
+	{
+		if(estab != undefined)
+		{
+			$scope.estabelecimentos.push
+			({ 
+				nome: estab.nome, 
+				rua: estab.rua, 
+				cidade: estab.cidade, 
+				estado: estab.estado, 
+				numero: estab.numero, 
+				cep: estab.cep 
+			});
+			
+			googleMaps.pegarLatitudeLongitude(estab.nome +" - "+ estab.rua +" - "+ estab.cidade +" - "+ estab.estado,function(){
+				
+				var json = "{nome: '"+estab.nome+"', rua: '"+estab.rua+"', cidade: '"+estab.cidade+"', estado: '"+estab.estado+"', numero: '"+estab.numero+"', cep: '"+estab.cep+"',latitude: '"+window.localStorage.latCadastroEstab+"',longitude: '"+window.localStorage.lonCadastroEstab+"'}";
+				
+				$http.post('http://localhost:51786/Webservices/WsEstabelecimento.asmx/criarEstabelecimento', {dtoEstabelecimento:json}).
+				  success(function(data, status, headers, config)
+				{
+					var retorno = data.d;	
+				});
+				$scope.modal.hide();
+			});
+			
+		
+		}
+		else
+		{
+			
+		}
 	}	
 });
