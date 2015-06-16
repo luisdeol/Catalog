@@ -1,5 +1,5 @@
 describe("Testes de Usuario", function () {
-    beforeEach(module("catalogApp",['catalogApp.controllers']));
+    beforeEach(module("UsuarioControllers"));
 
     describe("UsuarioController", function () {
         var scope,
