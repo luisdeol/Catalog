@@ -31,9 +31,6 @@ namespace Catalog.DTO
 				case Enum.CriteriosDeBuscaInsuficientes:
 					mensagem = "É nescessário que pelo menos um dos campos de busca contenha pelo menos 4 caracteres";
 					break;
-				case Enum.CriteriosDeBuscaInsuficientes:
-					mensagem = "É nescessário que pelo menos o(s) campo(s) sejam preenchidos:\n" + especificacao;
-					break;
 			}
 		}
 

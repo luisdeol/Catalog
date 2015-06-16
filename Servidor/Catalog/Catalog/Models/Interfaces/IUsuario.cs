@@ -9,7 +9,7 @@ namespace Catalog.Models.Interfaces
 	public interface IUsuario
 	{
 		DtoChave cadastrarUsuario(DtoUsuario usuario);
-		void alterarSenha(int idUsuario, string novaSenha);
+        DtoChave alterarDadosCadastrais(string email, string novaSenha);
 		void recuperarSenha(string email);
 		DtoChave logar(string email, string senha);
 		void deslogar(DtoChave chave);

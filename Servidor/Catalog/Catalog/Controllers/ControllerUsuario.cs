@@ -30,7 +30,7 @@ namespace Catalog.Controllers
                 try
                 {
 					DtoChave chave = mUsuario.cadastrarUsuario(usuario);
-                    retorno = new DtoRetornoObjeto(chave,"principal.html");
+                    retorno = new DtoRetornoObjeto(chave,"#/menu");
 				}
 				catch (DtoExcecao ex)
 				{
@@ -81,7 +81,7 @@ namespace Catalog.Controllers
 			try
 			{
 				DtoChave chave = mUsuario.logar(usuario.email, usuario.senha);
-				retorno = new DtoRetornoObjeto(chave,"principal.html");
+                retorno = new DtoRetornoObjeto(chave, "#/menu");
 			}
 			catch (DtoExcecao ex)
 			{
@@ -94,6 +94,31 @@ namespace Catalog.Controllers
 
 			return js.Serialize(retorno);
 		}
+
+        //______________ ALTERAR DADOS CADASTRAIS ________________//
+        public string alterarDadosCadastrais(string dtoUsuario, string novaSenha)
+        {
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            DtoUsuario usuario = js.Deserialize<DtoUsuario>(dtoUsuario);
+            Usuario mUsuario = new Usuario();
+            DtoRetorno retorno;
+
+            try
+            {
+                DtoChave chave = mUsuario.alterarDadosCadastrais(usuario.email, novaSenha);
+                retorno = new DtoRetornoObjeto(chave, "#/menu");
+            }
+            catch (DtoExcecao ex)
+            {
+                retorno = ex.ToDto();
+            }
+            catch (Exception ex)
+            {
+                retorno = new DtoRetornoErro(ex.Message);
+            }
+
+            return js.Serialize(retorno);
+        }
 
 	}
 }

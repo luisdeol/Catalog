@@ -37,10 +37,25 @@ namespace Catalog.Models
             }
 		}
 
-		public void alterarSenha(int idUsuario, string novaSenha)
-		{
 
+        public DtoChave alterarDadosCadastrais(string email, string novaSenha)
+		{
+            Chave mChave = new Chave();
+            DBCatalogDataContext dataContext = new DBCatalogDataContext();
+            var usuarios = dataContext.tb_Usuarios.FirstOrDefault(u => u.email == email);
+            if (usuarios != null)
+            {
+                DtoChave chave = mChave.criarChave(usuarios.id);
+                usuarios.senha = novaSenha;
+                dataContext.SubmitChanges();
+                return chave;
+            }
+            else
+            {
+                throw new DtoExcecao(DTO.Enum.CampoInvalido, "Email incorreto!");
+            }
 		}
+
 
 		public void recuperarSenha(string email)
 		{
