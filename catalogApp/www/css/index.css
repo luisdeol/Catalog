@@ -4,6 +4,11 @@ img.logo-index {
   margin-left: 18%;
 }
 
+.inputs{
+  color:orange !important;
+  font-size:18px !important;
+}
+
 p.logo {
   text-align: center;
   margin-right: 15%;

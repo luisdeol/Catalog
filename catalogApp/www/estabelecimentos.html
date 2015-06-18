@@ -52,7 +52,7 @@
 		<!-- fotter -->
 		<div class="tabs-striped tabs-color-assertive">
 			<div class="tabs">
-				<a class="tab-item" href="#/listas">
+				<a class="tab-item" href="#/lista">
 					<img class="icon-footer-secundario" src="img/list.png" width="35px" height="35px">
 				</a>
 				<a class="tab-item active" href="#/menu">
@@ -80,30 +80,30 @@
 		<img class="icon-estab-atualizar" src="img/estabelecimento.png" width="20%" height="80px">
 			<div class="list-estab-atualizar">
 				<label class="item item-input">
-					<span class="input-label">Nome do Estabelecimento</span>
-					<input ng-model="estabelecimento.nome" type="text">
+					<span class="input-label">Nome do Estabelecimento:</span>
+					<input type="text" id="nome" class="inputs">
 				</label>
 				<label class="item item-input">
-					<span class="input-label">Rua</span>
-					<input ng-model="estabelecimento.rua" type="text">
+					<span class="input-label">Rua:</span>
+					<input type="text" id="logradouro" class="inputs">
 				</label>
 				<label class="item item-input">
-					<span class="input-label">Cidade</span>
-					<input ng-model="estabelecimento.cidade" type="text">
+					<span class="input-label">Cidade:</span>
+					<input type="text" id="cidade" class="inputs">
 				</label>
 				<label class="item item-input">
-					<span class="input-label">Estado</span>
-					<input ng-model="estabelecimento.estado" type="text">
+					<span class="input-label">Estado:</span>
+					<input type="text" id="estado" class="inputs">
 				</label>
 				<label class="item item-input">
-					<span class="input-label">Numero</span>
-					<input ng-model="estabelecimento.numero" type="number">
+					<span class="input-label">Numero:</span>
+					<input type="number" id="numero" class="inputs">
 				</label>
 				<label class="item item-input">
-					<span class="input-label">CEP</span>
-					<input ng-model="estabelecimento.cep" type="text">
+					<span class="input-label">CEP:</span>
+					<input ng-model="cep" type="text" maxlength="9" size="9" ng-change="getEnderecoCep(cep)" id="cep" class="inputs">
 				</label>
-				<button class="button button-full button-positive" ng-click="cadastrarEstabelecimento(estabelecimento)">Cadastrar</button>
+				<button class="button button-full button-positive" ng-click="cadastrarEstabelecimento()">Cadastrar</button>
 			</div>
 		</ion-content>
 	 </ion-modal-view>
