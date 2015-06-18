@@ -1,6 +1,6 @@
 angular.module('services.googleMaps', [])
 
-.factory('googleMaps', [function ( $http) {
+.factory('googleMaps', [function () {
 
 	var googleMaps = {};
 

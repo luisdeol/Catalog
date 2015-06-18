@@ -137,6 +137,68 @@ img.icone-mapa{
   margin-top: -40px;
 }
 
+input.input-form {
+  margin: 0px auto;
+  display: block;
+  width: 100%;
+  max-width: 500px;
+  height: 34px;
+  padding: 6px 50px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #FF5300;
+  font-size: 17px;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  z-index: -2;
+}
+
+.input-grupo {
+  margin-left: -1px;
+  padding: 7px 11px;
+  border: 1px solid #ccc;
+  width: 40px;
+  height: 34px;
+  position: absolute;
+  border-radius: 4px;
+  background-color: #eee;
+  z-index: 1;
+}
+
+.bloco{
+  width: 100%;
+  max-width: 500px;
+  margin: 0px auto;
+  display: block;
+}
+
+p.nome-campos {
+  margin-bottom: 0px;
+  color: #073664;
+  font-weight: bold;
+  margin: 0px auto;
+  max-width: 500px;
+}
+
+span.ion-ios-cart, span.ion-android-map, span.ion-map, span.ion-android-globe, span.ion-ios-compose, span.ion-home, span.ion-ios-list-outline,
+span.ion-at, span.ion-locked, span.ion-person, span.ion-unlocked{
+  font-size: 20px;
+  color: orange;
+}
+
+.botao {
+  border-radius: 4px;
+}
+
+input.input-form:focus {
+  background-color: #EAF5FF;
+  border: 1px solid rgba(33, 52, 249, 0.54);;
+}
+
 #map {
   width: 100%;
   height: 100%;

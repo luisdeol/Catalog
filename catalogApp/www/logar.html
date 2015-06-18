@@ -3,21 +3,26 @@
 		<p class="logo"><img class="logo-index" src="img/CATALOG.png" width="300px" height="80px"></p>
 		<div data-ng-init="verificarLogin('login.html')">
 			<div class="list">
-				<label class="item item-input campo-texto">
-					<span class="input-label">Email:</span>
-					<input type="email" id="email" ng-model="usuario.email">
-				</label>
-				<label class="item item-input campo-texto">
-					<span class="input-label">Senha:</span>
-					<input type="password" id="senha" ng-model="usuario.senha">
-				</label>
+				<div class="bloco">
+					<p class="nome-campos">Email:</p>
+						<span class="input-grupo"><span class="ion-at"></span></span>
+						<input type="text" name="nome" ng-model="usuario.email" class="input-form">
+					<br>
+				</div>
+				
+				<div class="bloco">
+					<p class="nome-campos">Senha:</p>
+						<span class="input-grupo"><span class="ion-locked"></span></span>
+						<input type="password" name="nsenha" ng-model="usuario.senha" class="input-form">
+					<br>
+				</div>	
 			</div>
 		
-			<button class="button button-block button-positive" ng-click="logar(usuario)">
+			<button class="button button-block button-positive botao" ng-click="logar(usuario)">
 				Logar
 			</button>
 			
-			<button class="button button-block button-energized" onclick="location.href='principal.html'">
+			<button class="button button-block button-energized botao" onclick="location.href='principal.html'">
 				Esqueceu a senha?
 			</button>		
 		</div>

@@ -68,11 +68,14 @@
 		<ion-content class="padding">
 		<img class="icon-lista-atualizar" src="img/list.png" width="20%" height="100px">
 			<div class="list-lista-atualizar">
-				<label class="item item-input">
-				  <span class="input-label">Nome Da Lista</span>
-				  <input ng-model="lista.nome" type="text">
-				</label>
-				<button class="button button-full button-positive" ng-click="criarLista(lista)">Criar</button>
+				<div class="bloco">
+					<p class="nome-campos">Nome Da Lista:</p>
+					<span class="input-grupo"><span class="ion-ios-list-outline"></span></span>
+					<input type="text" name="nome" ng-model="lista.nome" id="nome" class="input-form" placeholder="Entre com o nome">
+					<br>
+				</div>
+				
+				<button class="button button-full button-positive botao" ng-click="criarLista(lista)">Criar</button>
 			</div>
 		</ion-content>
 	 </ion-modal-view>

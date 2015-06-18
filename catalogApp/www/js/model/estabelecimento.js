@@ -27,6 +27,19 @@ angular.module('model.estabelecimento', [])
 			);
 		});
 	}
+	
+	 estabelecimento.update = function(id, nome, rua, cidade, estado, numero, cep)
+	{
+		var db = estabelecimento.openDataBase();
+		db.transaction( function (tx) {
+			tx.executeSql('CREATE TABLE IF NOT EXISTS estabelecimento (id, nome, rua, cidade, estado, numero, cep)',[],
+				function ()
+				{
+				tx.executeSql(" UPDATE estabelecimento SET id="+id+", nome='"+nome+"', rua='"+rua+"', cidade='"+cidade+"', estado='"+estado+"', numero='"+numero+"', cep='"+cep+"' WHERE nome='"+nome+"'");
+				}
+			);
+		});
+	}
 
     return estabelecimento;
 }]);

@@ -4,28 +4,37 @@
 		<p class="logo"><img class="logo-index" src="img/CATALOG.png" width="300px" height="80px"></p>
 		<div data-ng-init="verificarLogin('cadastro.html')">
 			<div class="list">
-				 <label class="item item-input item-stacked-label campo-texto">
-					<span class="input-label">Usuario</span>
-					<input type="text" placeholder="Catalog" id="usuario" ng-model="usuario.nome">
-				 </label>
-				 
-				<label class="item item-input item-stacked-label campo-texto">
-					<span class="input-label">Email</span> 
-					<input  ng-class="{'erro-email': erro}" type="email" placeholder="email@catalog.com" id="email" ng-model="usuario.email">
-				</label>
+				 <div class="bloco">
+					<p class="nome-campos">Usuario:</p>
+						<span class="input-grupo"><span class="ion-person"></span></span>
+						<input type="text" name="nome" ng-model="usuario.usuario" class="input-form" placeholder="Catalog">
+					<br>
+				</div>
 				
-				<label class="item item-input item-stacked-label campo-texto">
-					<span class="input-label">Senha</span>
-					<input type="password" placeholder="senha" id="senha" ng-model="usuario.senha">
-				</label>	
+				<div class="bloco">
+					<p class="nome-campos">Email:</p>
+						<span class="input-grupo"><span class="ion-at"></span></span>
+						<input type="text" name="email" ng-model="usuario.email" class="input-form" placeholder="email@catalog.com">
+					<br>
+				</div>	
 				
-				<label class="item item-input item-stacked-label campo-texto">
-					<span class="input-label">Confirmar Senha</span>
-					<input type="password" placeholder="Confirmar senha" id="confirmarSenha" ng-model="usuario.confirmarSenha">
-				</label>	
+				<div class="bloco">
+					<p class="nome-campos">Senha:</p>
+						<span class="input-grupo"><span ng-class="{'ion-unlocked':usuario.senha == usuario.confirmarSenha && usuario.senha.length>5}" class="ion-locked"></span></span>
+						<input type="password" name="senha" ng-model="usuario.senha" class="input-form" placeholder="senha">
+					<br>
+				</div>
+				
+				<div class="bloco">
+					<p class="nome-campos">Repetir Senha:</p>
+						<span class="input-grupo"><span ng-class="{'ion-unlocked':usuario.senha == usuario.confirmarSenha && usuario.confirmarSenha.length>5}" class="ion-locked"></span></span>
+						<input type="password" name="repetirSenha" ng-model="usuario.confirmarSenha" class="input-form" placeholder="confirmar senha">
+					<br>
+				</div>	
+				
 			</div>
 			
-			<button class="button button-block button-positive" ng-click="cadastrar(usuario)">
+			<button class="button button-block button-positive botao" ng-click="cadastrar(usuario)">
 				Cadastrar
 			</button>
 		</div>

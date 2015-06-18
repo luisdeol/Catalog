@@ -2,7 +2,8 @@ angular.module("EstabelecimentoControllers",[
 'ionic',
 'services.verificarLogin',
 'services.googleMaps',
-'model.estabelecimento'
+'model.estabelecimento',
+'services.modalAlerta'
 ])
 .config(function($stateProvider, $urlRouterProvider) {
 	
@@ -13,7 +14,7 @@ angular.module("EstabelecimentoControllers",[
 			controller: 'EstabelecimentoController'
 		})
 })
-.controller("EstabelecimentoController",function($scope,$http,$ionicModal,$ionicLoading,$compile,verificarLogin,googleMaps,estabelecimento){
+.controller("EstabelecimentoController",function($scope,$http,$ionicModal,$ionicLoading,$compile,verificarLogin,googleMaps,estabelecimento,modalAlerta){
 	$scope.estabelecimentos = [];
 	
 	//___________ VERIFICAR LOGIN _____________//
@@ -59,6 +60,12 @@ angular.module("EstabelecimentoControllers",[
 		{
 			document.getElementById("cep").value = cep +"-";
 		}
+		else if(!isNaN(cep.replace(/-/g, "")) == false) //se cep nao for um numero
+		{
+			modalAlerta.alerta('CEP inválido!','CEP deve conter apenas números');
+			document.getElementById("cep").value = "";
+		}
+
 	}
 
 	//_______________ CADASTRAR ESTABELECIMENTO _________________// 
@@ -72,27 +79,37 @@ angular.module("EstabelecimentoControllers",[
 		estab.numero = document.getElementById("numero").value;
 		estab.cep = document.getElementById("cep").value;
 		
-		$scope.estabelecimentos.push
-		({ 
-			nome: estab.nome, 
-			rua: estab.rua, 
-			cidade: estab.cidade, 
-			estado: estab.estado, 
-			numero: estab.numero, 
-			cep: estab.cep 
-		});
-		
-		estabelecimento.insertInto(1,estab.nome, estab.rua, estab.cidade, estab.estado, estab.numero, estab.cep);
-		googleMaps.pegarLatitudeLongitude(estab.nome +" - "+ estab.rua +" - "+ estab.cidade +" - "+ estab.estado,function(){
-			
-			var json = "{nome: '"+estab.nome+"', rua: '"+estab.rua+"', cidade: '"+estab.cidade+"', estado: '"+estab.estado+"', numero: '"+estab.numero+"', cep: '"+estab.cep+"',latitude: '"+window.localStorage.latCadastroEstab+"',longitude: '"+window.localStorage.lonCadastroEstab+"'}";
-			
-			$http.post('http://localhost:51786/Webservices/WsEstabelecimento.asmx/criarEstabelecimento', {dtoEstabelecimento:json}).
-			  success(function(data, status, headers, config)
-			{
-				var retorno = data.d;	
+		if(estab.nome.length>=3   && 
+		   estab.rua.length>=3    && 
+		   estab.cidade.length>=3 && 
+		   estab.estado.length>=2 && 
+		   estab.numero!="")
+		{
+			$scope.estabelecimentos.push
+			({ 
+				nome: estab.nome, 
+				rua: estab.rua, 
+				cidade: estab.cidade, 
+				estado: estab.estado, 
+				numero: estab.numero, 
+				cep: estab.cep 
 			});
-			$scope.modal.hide();
-		});
+			
+			googleMaps.pegarLatitudeLongitude(estab.nome +" - "+ estab.rua +" - "+ estab.cidade +" - "+ estab.estado,function(){
+				
+				var json = "{nome: '"+estab.nome+"', rua: '"+estab.rua+"', cidade: '"+estab.cidade+"', estado: '"+estab.estado+"', numero: '"+estab.numero+"', cep: '"+estab.cep+"',latitude: '"+window.localStorage.latCadastroEstab+"',longitude: '"+window.localStorage.lonCadastroEstab+"'}";
+				
+				$http.post('http://localhost:51786/Webservices/WsEstabelecimento.asmx/criarEstabelecimento', {dtoEstabelecimento:json}).
+				  success(function(data, status, headers, config)
+				{
+					var retorno = data.d;	
+				});
+				$scope.modal.hide();
+			});		
+		}
+		else
+		{
+			modalAlerta.alerta('ERRO!','Existem campos inválidos!');
+		}
 	}	
 });
