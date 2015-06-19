@@ -13,12 +13,14 @@
 				<div class="bloco">
 					<p class="nome-campos">Senha:</p>
 						<span class="input-grupo"><span class="ion-locked"></span></span>
-						<input type="password" name="nsenha" ng-model="usuario.senha" class="input-form">
+						<input type="password" name="senha" ng-model="usuario.senha" class="input-form">
 					<br>
 				</div>	
 			</div>
 		
-			<button class="button button-block button-positive botao" ng-click="logar(usuario)">
+			<button class="button button-block button-positive botao" ng-click="logar(usuario)"
+					ng-disabled="(usuario.email == undefined || usuario.email == '') || 
+								 (usuario.senha == undefined || usuario.senha == '') ">
 				Logar
 			</button>
 			

@@ -52,7 +52,7 @@
 		<!-- fotter -->
 		<div class="tabs-striped tabs-color-assertive">
 			<div class="tabs">
-				<a class="tab-item" href="#/lista">
+				<a class="tab-item" href="#/listas">
 					<img class="icon-footer-secundario" src="img/list.png" width="35px" height="35px">
 				</a>
 				<a class="tab-item active" href="#/menu">
@@ -77,7 +77,7 @@
 		</ion-header-bar>
 		
 		<ion-content class="padding">
-		<img class="icon-estab-atualizar" src="img/estabelecimento.png" width="20%" height="80px">
+		<img class="icon-estab-atualizar" src="img/estabelecimento.png" width="80px" height="80px">
 			<div class="list-estab-atualizar">
 				<form>
 					<div class="bloco">
@@ -121,7 +121,8 @@
 						<input type="text" ng-model="cep" class="input-form" maxlength="9" size="9" name="cep" ng-change="getEnderecoCep(cep)" id="cep" placeholder="Entre com o CEP">
 					</div>
 					
-					<button class="button button-full button-positive botao" ng-click="cadastrarEstabelecimento()">Cadastrar</button>
+					<button class="button button-full button-positive botao" ng-click="cadastrarEstabelecimento()"	
+					ng-disabled="(cep == undefined || cep == '') ">Cadastrar</button>
 				</form>
 			</div>
 		</ion-content>

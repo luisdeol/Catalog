@@ -182,16 +182,23 @@ p.nome-campos {
   font-weight: bold;
   margin: 0px auto;
   max-width: 500px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 span.ion-ios-cart, span.ion-android-map, span.ion-map, span.ion-android-globe, span.ion-ios-compose, span.ion-home, span.ion-ios-list-outline,
-span.ion-at, span.ion-locked, span.ion-person, span.ion-unlocked{
+span.ion-at, span.ion-locked, span.ion-person, span.ion-unlocked, span.ion-lock-combination{
   font-size: 20px;
   color: orange;
 }
 
 .botao {
   border-radius: 4px;
+}
+
+.botao-desabilitado:disabled {
+color:red;
 }
 
 input.input-form:focus {

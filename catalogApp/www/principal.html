@@ -59,21 +59,36 @@
 		</ion-header-bar>
 		
 		<ion-content class="padding">
-		<img class="icon-user-atualizar" src="img/user.png" width="20%" height="80px">
+		<img class="icon-user-atualizar" src="img/user.png" width="80px" height="80px">
 			<div class="list-user-atualizar">
-				<label class="item item-input">
-					<span class="input-label">Senha Antiga</span>
-					<input ng-model="usuario.senha" type="text">
-				</label>
-				<label class="item item-input">
-					<span class="input-label">Nova Senha</span>
-					<input ng-model="usuario.novaSenha" type="password">
-				</label>				
-				<label class="item item-input">
-					<span class="input-label">Confirmar Senha</span>
-					<input ng-model="usuario.confirmarNovaSenha" type="password">
-				</label>
-				<button class="button button-full button-positive" ng-click="createContact(usuario)">Atualizar</button>
+			
+				<div class="bloco">
+					<p class="nome-campos">Senha Antiga:</p>
+						<span class="input-grupo"><span class="ion-lock-combination"></span></span>
+						<input type="text" name="senha" ng-model="usuario.senha" class="input-form" placeholder="senha antiga">
+					<br>
+				</div>
+				
+				<div class="bloco">
+					<p class="nome-campos">Nova Senha:</p>
+						<span class="input-grupo"><span ng-class="{'ion-unlocked':usuario.novaSenha == usuario.confirmarNovaSenha && usuario.novaSenha.length>5}" class="ion-locked"></span></span>
+						<input type="password" name="senha" ng-model="usuario.novaSenha" class="input-form" placeholder="senha">
+					<br>
+				</div>
+				
+				<div class="bloco">
+					<p class="nome-campos">Confirmar Senha:</p>
+						<span class="input-grupo"><span ng-class="{'ion-unlocked':usuario.novaSenha == usuario.confirmarNovaSenha && usuario.novaSenha.length>5}" class="ion-locked"></span></span>
+						<input type="password" name="repetirSenha" ng-model="usuario.confirmarNovaSenha" class="input-form" placeholder="confirmar senha">
+					<br>
+				</div>	
+				
+				<button class="button button-full button-positive botao" ng-click="createContact(usuario)" 
+					ng-disabled="(usuario.senha == undefined || usuario.senha == '') || 
+								 (usuario.novaSenha == undefined || usuario.novaSenha == '') || 
+								 (usuario.confirmarNovaSenha == undefined || usuario.confirmarNovaSenha == '')">
+					Atualizar
+				</button>
 			</div>
 		</ion-content>
 	 </ion-modal-view>

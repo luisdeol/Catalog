@@ -34,7 +34,11 @@
 				
 			</div>
 			
-			<button class="button button-block button-positive botao" ng-click="cadastrar(usuario)">
+			<button class="button button-block button-positive botao" ng-click="cadastrar(usuario)"
+					ng-disabled="(usuario.usuario == undefined || usuario.usuario == '') || 
+								 (usuario.email == undefined || usuario.email == '')     || 
+								 (usuario.senha == undefined || usuario.senha == '')     ||
+								 (usuario.confirmarSenha == undefined || usuario.confirmarSenha == '')   ">
 				Cadastrar
 			</button>
 		</div>
