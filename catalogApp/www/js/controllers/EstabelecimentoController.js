@@ -3,7 +3,8 @@ angular.module("EstabelecimentoControllers",[
 'services.verificarLogin',
 'services.googleMaps',
 'model.estabelecimento',
-'services.modalAlerta'
+'services.modalAlerta',
+'services.WebServices'
 ])
 .config(function($stateProvider, $urlRouterProvider) {
 	
@@ -14,7 +15,7 @@ angular.module("EstabelecimentoControllers",[
 			controller: 'EstabelecimentoController'
 		})
 })
-.controller("EstabelecimentoController",function($scope,$http,$ionicModal,$ionicLoading,$compile,verificarLogin,googleMaps,estabelecimento,modalAlerta){
+.controller("EstabelecimentoController",function($scope,$http,$ionicModal,$ionicLoading,$compile,verificarLogin,googleMaps,estabelecimento,modalAlerta,WebServices){
 	$scope.estabelecimentos = [];
 	
 	//___________ VERIFICAR LOGIN _____________//
@@ -46,8 +47,8 @@ angular.module("EstabelecimentoControllers",[
 		if(cep.length == 9)
 		{
 			cep.split().splice(5,1);
-			$http.get('http://api.postmon.com.br/v1/cep/' +cep).
-			  success(function(data, status, headers, config)
+			WebServices.getCep(cep)
+			.success(function(data, status, headers, config)
 			{
 				var retorno = angular.fromJson(data);	
 				document.getElementById("cidade").value = retorno.cidade;
@@ -99,8 +100,8 @@ angular.module("EstabelecimentoControllers",[
 				
 				var json = "{nome: '"+estab.nome+"', rua: '"+estab.rua+"', cidade: '"+estab.cidade+"', estado: '"+estab.estado+"', numero: '"+estab.numero+"', cep: '"+estab.cep+"',latitude: '"+window.localStorage.latCadastroEstab+"',longitude: '"+window.localStorage.lonCadastroEstab+"'}";
 				
-				$http.post('http://localhost:51786/Webservices/WsEstabelecimento.asmx/criarEstabelecimento', {dtoEstabelecimento:json}).
-				  success(function(data, status, headers, config)
+				WebServices.cadastrarEstabelecimento(json)
+				.success(function(data, status, headers, config)
 				{
 					var retorno = data.d;	
 				});

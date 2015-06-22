@@ -12,6 +12,18 @@ angular.module('services.modalAlerta', ['ionic'])
 		});
 	}
 	
+	modalAlerta.confirmar = function(mensagem,subMensagem, callback)
+	{
+		var confirmPopup = $ionicPopup.confirm
+		({
+			title: mensagem,
+			template: subMensagem
+		});
+		confirmPopup.then(function(res) {
+			callback(res);
+		});
+	}
+	
 	modalAlerta.sucesso = function(mensagem,subMensagem,destino)
 	{
 		var alertPopup = $ionicPopup.alert({

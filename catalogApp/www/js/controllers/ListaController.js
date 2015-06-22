@@ -1,4 +1,4 @@
-angular.module('ListaControllers', ['ionic','services.verificarLogin'])
+angular.module('ListaControllers', ['ionic','services.verificarLogin','services.WebServices','services.modalAlerta'])
 .config(function($stateProvider, $urlRouterProvider) {
 	
     $stateProvider
@@ -8,7 +8,7 @@ angular.module('ListaControllers', ['ionic','services.verificarLogin'])
 			controller: 'ListaController'
 		})
 })
-.controller('ListaController', function($scope,$ionicModal,$http,$ionicPopup,$timeout,verificarLogin) {
+.controller('ListaController', function($scope, $ionicModal, $http, modalAlerta, verificarLogin, WebServices, $ionicPopup) {
   
 	//chave e listas
 	var chave = "{idUsuario:'"+window.localStorage.idUsuario+"',token:'"+window.localStorage.token+"',ultimoAcesso:'"+window.localStorage.ultimoAcesso+"'}";
@@ -28,11 +28,10 @@ angular.module('ListaControllers', ['ionic','services.verificarLogin'])
 		}
 		var dtoLista = "{idLista:'"+idLista+"',idUsuario:'"+idUsuario+"',titulo:'"+titulo+"'}";
 	
-		$http.post('http://localhost:51786/Webservices/WsLista.asmx/editarLista', {dtoChave:chave,dtoLista:dtoLista}).
-		success(function(data, status, headers, config)
+		WebServices.editarListas(chave,dtoLista)
+		.success(function(data, status, headers, config)
 		{
-			var retorno = angular.fromJson(data.d);	
-				
+			var retorno = angular.fromJson(data.d);		
 		});
 	};
 	
@@ -46,13 +45,7 @@ angular.module('ListaControllers', ['ionic','services.verificarLogin'])
     //___________________ DELETAR LISTA ______________//
 	$scope.deletarLista = function(lista) 
 	{
-		
-		var confirmPopup = $ionicPopup.confirm
-		({
-			title: 'Deletar lista',
-			template: "Você tem certeza que quer deletar "+lista.titulo+" ?"
-		});
-		confirmPopup.then(function(res) {
+	   var res = modalAlerta.confirmar("Lista","Adicione um nome a lista",function(res){
 		   if(res)
 		   {
 				$scope.listas.splice($scope.listas.indexOf(lista), 1);
@@ -63,15 +56,15 @@ angular.module('ListaControllers', ['ionic','services.verificarLogin'])
 				{
 					var retorno = angular.fromJson(data.d);	
 				});
-		   } 
-		});
+		   } 	   	   
+	   });
 	};
   	
 	//________________ PESQUISAR LISTAS _____________//
 	$scope.pesquisarLista = function()
 	{	
-		$http.post('http://localhost:51786/Webservices/WsLista.asmx/pesquisarLista', {dtoChave:chave,parametros:""}).
-	    success(function(data, status, headers, config)
+		WebServices.pesquisarListas(chave)
+	    .success(function(data, status, headers, config)
 		{
 			var retorno = angular.fromJson(data.d);	
 			for(var l=0; retorno.objeto.length > l; l++)
@@ -93,17 +86,22 @@ angular.module('ListaControllers', ['ionic','services.verificarLogin'])
 			$scope.modal.hide();	
 			var dtoLista = "{idUsuario:'"+window.localStorage.idUsuario+"',titulo:'"+lista.nome+"'}";
 			
-			$http.post('http://localhost:51786/Webservices/WsLista.asmx/criarLista', {dtoChave:chave,dtoLista:dtoLista}).
-			success(function(data, status, headers, config)
+			WebServices.criarListas(chave,dtoLista)
+			.success(function(data, status, headers, config)
 			{
 				var retorno = angular.fromJson(data.d);	
-				$scope.alerta("Lista","Lista criada com sucesso!");
+				modalAlerta.alerta("Lista","Lista criada com sucesso!");
 			});
 		}
 		else
 		{
-			$scope.alerta("Lista","Adicione um nome a lista");
+			modalAlerta.alerta("Lista","Adicione um nome a lista");
 		}
+	}
+	
+	$scope.pesquisar =  function()
+	{
+		
 	}
   
 	//________________ VERIFICAR LOGIN _________________//
@@ -148,19 +146,4 @@ angular.module('ListaControllers', ['ionic','services.verificarLogin'])
 		 ]
 		});
 	}
-	
-	//____________ ALERTA ____________//
-	$scope.alerta = function(mensagem,subMensagem)
-	{
-		var alertPopup = $ionicPopup.alert({
-		title: mensagem,
-		template: subMensagem
-		});
-		
-		 $timeout(function() 
-		{
-		  alertPopup.close();
-		}, 3000);
-	};
-  
 });

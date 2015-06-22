@@ -1,4 +1,4 @@
-var app = angular.module("UsuarioControllers",['ionic','services.verificarLogin','services.modalAlerta'])
+var app = angular.module("UsuarioControllers",['ionic','services.verificarLogin','services.modalAlerta','services.WebServices'])
 .config(function($stateProvider, $urlRouterProvider) {
 	
     $stateProvider
@@ -23,7 +23,7 @@ var app = angular.module("UsuarioControllers",['ionic','services.verificarLogin'
 			controller: 'PrincipalController'
 		})
 })
-.controller("UsuarioController",function($scope, $ionicModal, $http, $ionicPopup, $timeout, verificarLogin,modalAlerta){
+.controller("UsuarioController",function($scope, $ionicModal, $http, $ionicPopup, $timeout, verificarLogin, modalAlerta, WebServices){
 
     //___________________ LOGAR__________________//
 	$scope.logar = function(usuario)
@@ -34,8 +34,8 @@ var app = angular.module("UsuarioControllers",['ionic','services.verificarLogin'
 			var senha = usuario.senha;
 			var json = "{email:'"+email+"',senha:'"+senha+"'}";
 
-			$http.post('http://localhost:51786/Webservices/WsUsuario.asmx/logar', {dtoUsuario:json}).
-			  success(function(data, status, headers, config)
+			WebServices.logar(json)
+			.success(function(data, status, headers, config)
 			{
 				var retorno = angular.fromJson(data.d);	
 				if(retorno.tipoRetorno == "ACK") //logado
@@ -61,62 +61,54 @@ var app = angular.module("UsuarioControllers",['ionic','services.verificarLogin'
 	//___________________ CADASTRAR___________________//
 	$scope.cadastrar = function(user)
 	{
-		if(user != undefined) //campos foram preenchidos
+		var usuario = user.nome;
+		var email =  user.email;
+		var senha = user.senha;
+		var confirmarSenha = user.confirmarSenha;
+		var json = "{email:'"+email+"',senha:'"+senha+"',nome:'"+usuario+"'}";
+		
+		if(senha.length >=6)
 		{	
-			var usuario = user.nome;
-			var email =  user.email;
-			var senha = user.senha;
-			var confirmarSenha = user.confirmarSenha;
-			var json = "{email:'"+email+"',senha:'"+senha+"',nome:'"+usuario+"'}";
-			
-			if(senha.length >=6)
-			{	
-				if(senha == confirmarSenha) //senhas conferem
-				{
-					var filtro = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-					if(filtro.test(email))//email valido
-					{
-						$http.post('http://localhost:51786/Webservices/WsUsuario.asmx/realizarCadastro', {dtoUsuario:json}).
-						  success(function(data, status, headers, config)
-						{
-							var retorno = angular.fromJson(data.d);	
-							if(retorno.tipoRetorno == "ACK") //cadastrado
-							{
-								window.localStorage.idUsuario = retorno.chave.idUsuario;
-								window.localStorage.token = retorno.chave.token;
-								window.localStorage.ultimoAcesso = retorno.chave.ultimoAcesso;
-								modalAlerta.sucesso("Cadastro","Cadastrando...","#/menu");		
-								return true;
-							}
-							else //erro
-							{
-								modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
-								return false;
-							}
-						});
-					}
-					else //email inválido
-					{
-						$scope.erro = true;
-						document.getElementById("email").value = "Email incorreto!";
-						return false;
-					}
-				}
-				else //senhas nao conferem
-				{
-					modalAlerta.alerta("Ocorreu um erro","Senhas não conferem!");
-					return false;
-				}	
-			}
-			else
+			if(senha == confirmarSenha) //senhas conferem
 			{
-				modalAlerta.alerta("Ocorreu um erro","Senha deve conter mais de 5 digitos!");
+				var filtro = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+				if(filtro.test(email))//email valido
+				{
+					WebServices.cadastrar(json)
+					.success(function(data, status, headers, config)
+					{
+						var retorno = angular.fromJson(data.d);	
+						if(retorno.tipoRetorno == "ACK") //cadastrado
+						{
+							window.localStorage.idUsuario = retorno.chave.idUsuario;
+							window.localStorage.token = retorno.chave.token;
+							window.localStorage.ultimoAcesso = retorno.chave.ultimoAcesso;
+							modalAlerta.sucesso("Cadastro","Cadastrando...","#/menu");		
+							return true;
+						}
+						else //erro
+						{
+							modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
+							return false;
+						}
+					});
+				}
+				else //email inválido
+				{
+					$scope.erro = true;
+					document.getElementById("email").value = "Email incorreto!";
+					return false;
+				}
 			}
+			else //senhas nao conferem
+			{
+				modalAlerta.alerta("Ocorreu um erro","Senhas não conferem!");
+				return false;
+			}	
 		}
 		else
 		{
-			modalAlerta.alerta("Ocorreu um erro","Preencha todos os campos!");
-			return false;
+			modalAlerta.alerta("Ocorreu um erro","Senha deve conter mais de 5 digitos!");
 		}
 	}	
 	
