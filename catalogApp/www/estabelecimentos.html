@@ -8,42 +8,16 @@
 		<!-- conteudo -->
 		 <ion-content>
 		<div class="list">
-			<a class="item item-avatar" href="#">
-				<img src="img/estab1.png">
-				<h2 class="titulo-estab">Nordestao</h2>
-				<p>Prudente de Morais</p>
-				<img class="icone-mapa" src="img/mapa.png" width="30px" height="30px" ng-click="chamarMapa('-5.7936813','-35.2035056','Nordestao')">
-			</a>
-			
-			<a class="item item-avatar" href="#">
-				<img src="img/estab2.png">
-				<h2 class="titulo-estab">Farmaformula</h2>
-				<p>Tirol</p>
-				<img class="icone-mapa" src="img/mapa.png" width="30px" height="30px" ng-click="chamarMapa('-5.7865758','-35.2080757','Farmaformula')">
-			</a>
-			
-			<a class="item item-avatar" href="#">
-				<img src="img/estab3.png">
-				<h2 class="titulo-estab">Auri Auto peças</h2>
-				<p>Cidade Alta</p>
-				<img class="icone-mapa" src="img/mapa.png" width="30px" height="30px" ng-click="chamarMapa('-5.81605','-35.23211','Auri auto pecas')">
-			</a>
-			
-			<a class="item item-avatar" href="#">
-				<img src="img/estab5.png">
-				<h2 class="titulo-estab">Carrefour</h2>
-				<p>Salgado filho</p>
-				<img class="icone-mapa" src="img/mapa.png" width="30px" height="30px" ng-click="chamarMapa('-5.8445742','-35.2105137','Carrefour')">
-			</a>
-			
-			<a class="item item-avatar" href="#">
-				<img src="img/estab1.png">
-				<h2 class="titulo-estab">Nordestao</h2>
-				<p>Zona Norte</p>
-				<img class="icone-mapa" src="img/mapa.png" width="30px" height="30px" ng-click="chamarMapa('-5.7936813','-35.2035056','Nordestao')">
+			<div class="sem-lista-cadastrada" ng-show="estabelecimentos.length == 0">Nenhum Estabelecimento Cadastrado</div>   
+			<a class="item item-avatar" href="#/estabelecimentos" ng-repeat="estab in estabelecimentos">
+				<img src="{{estab.imagem || 'img/semImagem.png'}}">
+				<h2 class="titulo-estab">{{estab.nome}}</h2>
+				<p>{{estab.rua}}</p>
+				<img class="icone-mapa" src="img/mapa.png" width="30px" height="30px" ng-click="chamarMapa('{{estab.latitude}}','{{estab.longitude}}','{{estab.nome}}')">
 			</a>
 		</div>
 		</ion-content>
+		
 		
 		<div class="botao-flutuante" ng-click="modal.show()">
 			<div class="ion-plus-round" id="iconAdd"></div>
@@ -121,6 +95,13 @@
 						<input type="text" ng-model="cep" class="input-form" maxlength="9" size="9" name="cep" ng-change="getEnderecoCep(cep)" id="cep" placeholder="Entre com o CEP">
 					</div>
 					
+					<div class="bloco">
+						<p class="nome-campos img">Imagem:</p>
+						<div class="input-file">
+							<input type="file" id="file">
+						</div>
+					</div>
+
 					<button class="button button-full button-positive botao" ng-click="cadastrarEstabelecimento()"	
 					ng-disabled="(cep == undefined || cep == '') ">Cadastrar</button>
 				</form>

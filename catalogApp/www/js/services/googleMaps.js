@@ -19,7 +19,8 @@ angular.module('services.googleMaps', [])
 			} 
 			else 
 			{
-			  alert("Latitude e Longitude não encontradas");
+				window.localStorage.latCadastroEstab = "semLatitude";
+				window.localStorage.lonCadastroEstab = "semLongitude";		
 			}
 			
 			callback();

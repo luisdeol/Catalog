@@ -22,6 +22,7 @@ angular.module("EstabelecimentoControllers",[
 	$scope.verificarLogin = function(lugarPagina)
 	{
 		verificarLogin.verificarEstabelecimento(lugarPagina);
+		$scope.pesquisarEstabelecimento();
 		estabelecimento.openDataBase();
 	}
 	
@@ -35,10 +36,17 @@ angular.module("EstabelecimentoControllers",[
 	//_______________ CHAMAR MAPA _________________// 
 	$scope.chamarMapa = function(latitudeEstabelecimento,longitudeEstabelecimento,nomeEstabelecimento)
 	{
-		window.localStorage.latitudeEstabelecimento = latitudeEstabelecimento;
-		window.localStorage.longitudeEstabelecimento = longitudeEstabelecimento;
-		window.localStorage.nomeEstabelecimento = nomeEstabelecimento;
-		window.location = "googleMaps.html";
+		if(latitudeEstabelecimento!="semLatitude" && longitudeEstabelecimento!="semLongitude")
+		{
+			window.localStorage.latitudeEstabelecimento = latitudeEstabelecimento;
+			window.localStorage.longitudeEstabelecimento = longitudeEstabelecimento;
+			window.localStorage.nomeEstabelecimento = nomeEstabelecimento;
+			window.location = "googleMaps.html";			
+		}
+		else
+		{
+			modalAlerta.alerta('Sem Localização!','Estabelecimento não possui localização');
+		}
 	}	
 	
 	//_______________ PEGAR ENDEREÇO POR CEP __________________//
@@ -68,10 +76,51 @@ angular.module("EstabelecimentoControllers",[
 		}
 
 	}
+	
+	//_______________ SALVAR IMAGEM __________________//
+	$scope.salvarImagem = function()
+	{
+		var oFReader = new FileReader(); 
+		try 
+		{
+			oFReader.readAsDataURL(document.getElementById("file").files[0]);
+			oFReader.onload = function (oFREvent) 
+			{ 
+				window.localStorage.estabImagem = oFREvent.target.result; 
+			}; 		
+		}
+		catch(err) 
+		{
+			window.localStorage.estabImagem = "";
+		}
+	}
+	
+	//________________ PESQUISAR ESTABELECIMENTO _____________//
+	$scope.pesquisarEstabelecimento = function()
+	{	
+		estabelecimento.select(function(retorno){
+			for(var l=0; retorno.length > l; l++)
+			{
+				var id = retorno[l].id;
+				var nome = retorno[l].nome;
+				var rua = retorno[l].rua;
+				var cidade = retorno[l].cidade;
+				var estado = retorno[l].estado;
+				var numero = retorno[l].numero;
+				var cep = retorno[l].cep;
+				var latitude = retorno[l].latitude;
+				var longitude = retorno[l].longitude; 
+				var imagem = retorno[l].imagem;
+				
+				$scope.estabelecimentos[l] = {id:id, nome:nome, rua:rua, cidade:cidade, estado:estado, numero:numero, cep:cep, latitude:latitude, longitude:longitude, imagem:imagem};
+			}		
+		});	
+	} 
 
 	//_______________ CADASTRAR ESTABELECIMENTO _________________// 
 	$scope.cadastrarEstabelecimento = function()
 	{
+		$scope.salvarImagem();
 		var estab = new Object();
 		estab.nome = document.getElementById("nome").value;
 		estab.rua = document.getElementById("logradouro").value;
@@ -80,31 +129,38 @@ angular.module("EstabelecimentoControllers",[
 		estab.numero = document.getElementById("numero").value;
 		estab.cep = document.getElementById("cep").value;
 		
-		if(estab.nome.length>=3   && 
-		   estab.rua.length>=3    && 
-		   estab.cidade.length>=3 && 
-		   estab.estado.length>=2 && 
-		   estab.numero!="")
+		if( estab.nome.length>=3   && 
+		    estab.rua.length>=3    && 
+		    estab.cidade.length>=3 && 
+		    estab.estado.length>=2 && 
+		    estab.numero!=""       &&
+		    estab.numero>0)
 		{
-			$scope.estabelecimentos.push
-			({ 
-				nome: estab.nome, 
-				rua: estab.rua, 
-				cidade: estab.cidade, 
-				estado: estab.estado, 
-				numero: estab.numero, 
-				cep: estab.cep 
-			});
+			// $scope.estabelecimentos.push
+			// ({ 
+				// nome: estab.nome, 
+				// rua: estab.rua, 
+				// cidade: estab.cidade, 
+				// estado: estab.estado, 
+				// numero: estab.numero, 
+				// cep: estab.cep,
+				// latitude: window.localStorage.latCadastroEstab,
+				// longitude: window.localStorage.lonCadastroEstab,
+				// imagem: window.localStorage.estabImagem
+			// });
 			
 			googleMaps.pegarLatitudeLongitude(estab.nome +" - "+ estab.rua +" - "+ estab.cidade +" - "+ estab.estado,function(){
 				
 				var json = "{nome: '"+estab.nome+"', rua: '"+estab.rua+"', cidade: '"+estab.cidade+"', estado: '"+estab.estado+"', numero: '"+estab.numero+"', cep: '"+estab.cep+"',latitude: '"+window.localStorage.latCadastroEstab+"',longitude: '"+window.localStorage.lonCadastroEstab+"'}";
+				estabelecimento.insertInto(0, estab.nome, estab.rua, estab.cidade, estab.estado, estab.numero, estab.cep, window.localStorage.latCadastroEstab, window.localStorage.lonCadastroEstab, window.localStorage.estabImagem);
 				
-				WebServices.cadastrarEstabelecimento(json)
-				.success(function(data, status, headers, config)
-				{
-					var retorno = data.d;	
-				});
+				// WebServices.cadastrarEstabelecimento(json)
+				// .success(function(data, status, headers, config)
+				// {
+					// var retorno = data.d;	
+				// });
+				
+				$scope.pesquisarEstabelecimento();
 				$scope.modal.hide();
 			});		
 		}

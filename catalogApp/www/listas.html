@@ -5,8 +5,15 @@
 				<button class="button button-icon icon ion-gear-b"
 					ng-click="data.showDelete = !data.showDelete; data.showReorder = false">
 				</button>
+				
+				<button id="lupa" class="button button-icon icon ion-search" ng-click="pesquisarPorLista()">
+				</button>
+				
+				<div ng-show="pesquisarClicado == true">
+					<input type="text" ng-model="obj.teste" ng-class="{'pesquisar-aberto': pesquisarClicado == true}" class="pesquisar-fechado" placeholder="Pesquisar..."> 
+			    </div>
 			</div>
-			<h1 class="title">Listas</h1>
+			<h1 class="title" id="titulo">Listas</h1>
 			<div class="buttons">
 				<button class="button" ng-click="data.showDelete = false; data.showReorder = !data.showReorder">
 					Ordenar
@@ -14,12 +21,11 @@
 			</div>
 		</ion-header-bar>
 
-		<ion-content>      
+		<ion-content class="ajuste-altura-lista">      
 			<ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
 				<div class="sem-lista-cadastrada" ng-show="listas.length == 0">Nenhuma Lista Cadastrada</div>   
-				<ion-item ng-repeat="lista in listas" lista="lista" href="produtos-lista.html" class="item-remove-animate">
+				<ion-item ng-repeat="lista in listas | filter:obj.teste" lista="lista" href="produtos-lista.html" class="item-remove-animate">
 					{{ lista.titulo}}
-					 
 					<ion-delete-button class="ion-close-round" 
 						ng-click="deletarLista(lista)">
 					</ion-delete-button>

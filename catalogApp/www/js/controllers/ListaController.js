@@ -1,4 +1,11 @@
-angular.module('ListaControllers', ['ionic','services.verificarLogin','services.WebServices','services.modalAlerta'])
+angular.module('ListaControllers', 
+[
+'ionic',
+'services.verificarLogin',
+'services.WebServices',
+'services.modalAlerta',
+'model.lista'
+])
 .config(function($stateProvider, $urlRouterProvider) {
 	
     $stateProvider
@@ -8,10 +15,11 @@ angular.module('ListaControllers', ['ionic','services.verificarLogin','services.
 			controller: 'ListaController'
 		})
 })
-.controller('ListaController', function($scope, $ionicModal, $http, modalAlerta, verificarLogin, WebServices, $ionicPopup) {
+.controller('ListaController', function($scope, $ionicModal, $http, modalAlerta, verificarLogin, WebServices, $ionicPopup, listaModelo) {
   
 	//chave e listas
-	var chave = "{idUsuario:'"+window.localStorage.idUsuario+"',token:'"+window.localStorage.token+"',ultimoAcesso:'"+window.localStorage.ultimoAcesso+"'}";
+	var idUsuario = window.localStorage.idUsuario;
+	var chave = "{idUsuario:'"+idUsuario+"',token:'"+window.localStorage.token+"',ultimoAcesso:'"+window.localStorage.ultimoAcesso+"'}";
 	$scope.listas = [];
 
 	//________________ EDITAR LISTAS _____________//
@@ -23,16 +31,17 @@ angular.module('ListaControllers', ['ionic','services.verificarLogin','services.
 				var idLista = $scope.listas[i].idLista;
 				var idUsuario = $scope.listas[i].idUsuario;
 				var titulo = lista.nome;
+				listaModelo.update(0, lista.nome, idUsuario, $scope.listas[i].titulo);
 				$scope.listas[i].titulo = lista.nome;
 			}
 		}
-		var dtoLista = "{idLista:'"+idLista+"',idUsuario:'"+idUsuario+"',titulo:'"+titulo+"'}";
+		// var dtoLista = "{idLista:'"+idLista+"',idUsuario:'"+idUsuario+"',titulo:'"+titulo+"'}";
 	
-		WebServices.editarListas(chave,dtoLista)
-		.success(function(data, status, headers, config)
-		{
-			var retorno = angular.fromJson(data.d);		
-		});
+		// WebServices.editarListas(chave,dtoLista)
+		// .success(function(data, status, headers, config)
+		// {
+			// var retorno = angular.fromJson(data.d);		
+		// });
 	};
 	
     //__________________ MOVER LISTA _________________//
@@ -45,17 +54,19 @@ angular.module('ListaControllers', ['ionic','services.verificarLogin','services.
     //___________________ DELETAR LISTA ______________//
 	$scope.deletarLista = function(lista) 
 	{
-	   var res = modalAlerta.confirmar("Lista","Adicione um nome a lista",function(res){
+	   var res = modalAlerta.confirmar("Deletar","Tem certeza que deseja deletar " + lista.titulo + " ?",function(res){
 		   if(res)
 		   {
 				$scope.listas.splice($scope.listas.indexOf(lista), 1);
 				var dtoLista = "{idLista:'"+lista.idLista+"',idUsuario:'"+lista.idUsuario+"',titulo:'"+lista.titulo+"'}";
 				
-				$http.post('http://localhost:51786/Webservices/WsLista.asmx/excluirLista', {dtoChave:chave,dtoLista:dtoLista}).
-				success(function(data, status, headers, config)
-				{
-					var retorno = angular.fromJson(data.d);	
-				});
+				listaModelo.deletar(lista.titulo, idUsuario);
+				
+				// $http.post('http://localhost:51786/Webservices/WsLista.asmx/excluirLista', {dtoChave:chave,dtoLista:dtoLista}).
+				// success(function(data, status, headers, config)
+				// {
+					// var retorno = angular.fromJson(data.d);	
+				// });
 		   } 	   	   
 	   });
 	};
@@ -63,53 +74,78 @@ angular.module('ListaControllers', ['ionic','services.verificarLogin','services.
 	//________________ PESQUISAR LISTAS _____________//
 	$scope.pesquisarLista = function()
 	{	
-		WebServices.pesquisarListas(chave)
-	    .success(function(data, status, headers, config)
-		{
-			var retorno = angular.fromJson(data.d);	
-			for(var l=0; retorno.objeto.length > l; l++)
+		listaModelo.select(idUsuario, function(retorno){
+			for(var l=0; retorno.length > l; l++)
 			{
-				var idLista = retorno.objeto[l].id;
-				var idUsuario = retorno.objeto[l].idUsuario;
-				var titulo = retorno.objeto[l].titulo;
+				var idLista = retorno[l].id;
+				var idUsuario = retorno[l].id_usuario;
+				var titulo = retorno[l].nome;
 				
 				$scope.listas[l] = {idLista:idLista,idUsuario:idUsuario,titulo:titulo,indice:l};
-			}
-		});
-	}
+			}		
+		});	
+		// WebServices.pesquisarListas(chave)
+	    // .success(function(data, status, headers, config)
+		// {
+			// var retorno = angular.fromJson(data.d);	
+			// for(var l=0; retorno.objeto.length > l; l++)
+			// {
+				// var idLista = retorno.objeto[l].id;
+				// var idUsuario = retorno.objeto[l].idUsuario;
+				// var titulo = retorno.objeto[l].titulo;
+				
+				// $scope.listas[l] = {idLista:idLista,idUsuario:idUsuario,titulo:titulo,indice:l};
+			// }
+		// });
+	} 
 
 	//________________ CRIAR LISTA _________________//
 	$scope.criarLista = function(lista)
 	{
 		if(lista != undefined){
+			
 			$scope.listas.push({ titulo: lista.nome});
 			$scope.modal.hide();	
-			var dtoLista = "{idUsuario:'"+window.localStorage.idUsuario+"',titulo:'"+lista.nome+"'}";
+			var dtoLista = "{idUsuario:'"+idUsuario+"',titulo:'"+lista.nome+"'}";
+			listaModelo.insertInto(0, lista.nome, idUsuario);
 			
-			WebServices.criarListas(chave,dtoLista)
-			.success(function(data, status, headers, config)
-			{
-				var retorno = angular.fromJson(data.d);	
-				modalAlerta.alerta("Lista","Lista criada com sucesso!");
-			});
+			// WebServices.criarListas(chave,dtoLista)
+			// .success(function(data, status, headers, config)
+			// {
+				// var retorno = angular.fromJson(data.d);	
+				// modalAlerta.alerta("Lista","Lista criada com sucesso!");
+			// });
 		}
 		else
 		{
 			modalAlerta.alerta("Lista","Adicione um nome a lista");
 		}
 	}
-	
-	$scope.pesquisar =  function()
-	{
-		
-	}
   
+	$scope.pesquisarClicado = false;
+    //________________ PESQUISAR POR LISTA _________________//
+	$scope.pesquisarPorLista = function()
+	{
+		if($scope.pesquisarClicado == false)
+		{
+			document.getElementById("titulo").className = "title animacao-titulo";
+			$scope.pesquisarClicado = !$scope.pesquisarClicado;
+		}
+		else
+		{
+			document.getElementById("titulo").className = "title";
+			$scope.pesquisarClicado = !$scope.pesquisarClicado;
+		}
+	}
+	
 	//________________ VERIFICAR LOGIN _________________//
 	$scope.verificarLogin = function(lugarPagina)
 	{
 		$scope.pesquisarLista(); //chama as listas
+		listaModelo.openDataBase();
 		verificarLogin.verificarLista(lugarPagina);
 	}
+	
 	
 	//_______________ ABRIR MODAL DE CADASTRO DA LISTA __________________//
 	$ionicModal.fromTemplateUrl('templates/modal.html', {

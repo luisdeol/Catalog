@@ -76,6 +76,7 @@ p.sub-titulo {
   font-weight: bold;
   font-size: 13px;
   margin-left: -18px;
+  background: transparent !important;
 }
 
 .item h2 {
@@ -83,6 +84,7 @@ p.sub-titulo {
   font-size: 20px;
   font-weight: normal;
   margin-left: -18px;
+  background: transparent !important;
 }
 
 .largura-footer{
@@ -135,6 +137,14 @@ button.button-block, button.button-full, .button-full > button.button, input.but
 img.icone-mapa{
   float: right;
   margin-top: -40px;
+}
+
+p.nome-campos.img {
+  margin-top: 15px;
+}
+input#file {
+  color: #073664;
+  font-weight: bold;
 }
 
 input.input-form {
@@ -248,12 +258,46 @@ img.icon-estab-atualizar {
 
 h2.titulo-estab {
   margin-left: 0px;
+  background: transparent !important;
+}
+
+p.ng-binding {
+  background: transparent !important;
 }
 
 /*-- ARQUIVO LISTA.HTML --*/
 .item-delete .button.icon {
   color: orange;
   font-size: 24px;
+}
+
+.ajuste-altura-lista {
+  top: 0px;
+}
+
+
+h1.animacao-titulo{
+  margin-top: 38px !important;
+  transition: margin-top 1.5s;
+}
+
+input.pesquisar-fechado {
+  border-radius: 3px;
+  padding: 10px;
+  width: 3px;
+  transition: width 2s;
+}
+
+input.pesquisar-aberto {
+  width: 285px;
+}
+
+
+.sem-lista-cadastrada {
+  color: orange;
+  font-size: 20px;
+  text-align: center;
+  margin-top: 50px;
 }
 
 .button.button-assertive {
