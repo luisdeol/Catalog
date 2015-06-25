@@ -14,21 +14,21 @@
 				<div class="bloco">
 					<p class="nome-campos">Email:</p>
 						<span class="input-grupo"><span class="ion-at"></span></span>
-						<input type="text" name="email" ng-model="usuario.email" class="input-form" placeholder="email@catalog.com">
+						<input type="text" name="email" id="email" ng-model="usuario.email" class="input-form" placeholder="email@catalog.com">
 					<br>
 				</div>	
 				
 				<div class="bloco">
 					<p class="nome-campos">Senha:</p>
 						<span class="input-grupo"><span ng-class="{'ion-unlocked':usuario.senha == usuario.confirmarSenha && usuario.senha.length>5}" class="ion-locked"></span></span>
-						<input type="password" name="senha" ng-model="usuario.senha" class="input-form" placeholder="senha">
+						<input type="password" id="senha" name="senha" ng-model="usuario.senha" class="input-form" placeholder="senha">
 					<br>
 				</div>
 				
 				<div class="bloco">
 					<p class="nome-campos">Repetir Senha:</p>
 						<span class="input-grupo"><span ng-class="{'ion-unlocked':usuario.senha == usuario.confirmarSenha && usuario.confirmarSenha.length>5}" class="ion-locked"></span></span>
-						<input type="password" name="repetirSenha" ng-model="usuario.confirmarSenha" class="input-form" placeholder="confirmar senha">
+						<input type="password" ng-blur="confereSenhaErrada()" ng-change="confereSenhaCerta()" id="repetirSenha" name="repetirSenha" ng-model="usuario.confirmarSenha" class="input-form" placeholder="confirmar senha">
 					<br>
 				</div>	
 				

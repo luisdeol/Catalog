@@ -49,6 +49,9 @@ var app = angular.module("UsuarioControllers",['ionic','services.verificarLogin'
 				{
 					modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
 				}
+			})
+			.error(function(data, status, headers, config) {
+				modalAlerta.alerta("Ocorreu um erro","Voce esta sem acesso a rede!");
 			});
 		}
 		else //campos vazios
@@ -91,6 +94,9 @@ var app = angular.module("UsuarioControllers",['ionic','services.verificarLogin'
 							modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
 							return false;
 						}
+					})
+					.error(function(data, status, headers, config) {
+						modalAlerta.alerta("Ocorreu um erro","Voce esta sem acesso a rede!");
 					});
 				}
 				else //email inválido
@@ -111,6 +117,30 @@ var app = angular.module("UsuarioControllers",['ionic','services.verificarLogin'
 			modalAlerta.alerta("Ocorreu um erro","Senha deve conter mais de 5 digitos!");
 		}
 	}	
+	
+	//_________________ CONFERE SENHA ERRADA _________________//
+	$scope.confereSenhaErrada = function()
+	{
+		var senha = document.getElementById("senha").value;
+		var repetirSenha = document.getElementById("repetirSenha").value;
+		if(senha!="" && repetirSenha.length<6 && repetirSenha!=senha)
+		{
+			document.getElementById("senha").className = "input-form senha-errada";
+			document.getElementById("repetirSenha").className = "input-form senha-errada";
+		}
+	}
+	
+	//________________ CONFERE SENHA CERTA __________________//
+	$scope.confereSenhaCerta = function()
+	{
+		var senha = document.getElementById("senha").value;
+		var repetirSenha = document.getElementById("repetirSenha").value;
+		if(senha!="" && repetirSenha!="" && senha==repetirSenha)
+		{
+			document.getElementById("senha").className = "input-form senha-correta";
+			document.getElementById("repetirSenha").className = "input-form senha-correta";
+		}
+	}
 	
 	//___________ VERIFICAR LOGIN _____________//
 	$scope.verificarLogin = function(lugarPagina)

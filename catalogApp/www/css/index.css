@@ -53,6 +53,14 @@ p.svg {
   border: 2px solid red !important;
 }
 
+.senha-correta{
+  border: 1px solid green !important;
+}
+
+.senha-errada{
+  border: 1px solid red !important;
+}
+
 /*-- ARQUIVO PRINCIPAL.HTML --*/
 a.item {
   color: inherit;
