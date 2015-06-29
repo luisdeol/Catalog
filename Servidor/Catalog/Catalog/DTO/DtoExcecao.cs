@@ -31,6 +31,9 @@ namespace Catalog.DTO
 				case Enum.CriteriosDeBuscaInsuficientes:
 					mensagem = "É nescessário que pelo menos um dos campos de busca contenha pelo menos 4 caracteres";
 					break;
+				case Enum.JsonInvalido:
+					mensagem = "Dados foram perdidos durante o processo!";
+					break;
 			}
 		}
 
