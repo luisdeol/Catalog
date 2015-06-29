@@ -148,6 +148,7 @@
     <Compile Include="Models\Interfaces\IProduto.cs" />
     <Compile Include="Models\Interfaces\ITipoProduto.cs" />
     <Compile Include="Models\Interfaces\IUsuario.cs" />
+    <Compile Include="Models\Item.cs" />
     <Compile Include="Models\Lista.cs" />
     <Compile Include="Models\Produto.cs" />
     <Compile Include="Models\TipoProduto.cs" />
