@@ -37,8 +37,11 @@ namespace Catalog.Models
 							 orderby i.compraRecente descending
 							 select i;
 
-			if(itensBanco.Count() < 1)
+			if (itensBanco.Count() < 1)
+			{
+				item.id = 0;
 				return item;
+			}
 
 			if(itensBanco.Count() > 1)
 				itensBanco = from i in itensBanco
