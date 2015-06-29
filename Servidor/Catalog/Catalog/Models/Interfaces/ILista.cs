@@ -12,8 +12,7 @@ namespace Catalog.Models.Interfaces
 		DtoLista abrirLista(int idLista);
 		void editarLista(int idLista, string novoNome);
 		void excluirLista(int idLista);
-		DtoLista[] pesquisarListas(int isUsuario);
-		DtoLista listarProdutos(int idLista);
+		DtoLista[] pesquisarListas(int idUsuario);
 		DtoLista listarItensEm(int idLista, int idEstabelecimento);
 		DtoProdutoDaLista adicionarProduto(DtoProdutoDaLista produto);
 		void removerProduto(int idProduto);

@@ -10,6 +10,7 @@ namespace Catalog.DTO
 		public int id { get; set; }
 		public string titulo { get; set; }
 		public int idUsuario { get; set; }
+		public int precoTotal { get; set; }
 		public DtoProdutoDaLista[] produtosDaLista { get; set; }
 	}
 }
