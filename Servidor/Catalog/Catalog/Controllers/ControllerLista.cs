@@ -1,5 +1,6 @@
 ﻿using Catalog.Controllers.Interfaces;
 using Catalog.DTO;
+using Catalog.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +18,25 @@ namespace Catalog.Controllers
 			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
 			DtoLista lista = js.Deserialize<DtoLista>(dtoLista);
 
-			/*codigo simulado*/
-			lista.id = 1;
-			lista.idUsuario = chave.idUsuario;
-			lista.titulo = lista.titulo;
-			retorno = new DtoRetornoObjeto(chave, lista);
-			/*codigo simulado*/
+			Chave mChave = new Chave();
+
+			try
+			{
+				//mChave.validarChave(chave);
+				Lista mLista = new Lista();
+				lista.idUsuario = chave.idUsuario;
+				lista = mLista.criarLista(lista);
+				//chave = mChave.atualizarChave(chave);
+				retorno = new DtoRetornoObjeto(chave, lista);
+			}
+			catch (DtoExcecao ex)
+			{
+				retorno = ex.ToDto();
+			}
+			catch (Exception ex)
+			{
+				retorno = new DtoRetornoErro(ex.Message);
+			}
 
 			/*Objeto: DtoLista puro*/
 			return js.Serialize(retorno);
@@ -64,6 +78,7 @@ namespace Catalog.Controllers
 			return js.Serialize(retorno);
 		}
 
+		/*Não Implementado*/
 		public string editarLista(string dtoChave, string dtoLista)
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
@@ -78,6 +93,7 @@ namespace Catalog.Controllers
 			return js.Serialize(retorno);
 		}
 
+		/*Não Implementado*/
 		public string excluirLista(string dtoChave, string dtoLista)
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
@@ -220,6 +236,7 @@ namespace Catalog.Controllers
 			return js.Serialize(retorno);
 		}
 
+		/*Não Implementado*/
 		public string removerProduto(string dtoChave, string dtoLista, string dtoProduto)
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
