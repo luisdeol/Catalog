@@ -49,14 +49,7 @@ namespace Catalog.Webservices
 		public string pesquisarLista(string dtoChave, string parametros)
 		{
 			ControllerLista cLista = new ControllerLista();
-			return cLista.pesquisarLista(dtoChave, parametros);
-		}
-
-		[WebMethod]
-		public string listarProdutos(string dtoChave, string dtoLista)
-		{
-			ControllerLista cLista = new ControllerLista();
-			return cLista.listarProdutos(dtoChave, dtoLista);
+			return cLista.pesquisarLista(dtoChave);
 		}
 
 		[WebMethod]

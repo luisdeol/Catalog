@@ -21,7 +21,7 @@ namespace Catalog.Models
 			var ListasSimilaresBanco = from l in dataContext.tb_Listas where l.titulo.StartsWith(lista.titulo) select l;
 
 			if (ListasSimilaresBanco.Count() >= 1)
-				lista.titulo += " " + DateTime.Now.ToString();
+				lista.titulo = lista.titulo + " " + DateTime.Now.ToString();
 
 			tb_Lista listaBanco = new tb_Lista();
 			listaBanco.titulo = lista.titulo;
