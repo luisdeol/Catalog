@@ -12,17 +12,33 @@ namespace Catalog.Controllers
 	{
 		public string criarEstabelecimento(string dtoChave, string dtoEnderecoEstabelecimento)
 		{
-			/*Objeto: DtoEnderecoEstabelecimento com DtoEstabelecimento*/
-			return null;
-		}
 
-        public void criarEstabelecimento(string DtoEstabelecimento)
-        {
             JavaScriptSerializer js = new JavaScriptSerializer();
-            DtoEnderecoEstabelecimento enderecoEstabelecimento = js.Deserialize<DtoEnderecoEstabelecimento>(DtoEstabelecimento);
-            DtoEstabelecimento estabelecimento = js.Deserialize<DtoEstabelecimento>(DtoEstabelecimento);
-            Estabelecimento mEstabelecimento = new Estabelecimento();
-            mEstabelecimento.criarEstabelecimento(enderecoEstabelecimento,estabelecimento);
+            DtoRetorno retorno;
+            DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
+            DtoEnderecoEstabelecimento enderecoEstabelecimento = js.Deserialize<DtoEnderecoEstabelecimento>(dtoEnderecoEstabelecimento);
+            DtoEnderecoEstabelecimento[] estabelecimento;
+
+            Chave mChave = new Chave();
+
+            try
+            {
+                mChave.validarChave(chave);
+                Estabelecimento mEstabelecimento = new Estabelecimento();
+                estabelecimento = mEstabelecimento.criarEstabelecimento(enderecoEstabelecimento);
+                chave = mChave.atualizarChave(chave);
+                retorno = new DtoRetornoObjeto(chave, estabelecimento);
+            }
+            catch (DtoExcecao ex)
+            {
+                retorno = ex.ToDto();
+            }
+            catch (Exception ex)
+            {
+                retorno = new DtoRetornoErro(ex.Message);
+            }
+
+            return js.Serialize(retorno);
 		}
 
 		public string pesquisarEstabelecimentos(string dtoChave, string dtoEnderecoEstabelecimento)

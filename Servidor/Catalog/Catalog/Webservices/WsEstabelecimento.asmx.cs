@@ -19,11 +19,11 @@ namespace Catalog.Webservices
     {
 
         [WebMethod]
-        public string criarEstabelecimento(string dtoEstabelecimento)
+        public string criarEstabelecimento(string dtoChave, string dtoEnderecoEstabelecimento)
         {
             ControllerEstabelecimento cEstabelecimento = new ControllerEstabelecimento();
-            cEstabelecimento.criarEstabelecimento(dtoEstabelecimento);
-            return "sucesso"; //tem que retornar o DTO do EnderecoEstabelecimento com o DtoEstabelecimento
+            return cEstabelecimento.criarEstabelecimento(dtoChave, dtoEnderecoEstabelecimento);
+            //return "sucesso"; //tem que retornar o DTO do EnderecoEstabelecimento com o DtoEstabelecimento
         }
 
 		[WebMethod]

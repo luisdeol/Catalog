@@ -10,36 +10,35 @@ namespace Catalog.Models
 {
     public class Estabelecimento : IEstabelecimento
     {
-		public DtoEnderecoEstabelecimento cadastrarEstabelecimento(DtoEnderecoEstabelecimento estabelecimento)
-		{
-			return new DtoEnderecoEstabelecimento();
-		}
 
-        public void criarEstabelecimento(DtoEnderecoEstabelecimento enderecoEstabelecimento,DtoEstabelecimento estabelecimento)
+        public void criarEstabelecimento(DtoEnderecoEstabelecimento enderecoEstabelecimento)
 		{
             DBCatalogDataContext dataContext = new DBCatalogDataContext();
-			var estabelecimentoBanco = dataContext.tb_EnderecoEstabelecimentos.FirstOrDefault(u => 
+            var estabelecimentoBanco = new tb_Estabelecimento();
+
+			var enderecoEstabelecimentoBanco = dataContext.tb_EnderecoEstabelecimentos.FirstOrDefault(u => 
                 u.rua ==  enderecoEstabelecimento.rua && 
                 u.numero ==  enderecoEstabelecimento.numero);
 
-            var estab = dataContext.tb_Estabelecimentos.FirstOrDefault(u => u.estabelecimento == estabelecimento.nome);
-
-
-            if (estabelecimentoBanco == null && estab == null)
+            if (enderecoEstabelecimentoBanco == null)
             {
-                estabelecimentoBanco = new tb_EnderecoEstabelecimento();
-                estab = new tb_Estabelecimento();
-                estab.estabelecimento = estabelecimento.nome;
-                estabelecimentoBanco.rua =  enderecoEstabelecimento.rua;
-                estabelecimentoBanco.cidade =  enderecoEstabelecimento.cidade;
-                estabelecimentoBanco.estado =  enderecoEstabelecimento.estado;  
-                estabelecimentoBanco.numero =  enderecoEstabelecimento.numero;
-                estabelecimentoBanco.cep =  enderecoEstabelecimento.cep;
-                estabelecimentoBanco.latitude =  enderecoEstabelecimento.latitude;
-                estabelecimentoBanco.longitude =  enderecoEstabelecimento.longitude;
+                enderecoEstabelecimentoBanco = new tb_EnderecoEstabelecimento();
+                estabelecimentoBanco.estabelecimento = enderecoEstabelecimento.estabelecimento.nome;
+                dataContext.tb_Estabelecimentos.InsertOnSubmit(estabelecimentoBanco);
+                dataContext.SubmitChanges();
 
-                dataContext.tb_EnderecoEstabelecimentos.InsertOnSubmit(estabelecimentoBanco);
-                dataContext.tb_Estabelecimentos.InsertOnSubmit(estab);
+                var ultimoEstabelecimentoSalvo = (from ues in dataContext.tb_Estabelecimentos orderby ues.id descending select ues).First();
+
+                enderecoEstabelecimentoBanco.idEstabelecimento = ultimoEstabelecimentoSalvo.id;
+                enderecoEstabelecimentoBanco.rua = enderecoEstabelecimento.rua;
+                enderecoEstabelecimentoBanco.cidade = enderecoEstabelecimento.cidade;
+                enderecoEstabelecimentoBanco.estado = enderecoEstabelecimento.estado;
+                enderecoEstabelecimentoBanco.numero = enderecoEstabelecimento.numero;
+                enderecoEstabelecimentoBanco.cep = enderecoEstabelecimento.cep;
+                enderecoEstabelecimentoBanco.latitude = enderecoEstabelecimento.latitude;
+                enderecoEstabelecimentoBanco.longitude = enderecoEstabelecimento.longitude;
+
+                dataContext.tb_EnderecoEstabelecimentos.InsertOnSubmit(enderecoEstabelecimentoBanco);
                 dataContext.SubmitChanges();
             }
             else
