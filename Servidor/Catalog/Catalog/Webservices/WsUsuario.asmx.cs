@@ -38,5 +38,12 @@ namespace Catalog.Webservices
             ControllerUsuario cUsuario = new ControllerUsuario();
             return cUsuario.alterarDadosCadastrais(dtoUsuario,novaSenha);
         }
+
+        [WebMethod]
+        public string recuperarSenha(string dtoUsuario)
+        {
+            ControllerUsuario cUsuario = new ControllerUsuario();
+            return cUsuario.recuperarSenha(dtoUsuario);
+        }
     }
 }

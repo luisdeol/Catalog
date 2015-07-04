@@ -4,6 +4,8 @@ using Catalog.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 
 namespace Catalog.Models
@@ -59,7 +61,37 @@ namespace Catalog.Models
 
 		public void recuperarSenha(string email)
 		{
+            DBCatalogDataContext dataContext = new DBCatalogDataContext();
+            var usuarioBanco = dataContext.tb_Usuarios.FirstOrDefault(u => u.email == email); ;
 
+            if(usuarioBanco != null)
+            {
+                Random senhaAlternativa = new Random ();
+                senhaAlternativa.Next(999999);
+                DateTime dataAtual = DateTime.Today;
+
+                //enviar email
+                SmtpClient cliente = new SmtpClient();
+                cliente.Host = "smtp.gmail.com";
+                cliente.EnableSsl = true;
+                cliente.Credentials = new NetworkCredential("sistemadecomprasdigitais@gmail.com", "comprasdigitais"); //email e sennha 
+
+                cliente.Send("sistemadecomprasdigitais@gmail.com", email,
+                "Recuperar senha", "Sua senha alternativa é:" + senhaAlternativa.ToString());
+
+                //banco
+                var senhaAlternativaBanco = new Linq.tb_SenhaAlternativa();
+                senhaAlternativaBanco.senha = senhaAlternativa.ToString();
+                senhaAlternativaBanco.idUsuario = usuarioBanco.id;
+                senhaAlternativaBanco.dataDeCriacao = dataAtual;
+
+                dataContext.tb_SenhaAlternativas.InsertOnSubmit(senhaAlternativaBanco);
+                dataContext.SubmitChanges();
+            }
+            else
+            {
+                throw new DtoExcecao(DTO.Enum.CampoInvalido, "E-mail não cadastrado!");
+            }
 		}
 
 		public DtoChave logar(string email, string senha)
