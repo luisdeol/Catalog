@@ -99,10 +99,19 @@ namespace Catalog.Models
 			Chave mChave = new Chave();
 
             DBCatalogDataContext dataContext = new DBCatalogDataContext();
-            var usuarios = dataContext.tb_Usuarios.FirstOrDefault(u => u.email == email && u.senha == senha);
-            if (usuarios != null)
+            var usuarioBanco = dataContext.tb_Usuarios.FirstOrDefault(u => u.email == email && u.senha == senha);
+            var usuarioSenhaAlternativaBanco = dataContext.tb_SenhaAlternativas.FirstOrDefault(u => u.tb_Usuario.email == email && u.senha == senha);
+
+            if (usuarioBanco != null)
             {
-                DtoChave chave = mChave.criarChave(usuarios.id);
+                dataContext.tb_SenhaAlternativas.DeleteOnSubmit(usuarioSenhaAlternativaBanco);
+                dataContext.SubmitChanges();
+                DtoChave chave = mChave.criarChave(usuarioBanco.id);
+                return chave;
+            }
+            else if (usuarioSenhaAlternativaBanco != null)
+            {
+                DtoChave chave = mChave.criarChave(usuarioBanco.id);
                 return chave;
             }
             else
