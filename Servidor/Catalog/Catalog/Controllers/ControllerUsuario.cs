@@ -54,12 +54,28 @@ namespace Catalog.Controllers
 		}
 
         //______________ ALTERAR SENHA ________________//
-		public string alterarSenha(string dtoChave, string dtoUsuario)
+		public string alterarSenha(string dtoUsuario)
 		{
-			JavaScriptSerializer js = new JavaScriptSerializer();
-			DtoRetorno retorno;
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            DtoUsuario usuario = js.Deserialize<DtoUsuario>(dtoUsuario);
+            DtoRetorno retorno;
 
-			return "";
+            try
+            {
+                Usuario mUsuario = new Usuario();
+                mUsuario.recuperarSenha(usuario.email);
+                retorno = new DtoRetorno("ACK","");
+            }
+            catch (DtoExcecao ex)
+            {
+                retorno = ex.ToDto();
+            }
+            catch (Exception ex)
+            {
+                retorno = new DtoRetornoErro(ex.Message);
+            }
+
+            return js.Serialize(retorno);
 		}
 
 		public string recuperarSenha(string dtoUsuario)
