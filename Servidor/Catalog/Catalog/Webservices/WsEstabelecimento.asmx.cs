@@ -23,7 +23,6 @@ namespace Catalog.Webservices
         {
             ControllerEstabelecimento cEstabelecimento = new ControllerEstabelecimento();
             return cEstabelecimento.criarEstabelecimento(dtoChave, dtoEnderecoEstabelecimento);
-            //return "sucesso"; //tem que retornar o DTO do EnderecoEstabelecimento com o DtoEstabelecimento
         }
 
 		[WebMethod]

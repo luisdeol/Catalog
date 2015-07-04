@@ -11,10 +11,11 @@ namespace Catalog.Models
     public class Estabelecimento : IEstabelecimento
     {
 
-        public void criarEstabelecimento(DtoEnderecoEstabelecimento enderecoEstabelecimento)
+        public DtoEnderecoEstabelecimento criarEstabelecimento(DtoEnderecoEstabelecimento enderecoEstabelecimento)
 		{
             DBCatalogDataContext dataContext = new DBCatalogDataContext();
             var estabelecimentoBanco = new tb_Estabelecimento();
+            var ultimoEstabelecimentoSalvo = new tb_Estabelecimento(); 
 
 			var enderecoEstabelecimentoBanco = dataContext.tb_EnderecoEstabelecimentos.FirstOrDefault(u => 
                 u.rua ==  enderecoEstabelecimento.rua && 
@@ -27,7 +28,7 @@ namespace Catalog.Models
                 dataContext.tb_Estabelecimentos.InsertOnSubmit(estabelecimentoBanco);
                 dataContext.SubmitChanges();
 
-                var ultimoEstabelecimentoSalvo = (from ues in dataContext.tb_Estabelecimentos orderby ues.id descending select ues).First();
+                ultimoEstabelecimentoSalvo = (from ues in dataContext.tb_Estabelecimentos orderby ues.id descending select ues).First();
 
                 enderecoEstabelecimentoBanco.idEstabelecimento = ultimoEstabelecimentoSalvo.id;
                 enderecoEstabelecimentoBanco.rua = enderecoEstabelecimento.rua;
@@ -45,6 +46,20 @@ namespace Catalog.Models
             {
 				throw new DtoExcecao(DTO.Enum.CampoInvalido, "Estabelecimento ja existente");
             }
+
+            var estabelecimentoRetorno = new DtoEnderecoEstabelecimento();
+            estabelecimentoRetorno.estabelecimento.id = ultimoEstabelecimentoSalvo.id;
+            estabelecimentoRetorno.estabelecimento.nome = ultimoEstabelecimentoSalvo.estabelecimento;
+            estabelecimentoRetorno.cep = enderecoEstabelecimento.cep;
+            estabelecimentoRetorno.cidade = enderecoEstabelecimento.cidade;
+            estabelecimentoRetorno.estado = enderecoEstabelecimento.estado;
+            estabelecimentoRetorno.idEstabelecimento = ultimoEstabelecimentoSalvo.id;
+            estabelecimentoRetorno.latitude = enderecoEstabelecimento.latitude;
+            estabelecimentoRetorno.longitude = enderecoEstabelecimento.longitude;
+            estabelecimentoRetorno.numero = enderecoEstabelecimento.numero;
+            estabelecimentoRetorno.rua = enderecoEstabelecimento.rua;
+
+            return estabelecimentoRetorno;
 		}
 
 		public DtoItem[] procurarProduto(DtoProduto parametros)

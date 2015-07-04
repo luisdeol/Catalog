@@ -17,7 +17,7 @@ namespace Catalog.Controllers
             DtoRetorno retorno;
             DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
             DtoEnderecoEstabelecimento enderecoEstabelecimento = js.Deserialize<DtoEnderecoEstabelecimento>(dtoEnderecoEstabelecimento);
-            DtoEnderecoEstabelecimento[] estabelecimento;
+            DtoEnderecoEstabelecimento estabelecimento;
 
             Chave mChave = new Chave();
 
