@@ -72,22 +72,38 @@ namespace Catalog.Controllers
 			return js.Serialize(retorno);
 		}
 
-		/*Não Implementado*/
-		public string editarLista(string dtoChave, string dtoLista)
+
+		public string editarLista(string dtoChave, string dtoLista) 
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
 			DtoRetorno retorno;
 			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
+            DtoLista lista = js.Deserialize<DtoLista>(dtoLista);
 
-			/*codigo simulado*/
-			retorno = new DtoRetornoObjeto(chave);
-			/*codigo simulado*/
+            Chave mChave = new Chave();
+
+            try
+            {
+                mChave.validarChave(chave);
+                Lista mLista = new Lista();
+                mLista.editarLista(lista.id, lista.titulo);
+                chave = mChave.atualizarChave(chave);
+                retorno = new DtoRetornoObjeto(chave);
+            }
+            catch (DtoExcecao ex)
+            {
+                retorno = ex.ToDto();
+            }
+            catch (Exception ex)
+            {
+                retorno = new DtoRetornoErro(ex.Message);
+            }
 
 			/*Objeto: DtoLista puro*/
 			return js.Serialize(retorno);
 		}
 
-		/*Não Implementado*/
+
 		public string excluirLista(string dtoChave, string dtoLista)
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
@@ -95,15 +111,29 @@ namespace Catalog.Controllers
 			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
 			DtoLista lista = js.Deserialize<DtoLista>(dtoLista);
 
-			/*codigo simulado*/
-			retorno = new DtoRetornoObjeto(chave);
-			/*codigo simulado*/
+            Chave mChave = new Chave();
+            try
+            {
+                mChave.validarChave(chave);
+                Lista mLista = new Lista();
+                mLista.excluirLista(lista.id);
+                chave = mChave.atualizarChave(chave);
+                retorno = new DtoRetornoObjeto(chave); 
+            }
+            catch (DtoExcecao ex)
+            {
+                retorno = ex.ToDto();
+            }
+            catch (Exception ex)
+            {
+                retorno = new DtoRetornoErro(ex.Message);
+            }
 
 			/*Objeto: apenas a chave*/
 			return js.Serialize(retorno);
 		}
 
-        public string pesquisarLista(string dtoChave)
+		public string pesquisarLista(string dtoChave)
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
 			DtoRetorno retorno;
@@ -171,37 +201,59 @@ namespace Catalog.Controllers
 			DtoRetorno retorno;
 			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
 			DtoLista lista = js.Deserialize<DtoLista>(dtoLista);
-			DtoProdutoDaLista produtoDaLista = js.Deserialize<DtoProdutoDaLista>(dtoProdutoDaLista);
+		
 
-			/*codigo simulado*/
-			produtoDaLista.id = 99;
-			produtoDaLista.idLista = lista.id;
-			produtoDaLista.idProduto = produtoDaLista.produto.id;
-			retorno = new DtoRetornoObjeto(chave, produtoDaLista);
-			/*codigo simulado*/
+            Chave mChave = new Chave();
+
+            try
+            {
+                mChave.validarChave(chave);
+                DtoProdutoDaLista produtoDaLista = js.Deserialize<DtoProdutoDaLista>(dtoProdutoDaLista);
+                Lista mLista = new Lista();
+                produtoDaLista = mLista.adicionarProduto(produtoDaLista);
+                chave = mChave.atualizarChave(chave);
+                retorno = new DtoRetornoObjeto(chave, produtoDaLista);
+            }
+            catch (DtoExcecao ex)
+            {
+                retorno = ex.ToDto();
+            }
+            catch (Exception ex)
+            {
+                retorno = new DtoRetornoErro(ex.Message);
+            }
 
 			/*Objeto: DtoProdutoDaLista com o DtoProduto*/
 			return js.Serialize(retorno);
 		}
 
-		/*Não Implementado*/
 		public string removerProduto(string dtoChave, string dtoLista, string dtoProduto)
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
 			DtoRetorno retorno;
 			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
+            DtoProdutoDaLista produtoDaLista = js.Deserialize<DtoProdutoDaLista>(dtoProduto);
 
-			/*codigo simulado*/
-			retorno = new DtoRetornoObjeto(chave);
-			/*codigo simulado*/
+            try
+            {
+                Chave mChave = new Chave();
+                mChave.validarChave(chave);
+                Lista mLista = new Lista();
+                mLista.removerProduto(produtoDaLista.id);
+                chave = mChave.atualizarChave(chave);
+                retorno = new DtoRetornoObjeto(chave);
+            }
+            catch (DtoExcecao ex)
+            {
+                retorno = ex.ToDto();
+            }
+            catch (Exception ex)
+            {
+                retorno = new DtoRetornoErro(ex.Message);
+            }
 
 			/*Objeto: apenas a chave*/
 			return js.Serialize(retorno);
 		}
-
-        public string listarProdutos(string dtoChave, string dtoLista)
-        {
-            return "";
-        }
 	}
 }

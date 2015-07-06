@@ -21,7 +21,7 @@ namespace Catalog.Models
 			var ListasSimilaresBanco = from l in dataContext.tb_Listas where l.titulo.StartsWith(lista.titulo) select l;
 
 			if (ListasSimilaresBanco.Count() >= 1)
-				lista.titulo += " " + DateTime.Now.ToString();
+				lista.titulo = lista.titulo + " " + DateTime.Now.ToString();
 
 			tb_Lista listaBanco = new tb_Lista();
 			listaBanco.titulo = lista.titulo;
@@ -79,12 +79,37 @@ namespace Catalog.Models
 
 		public void editarLista(int idLista, string novoNome)
 		{
-			/**/
+            DBCatalogDataContext dataContext = new DBCatalogDataContext();
+            tb_Lista listaBanco;
+            try 
+            { 
+                listaBanco = dataContext.tb_Listas.First(l => l.id == idLista); 
+            }
+            catch 
+            {
+                throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado);
+            }
+            listaBanco.titulo = novoNome;
+            dataContext.SubmitChanges();
 		}
 
 		public void excluirLista(int idLista)
 		{
-			/**/
+            DBCatalogDataContext dataContext = new DBCatalogDataContext();
+            tb_Lista listaBanco;
+            try
+            {
+                listaBanco = dataContext.tb_Listas.First(l => l.id == idLista);
+            }
+            catch { throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado, "lista"); }
+
+            foreach(tb_ProdutoDaLista produto in listaBanco.tb_ProdutoDaListas)
+            {
+                dataContext.tb_ProdutoDaListas.DeleteOnSubmit(produto);
+            }
+
+            dataContext.tb_Listas.DeleteOnSubmit(listaBanco);
+            dataContext.SubmitChanges();
 		}
 
 		public DtoLista[] pesquisarListas(int idUsuario)
@@ -163,12 +188,39 @@ namespace Catalog.Models
 
 		public DtoProdutoDaLista adicionarProduto(DtoProdutoDaLista produto)
 		{
-			return null;
+            DBCatalogDataContext dataContext = new DBCatalogDataContext();
+            
+
+            var produtosListaExistentes = from p in dataContext.tb_ProdutoDaListas where p.idProduto.Equals(produto.id) select p;
+            if (produtosListaExistentes.Count() > 1)
+            {
+                produto.quantidade = produto.quantidade + 1;
+                dataContext.SubmitChanges();
+            }
+            else
+            {
+                tb_ProdutoDaLista produtoLista = new tb_ProdutoDaLista() ;
+                produtoLista.idLista = produto.idLista;
+                produtoLista.idProduto = produto.idProduto;
+                produtoLista.quantidade = produto.quantidade;
+                dataContext.tb_ProdutoDaListas.InsertOnSubmit(produtoLista);
+                dataContext.SubmitChanges();
+                produto.id = dataContext.tb_ProdutoDaListas.FirstOrDefault(p => p.idProduto == produto.idProduto &&
+                    p.idLista == produto.idLista).id;
+            }
+			return produto;
 		}
 
 		public void removerProduto(int idProduto)
 		{
-			/**/
+            DBCatalogDataContext dataContext = new DBCatalogDataContext();
+            tb_ProdutoDaLista produtoLista;
+            try
+            {
+                produtoLista = (dataContext.tb_ProdutoDaListas.First(p => p.id == idProduto));
+            }
+            catch { throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado, "produto da lista"); }
+            dataContext.tb_ProdutoDaListas.DeleteOnSubmit(produtoLista);
 		}
 	}
 }
