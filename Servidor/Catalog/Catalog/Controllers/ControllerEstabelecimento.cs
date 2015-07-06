@@ -1,4 +1,5 @@
-﻿using Catalog.DTO;
+﻿using Catalog.Controllers.Interfaces;
+using Catalog.DTO;
 using Catalog.Models;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Web.Script.Serialization;
 
 namespace Catalog.Controllers
 {
-    public class ControllerEstabelecimento
+    public class ControllerEstabelecimento : IControllerEstabelecimento
 	{
 		public string criarEstabelecimento(string dtoChave, string dtoEnderecoEstabelecimento)
 		{
@@ -74,14 +75,73 @@ namespace Catalog.Controllers
 
 		public string listarProdutos(string dtoChave, string dtoEnderecoEstabelecimento)
 		{
+			JavaScriptSerializer js = new JavaScriptSerializer();
+			DtoRetorno retorno;
+			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
+			DtoEnderecoEstabelecimento enderecoEstabelecimento = js.Deserialize<DtoEnderecoEstabelecimento>(dtoEnderecoEstabelecimento);
+			DtoItem[] produtosDoEstabelecimento;
+
+			Chave mChave = new Chave();
+
+			try
+			{
+				mChave.validarChave(chave);
+				Estabelecimento mEstabelecimento = new Estabelecimento();
+				chave = mChave.atualizarChave(chave);
+
+				DtoProduto parametros = new DtoProduto();
+				parametros.nome = "";
+				parametros.idTipo = 0;
+				parametros.codigoDeBarras = "";
+				parametros.fabricante = new DtoFabricante();
+				parametros.fabricante.fabricante = "";
+
+				produtosDoEstabelecimento = mEstabelecimento.procurarProduto(enderecoEstabelecimento, parametros);
+				retorno = new DtoRetornoObjeto(chave, produtosDoEstabelecimento);
+			}
+			catch (DtoExcecao ex)
+			{
+				retorno = ex.ToDto();
+			}
+			catch (Exception ex)
+			{
+				retorno = new DtoRetornoErro(ex.Message);
+			}
+
 			/*Objeto: Array de DtoItem com DtoProduto*/
-			return null;
+			return js.Serialize(retorno);
 		}
 
-		public string pesquisarProdutos(string dtoChave, string dtoEnderecoEstabelecimento)
+		public string pesquisarProdutos(string dtoChave, string dtoEnderecoEstabelecimento, string parametros)
 		{
+			JavaScriptSerializer js = new JavaScriptSerializer();
+			DtoRetorno retorno;
+			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
+			DtoEnderecoEstabelecimento enderecoEstabelecimento = js.Deserialize<DtoEnderecoEstabelecimento>(dtoEnderecoEstabelecimento);
+			DtoProduto parametrosProduto = js.Deserialize<DtoProduto>(parametros);
+			DtoItem[] produtosDoEstabelecimento;
+
+			Chave mChave = new Chave();
+
+			try
+			{
+				mChave.validarChave(chave);
+				Estabelecimento mEstabelecimento = new Estabelecimento();
+				chave = mChave.atualizarChave(chave);
+				produtosDoEstabelecimento = mEstabelecimento.procurarProduto(enderecoEstabelecimento, parametrosProduto);
+				retorno = new DtoRetornoObjeto(chave, produtosDoEstabelecimento);
+			}
+			catch (DtoExcecao ex)
+			{
+				retorno = ex.ToDto();
+			}
+			catch (Exception ex)
+			{
+				retorno = new DtoRetornoErro(ex.Message);
+			}
+
 			/*Objeto: Array de DtoItem com DtoProduto*/
-			return null;
+			return js.Serialize(retorno);
 		}
     }
 }

@@ -9,7 +9,7 @@ namespace Catalog.Models.Interfaces
 	public interface IEstabelecimento
 	{
 		DtoEnderecoEstabelecimento cadastrarEstabelecimento(DtoEnderecoEstabelecimento estabelecimento);
-		DtoItem[] procurarProduto(DtoProduto parametros);
+		DtoItem[] procurarProduto(DtoEnderecoEstabelecimento enderecoEstabelecimento, DtoProduto parametros);
 		DtoEnderecoEstabelecimento[] procurarEstabelecimento(DtoEnderecoEstabelecimento parametros);
 	}
 }

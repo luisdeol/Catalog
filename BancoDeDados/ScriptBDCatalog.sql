@@ -77,6 +77,6 @@ CREATE TABLE tb_Item(
 	preco DOUBLE PRECISION,
 	compraRecente date,
 	qualificacao int,
-	idEstabelecimento int foreign key references tb_Estabelecimento(id),
+	idEstabelecimento int foreign key references tb_EnderecoEstabelecimento(id),
 	idProduto int foreign key references tb_Produto(id)
 );

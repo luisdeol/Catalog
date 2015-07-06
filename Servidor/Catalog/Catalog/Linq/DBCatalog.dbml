@@ -1,19 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Catalog" Class="DBCatalogDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=CBMRN01\SQLEXPRESS;Initial Catalog=Catalog;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="CatalogConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.tb_EnderecoEstabelecimento" Member="tb_EnderecoEstabelecimentos">
-    <Type Name="tb_EnderecoEstabelecimento">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="rua" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="cidade" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="estado" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="numero" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="cep" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="latitude" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="longitude" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="idEstabelecimento" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="tb_Estabelecimento_tb_EnderecoEstabelecimento" Member="tb_Estabelecimento" ThisKey="idEstabelecimento" OtherKey="id" Type="tb_Estabelecimento" IsForeignKey="true" />
-    </Type>
-  </Table>
+  <Connection Mode="WebSettings" ConnectionString="Data Source=MARCOS-PC\SQLEXPRESS;Initial Catalog=Catalog;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="CatalogConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.tb_Chave" Member="tb_Chaves">
     <Type Name="tb_Chave">
       <Column Name="idUsuario" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -27,7 +13,6 @@
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="estabelecimento" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Association Name="tb_Estabelecimento_tb_EnderecoEstabelecimento" Member="tb_EnderecoEstabelecimentos" ThisKey="id" OtherKey="idEstabelecimento" Type="tb_EnderecoEstabelecimento" />
-      <Association Name="tb_Estabelecimento_tb_Item" Member="tb_Items" ThisKey="id" OtherKey="idEstabelecimento" Type="tb_Item" />
     </Type>
   </Table>
   <Table Name="dbo.tb_Fabricante" Member="tb_Fabricantes">
@@ -35,18 +20,6 @@
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="fabricante" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Association Name="tb_Fabricante_tb_Produto" Member="tb_Produtos" ThisKey="id" OtherKey="idFabricante" Type="tb_Produto" />
-    </Type>
-  </Table>
-  <Table Name="dbo.tb_Item" Member="tb_Items">
-    <Type Name="tb_Item">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="preco" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="compraRecente" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="qualificacao" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="idEstabelecimento" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="idProduto" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="tb_Estabelecimento_tb_Item" Member="tb_Estabelecimento" ThisKey="idEstabelecimento" OtherKey="id" Type="tb_Estabelecimento" IsForeignKey="true" />
-      <Association Name="tb_Produto_tb_Item" Member="tb_Produto" ThisKey="idProduto" OtherKey="id" Type="tb_Produto" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.tb_Lista" Member="tb_Listas">
@@ -65,8 +38,8 @@
       <Column Name="codigoDeBarras" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="idFabricante" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="idTipo" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="tb_Produto_tb_Item" Member="tb_Items" ThisKey="id" OtherKey="idProduto" Type="tb_Item" />
       <Association Name="tb_Produto_tb_ProdutoDaLista" Member="tb_ProdutoDaListas" ThisKey="id" OtherKey="idProduto" Type="tb_ProdutoDaLista" />
+      <Association Name="tb_Produto_tb_Item" Member="tb_Items" ThisKey="id" OtherKey="idProduto" Type="tb_Item" />
       <Association Name="tb_Fabricante_tb_Produto" Member="tb_Fabricante" ThisKey="idFabricante" OtherKey="id" Type="tb_Fabricante" IsForeignKey="true" />
       <Association Name="tb_Tipo_tb_Produto" Member="tb_Tipo" ThisKey="idTipo" OtherKey="id" Type="tb_Tipo" IsForeignKey="true" />
     </Type>
@@ -105,6 +78,33 @@
       <Association Name="tb_Usuario_tb_Chave" Member="tb_Chave" ThisKey="id" OtherKey="idUsuario" Type="tb_Chave" Cardinality="One" />
       <Association Name="tb_Usuario_tb_Lista" Member="tb_Listas" ThisKey="id" OtherKey="idUsuario" Type="tb_Lista" />
       <Association Name="tb_Usuario_tb_SenhaAlternativa" Member="tb_SenhaAlternativa" ThisKey="id" OtherKey="idUsuario" Type="tb_SenhaAlternativa" Cardinality="One" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tb_EnderecoEstabelecimento" Member="tb_EnderecoEstabelecimentos">
+    <Type Name="tb_EnderecoEstabelecimento">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="rua" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="cidade" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="estado" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="numero" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="cep" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="latitude" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="longitude" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="idEstabelecimento" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="tb_EnderecoEstabelecimento_tb_Item" Member="tb_Items" ThisKey="id" OtherKey="idEstabelecimento" Type="tb_Item" />
+      <Association Name="tb_Estabelecimento_tb_EnderecoEstabelecimento" Member="tb_Estabelecimento" ThisKey="idEstabelecimento" OtherKey="id" Type="tb_Estabelecimento" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tb_Item" Member="tb_Items">
+    <Type Name="tb_Item">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="preco" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="compraRecente" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="qualificacao" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idEstabelecimento" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idProduto" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="tb_EnderecoEstabelecimento_tb_Item" Member="tb_EnderecoEstabelecimento" ThisKey="idEstabelecimento" OtherKey="id" Type="tb_EnderecoEstabelecimento" IsForeignKey="true" />
+      <Association Name="tb_Produto_tb_Item" Member="tb_Produto" ThisKey="idProduto" OtherKey="id" Type="tb_Produto" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

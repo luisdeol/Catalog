@@ -62,9 +62,42 @@ namespace Catalog.Models
             return estabelecimentoRetorno;
 		}
 
-		public DtoItem[] procurarProduto(DtoProduto parametros)
+		public DtoItem[] procurarProduto(DtoEnderecoEstabelecimento enderecoEstabelecimento, DtoProduto parametros)
 		{
-			return null;
+			List<DtoItem> itensEncontrados = new List<DtoItem>();
+			DBCatalogDataContext dataContext = new DBCatalogDataContext();
+			tb_EnderecoEstabelecimento estabelecimentoBanco;
+			try
+			{
+				estabelecimentoBanco = dataContext.tb_EnderecoEstabelecimentos.First(ee => ee.id == enderecoEstabelecimento.id);
+			}
+			catch
+			{
+				throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado, "Estabelecimento");
+			}
+
+			Item mItem = new Item();
+
+			if (parametros.idTipo == 0)
+			{
+				foreach (tb_Item itemBanco in estabelecimentoBanco.tb_Items)
+					itensEncontrados.Add(mItem.abrirItem(Convert.ToInt32(itemBanco.idProduto), Convert.ToInt32(itemBanco.idEstabelecimento)));
+			}
+			else
+			{
+				foreach (tb_Item itemBanco in estabelecimentoBanco.tb_Items)
+					if (itemBanco.tb_Produto.nome.StartsWith(parametros.nome) &&
+						itemBanco.tb_Produto.idTipo == parametros.idTipo &&
+						itemBanco.tb_Produto.tb_Fabricante.fabricante.StartsWith(parametros.fabricante.fabricante))
+					{
+						itensEncontrados.Add(mItem.abrirItem(Convert.ToInt32(itemBanco.idProduto), Convert.ToInt32(itemBanco.idEstabelecimento)));
+					}
+			}
+
+			if (itensEncontrados.Count < 1)
+				throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado, "Item");
+
+			return itensEncontrados.ToArray();
 		}
 
 		public DtoEnderecoEstabelecimento[] procurarEstabelecimento(DtoEnderecoEstabelecimento parametros)
