@@ -46,6 +46,25 @@ angular.module('services.verificarLogin', [])
 		}	
    }
    
+    verificarLogin.verificarProduto = function(lugarPagina)
+   {
+		var idUsuario = window.localStorage.idUsuario;
+		var token = window.localStorage.token;
+		var ultimoAcesso = window.localStorage.ultimoAcesso;
+	   
+		if((idUsuario != undefined && idUsuario != "") && 
+			(token != undefined && token != "") && 
+			(ultimoAcesso != undefined && ultimoAcesso != "")) //ta logado
+		{
+			if(lugarPagina != "produtos-lista.html")
+				window.location = "#/produtos-lista";	
+		}
+		else //nao esta logado
+		{
+			window.location = "#/home";
+		}	
+   }
+   
    verificarLogin.verificarEstabelecimento = function(lugarPagina)
    {	
 		var idUsuario = window.localStorage.idUsuario;

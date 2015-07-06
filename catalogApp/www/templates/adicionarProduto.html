@@ -1,0 +1,33 @@
+<ion-modal-view>
+  
+	<ion-header-bar class="bar bar-header bar-positive">
+	   <h1 class="title">Adicionar Produtos</h1>
+	   <button class="button button-clear button-primary" ng-click="modal.hide()">Cancelar</button>
+	</ion-header-bar>
+	
+	<ion-content class="padding">
+	<img class="icon-estab-atualizar" src="img/product.png" width="80px" height="80px">
+		<div class="list-estab-atualizar">
+			<form>
+				<div class="bloco">
+					<p class="nome-campos">Nome Do Produto:</p>
+					<span class="input-grupo"><span class="ion-ios-cart"></span></span>
+					<input type="text" ng-model="produto.nome" class="input-form" placeholder="Nome do Produto...">
+					<br>
+				</div>
+				
+				<div class="bloco">
+					<p class="nome-campos">Quantidade:</p>
+					<span class="input-grupo"><span class="ion-ios-compose"></span></span>
+					<input type="number" ng-model="produto.quantidade" class="input-form">
+					<br>
+				</div>
+
+				<button class="button button-full button-positive botao" ng-click="adicionarProduto(produto)"
+					ng-disabled="(produto.nome == undefined || produto.nome == '') || 
+								 (produto.quantidade == undefined || produto.quantidade == '') ">
+								 Adicionar</button>
+			</form>
+		</div>
+	</ion-content>
+</ion-modal-view>

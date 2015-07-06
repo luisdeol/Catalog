@@ -33,7 +33,7 @@ var app = angular.module("PrincipalControllers",['ionic','services.verificarLogi
 	};
 	
 	//_______________ ABRIR MODAL DE CADASTRO __________________//
-	$ionicModal.fromTemplateUrl('templates/modal.html', {
+	$ionicModal.fromTemplateUrl('templates/alterarDados.html', {
 		scope: $scope
 	}).then(function(modal) {
 		$scope.modal = modal;

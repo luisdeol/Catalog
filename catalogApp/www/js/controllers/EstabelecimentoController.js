@@ -17,6 +17,7 @@ angular.module("EstabelecimentoControllers",[
 })
 .controller("EstabelecimentoController",function($scope,$http,$ionicModal,$ionicLoading,$compile,verificarLogin,googleMaps,estabelecimento,modalAlerta,WebServices){
 	$scope.estabelecimentos = [];
+	window.localStorage.idUltimoEstabelecimentoCriado = 0;
 	
 	//___________ VERIFICAR LOGIN _____________//
 	$scope.verificarLogin = function(lugarPagina)
@@ -27,7 +28,7 @@ angular.module("EstabelecimentoControllers",[
 	}
 	
 	//_______________ ABRIR MODAL DE CADASTRO __________________//
-	 $ionicModal.fromTemplateUrl('templates/modal.html', {
+	 $ionicModal.fromTemplateUrl('templates/adicionarEstabelecimento.html', {
 		scope: $scope
 	  }).then(function(modal) {
 		$scope.modal = modal;
@@ -152,7 +153,10 @@ angular.module("EstabelecimentoControllers",[
 			googleMaps.pegarLatitudeLongitude(estab.nome +" - "+ estab.rua +" - "+ estab.cidade +" - "+ estab.estado,function(){
 				
 				var json = "{nome: '"+estab.nome+"', rua: '"+estab.rua+"', cidade: '"+estab.cidade+"', estado: '"+estab.estado+"', numero: '"+estab.numero+"', cep: '"+estab.cep+"',latitude: '"+window.localStorage.latCadastroEstab+"',longitude: '"+window.localStorage.lonCadastroEstab+"'}";
-				estabelecimento.insertInto(0, estab.nome, estab.rua, estab.cidade, estab.estado, estab.numero, estab.cep, window.localStorage.latCadastroEstab, window.localStorage.lonCadastroEstab, window.localStorage.estabImagem);
+				
+				var id = window.localStorage.idUltimoEstabelecimentoCriado-1;
+				estabelecimento.insertInto(id, estab.nome, estab.rua, estab.cidade, estab.estado, estab.numero, estab.cep, window.localStorage.latCadastroEstab, window.localStorage.lonCadastroEstab, window.localStorage.estabImagem);
+				window.localStorage.idUltimoEstabelecimentoCriado--;
 				
 				// WebServices.cadastrarEstabelecimento(json)
 				// .success(function(data, status, headers, config)

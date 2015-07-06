@@ -337,4 +337,13 @@ img.icon-lista-atualizar {
   margin-left: 41%;
   margin-bottom: 15px;
 }
+/*------------ ARQUIVO PRODUTOSLISTA.HTML---------------*/
+.quantidade.ng-binding {
+  width: auto;
+  float: right;
+  color: blue;
+  font-size: 100%;
+  font-weight: bold;
+}
+
 

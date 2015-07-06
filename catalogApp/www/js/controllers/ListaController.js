@@ -4,7 +4,8 @@ angular.module('ListaControllers',
 'services.verificarLogin',
 'services.WebServices',
 'services.modalAlerta',
-'model.lista'
+'model.lista',
+'model.produto'
 ])
 .config(function($stateProvider, $urlRouterProvider) {
 	
@@ -14,12 +15,18 @@ angular.module('ListaControllers',
 			templateUrl: 'listas.html',
 			controller: 'ListaController'
 		})
+		.state('produtos-lista/:id', {
+			url: '/produtos-lista',
+			templateUrl: 'produtos-lista.html',
+			controller: 'ProdutosListaController'
+		})
 })
-.controller('ListaController', function($scope, $ionicModal, $http, modalAlerta, verificarLogin, WebServices, $ionicPopup, listaModelo) {
-  
+.controller('ListaController', function($scope, $ionicModal, $http, modalAlerta, verificarLogin, WebServices, $ionicPopup, listaModelo) 
+{
 	//chave e listas
 	var idUsuario = window.localStorage.idUsuario;
 	var chave = "{idUsuario:'"+idUsuario+"',token:'"+window.localStorage.token+"',ultimoAcesso:'"+window.localStorage.ultimoAcesso+"'}";
+	window.localStorage.idUltimoListaCriada = 0;
 	$scope.listas = [];
 
 	//________________ EDITAR LISTAS _____________//
@@ -107,7 +114,9 @@ angular.module('ListaControllers',
 			$scope.listas.push({ titulo: lista.nome});
 			$scope.modal.hide();	
 			var dtoLista = "{idUsuario:'"+idUsuario+"',titulo:'"+lista.nome+"'}";
-			listaModelo.insertInto(0, lista.nome, idUsuario);
+			var id = window.localStorage.idUltimoListaCriada-1;
+			listaModelo.insertInto(id, lista.nome, idUsuario);
+			window.localStorage.idUltimoListaCriada--;
 			
 			// WebServices.criarListas(chave,dtoLista)
 			// .success(function(data, status, headers, config)
@@ -143,12 +152,13 @@ angular.module('ListaControllers',
 	{
 		$scope.pesquisarLista(); //chama as listas
 		listaModelo.openDataBase();
+		$scope.produtos = [];
 		verificarLogin.verificarLista(lugarPagina);
 	}
 	
 	
 	//_______________ ABRIR MODAL DE CADASTRO DA LISTA __________________//
-	$ionicModal.fromTemplateUrl('templates/modal.html', {
+	$ionicModal.fromTemplateUrl('templates/adicionarLista.html', {
 		scope: $scope
 	}).then(function(modal) {
 		$scope.modal = modal;
@@ -182,4 +192,53 @@ angular.module('ListaControllers',
 		 ]
 		});
 	}
+})
+//########################################################################################################//
+.controller('ProdutosListaController', function($scope, $ionicModal, produto, verificarLogin)
+{
+	$scope.produtos = [];
+	
+	var url = window.location.href.toString();
+	$scope.idLista = url.split("?")[1];
+	
+	//_______________ ABRIR MODAL DE CADASTRO DO PRODUTO __________________//
+	$ionicModal.fromTemplateUrl('templates/adicionarProduto.html', {
+		scope: $scope
+	}).then(function(modal) {
+		$scope.modal = modal;
+	});
+	
+	//________________ VERIFICAR LOGIN _________________//
+	$scope.verificarLogin = function(lugarPagina)
+	{
+		$scope.pesquisarProdutos();
+		produto.openDataBase();
+		console.log($scope.produtos);
+		verificarLogin.verificarProduto(lugarPagina);
+	}
+	
+	//________________ ADICIONAR PRODUTOS _______________//
+	$scope.adicionarProduto = function(prod)
+	{
+		$scope.produtos.push({ nome: prod.nome, quantidade: prod.quantidade});
+		$scope.modal.hide();	
+		produto.insertInto(1,prod.nome,prod.quantidade,"Alimenticia",$scope.idLista);
+	}
+	
+	//_________________ PESQUISAR PRODUTOS _________________//
+	$scope.pesquisarProdutos = function()
+	{	
+		produto.select($scope.idLista, function(retorno){
+			for(var l=0; retorno.length > l; l++)
+			{
+				var id = retorno[l].id;
+				var nome = retorno[l].nome;
+				var quantidade = retorno[l].quantidade;
+				var categoria = retorno[l].categoria;
+				var idLista = retorno[l].idLista;
+				
+				$scope.produtos[l] = {id:id, nome:nome, quantidade:quantidade ,categoria:categoria, idLista:idLista};
+			}		
+		});	
+	}	
 });
