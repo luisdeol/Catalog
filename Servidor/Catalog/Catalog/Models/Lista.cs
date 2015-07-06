@@ -123,7 +123,7 @@ namespace Catalog.Models
 
 			DBCatalogDataContext dataContext = new DBCatalogDataContext();
 			tb_Lista listaBanco;
-			tb_EnderecoEstabelecimento EnderecoEstabelecimento
+            tb_EnderecoEstabelecimento EnderecoEstabelecimento;
 
 			try
 				{listaBanco = dataContext.tb_Listas.First(l => l.id == idLista);}

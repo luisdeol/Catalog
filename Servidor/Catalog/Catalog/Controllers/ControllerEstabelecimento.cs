@@ -25,7 +25,7 @@ namespace Catalog.Controllers
             {
                 mChave.validarChave(chave);
                 Estabelecimento mEstabelecimento = new Estabelecimento();
-                estabelecimento = mEstabelecimento.criarEstabelecimento(enderecoEstabelecimento);
+                estabelecimento = mEstabelecimento.cadastrarEstabelecimento(enderecoEstabelecimento);
                 chave = mChave.atualizarChave(chave);
                 retorno = new DtoRetornoObjeto(chave, estabelecimento);
             }

@@ -98,7 +98,7 @@ namespace Catalog.Models
 				produto.idFabricante = produto.fabricante.id = Convert.ToInt32(produtoBanco.idFabricante);
 				produto.fabricante.fabricante = produtoBanco.tb_Fabricante.fabricante;
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado, "produto com id " + idProduto);
 			}

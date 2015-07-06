@@ -46,10 +46,10 @@ namespace Catalog.Webservices
 		}
 
 		[WebMethod]
-		public string pesquisarLista(string dtoChave, string parametros)
+		public string pesquisarLista(string dtoChave)
 		{
 			ControllerLista cLista = new ControllerLista();
-			return cLista.pesquisarLista(dtoChave, parametros);
+			return cLista.pesquisarLista(dtoChave);
 		}
 
 		[WebMethod]

@@ -104,8 +104,9 @@ namespace Catalog.Models
 
             if (usuarioBanco != null)
             {
+                if (usuarioSenhaAlternativaBanco != null)
                 dataContext.tb_SenhaAlternativas.DeleteOnSubmit(usuarioSenhaAlternativaBanco);
-                dataContext.SubmitChanges();
+
                 DtoChave chave = mChave.criarChave(usuarioBanco.id);
                 return chave;
             }

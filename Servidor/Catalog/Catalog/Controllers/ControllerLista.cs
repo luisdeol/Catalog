@@ -103,7 +103,7 @@ namespace Catalog.Controllers
 			return js.Serialize(retorno);
 		}
 
-		public string pesquisarLista(string dtoChave)
+        public string pesquisarLista(string dtoChave)
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
 			DtoRetorno retorno;
@@ -198,5 +198,10 @@ namespace Catalog.Controllers
 			/*Objeto: apenas a chave*/
 			return js.Serialize(retorno);
 		}
+
+        public string listarProdutos(string dtoChave, string dtoLista)
+        {
+            return "";
+        }
 	}
 }

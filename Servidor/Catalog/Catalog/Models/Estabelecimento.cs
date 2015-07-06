@@ -11,7 +11,7 @@ namespace Catalog.Models
     public class Estabelecimento : IEstabelecimento
     {
 
-        public DtoEnderecoEstabelecimento criarEstabelecimento(DtoEnderecoEstabelecimento enderecoEstabelecimento)
+        public DtoEnderecoEstabelecimento cadastrarEstabelecimento(DtoEnderecoEstabelecimento enderecoEstabelecimento)
 		{
             DBCatalogDataContext dataContext = new DBCatalogDataContext();
             var estabelecimentoBanco = new tb_Estabelecimento();

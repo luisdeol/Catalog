@@ -54,7 +54,7 @@ namespace Catalog.Controllers
 		}
 
         //______________ ALTERAR SENHA ________________//
-		public string alterarSenha(string dtoUsuario)
+		public string alterarSenha(string dtoChave, string dtoUsuario)
 		{
             JavaScriptSerializer js = new JavaScriptSerializer();
             DtoUsuario usuario = js.Deserialize<DtoUsuario>(dtoUsuario);
