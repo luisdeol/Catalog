@@ -12,6 +12,5 @@ namespace Catalog.Models.Interfaces
         DtoChave alterarDadosCadastrais(string email, string novaSenha);
 		void recuperarSenha(string email);
 		DtoChave logar(string email, string senha);
-		void deslogar(DtoChave chave);
 	}
 }

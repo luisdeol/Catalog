@@ -58,7 +58,7 @@ namespace Catalog.Models
             }
 		}
 
-
+        //________________ RECUPERAR SENHA ____________________//
 		public void recuperarSenha(string email)
 		{
             DBCatalogDataContext dataContext = new DBCatalogDataContext();
@@ -112,18 +112,16 @@ namespace Catalog.Models
             }
             else if (usuarioSenhaAlternativaBanco != null)
             {
-                DtoChave chave = mChave.criarChave(usuarioBanco.id);
+                DtoChave chave = new DtoChave();
+                chave.idUsuario = usuarioSenhaAlternativaBanco.idUsuario;
+                chave.token = "00000";
+                chave.ultimoAcesso = new TimeSpan().ToString();
                 return chave;
             }
             else
             {
 				throw new DtoExcecao(DTO.Enum.CampoInvalido, "Email e Senha não conferem");
             }
-		}
-
-		public void deslogar(DtoChave chave)
-		{
-
 		}
 	}
 }

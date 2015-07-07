@@ -12,7 +12,7 @@ namespace Catalog.Controllers
 {
 	public class ControllerUsuario : IControllerUsuario
 	{
-        //_____________ CADASTRAR USUARIO _____________//
+        //_____________ REALIZAR CADASTRO _____________//
 		public string realizarCadastro(string dtoUsuario)
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
@@ -53,8 +53,8 @@ namespace Catalog.Controllers
             return js.Serialize(retorno);
 		}
 
-        //______________ ALTERAR SENHA ________________//
-		public string alterarSenha(string dtoChave, string dtoUsuario)
+        //______________ RECUPERAR SENHA ________________//
+        public string recuperarSenha(string dtoUsuario)
 		{
             JavaScriptSerializer js = new JavaScriptSerializer();
             DtoUsuario usuario = js.Deserialize<DtoUsuario>(dtoUsuario);
@@ -78,14 +78,6 @@ namespace Catalog.Controllers
             return js.Serialize(retorno);
 		}
 
-		public string recuperarSenha(string dtoUsuario)
-		{
-			JavaScriptSerializer js = new JavaScriptSerializer();
-			DtoRetorno retorno;
-
-			return "";
-		}
-
         //______________ LOGAR ________________//
 		public string logar(string dtoUsuario)
 		{
@@ -97,7 +89,15 @@ namespace Catalog.Controllers
 			try
 			{
 				DtoChave chave = mUsuario.logar(usuario.email, usuario.senha);
-                retorno = new DtoRetornoObjeto(chave, "#/menu");
+                if(chave.token == "00000")
+                {
+                    retorno = new DtoRetornoObjeto(chave, "#/alterarSenha");
+                }
+                else
+                {
+                    retorno = new DtoRetornoObjeto(chave, "#/menu");
+                }
+               
 			}
 			catch (DtoExcecao ex)
 			{
@@ -112,16 +112,15 @@ namespace Catalog.Controllers
 		}
 
         //______________ ALTERAR DADOS CADASTRAIS ________________//
-        public string alterarDadosCadastrais(string dtoUsuario, string novaSenha)
+        public string alterarDadosCadastrais(string email, string novaSenha)
         {
             JavaScriptSerializer js = new JavaScriptSerializer();
-            DtoUsuario usuario = js.Deserialize<DtoUsuario>(dtoUsuario);
             Usuario mUsuario = new Usuario();
             DtoRetorno retorno;
 
             try
             {
-                DtoChave chave = mUsuario.alterarDadosCadastrais(usuario.email, novaSenha);
+                DtoChave chave = mUsuario.alterarDadosCadastrais(email, novaSenha);
                 retorno = new DtoRetornoObjeto(chave, "#/menu");
             }
             catch (DtoExcecao ex)

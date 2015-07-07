@@ -8,7 +8,7 @@ namespace Catalog.Controllers.Interfaces
 	public interface IControllerUsuario
 	{
 		string realizarCadastro(string dtoUsuario);
-		string alterarSenha(string dtoChave, string dtoUsuario);
+        string alterarDadosCadastrais(string email, string novaSenha);
 		string recuperarSenha(string dtoUsuario);
 		string logar(string dtoUsuario);
 	}
