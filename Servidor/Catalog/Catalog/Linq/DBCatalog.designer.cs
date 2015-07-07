@@ -66,7 +66,7 @@ namespace Catalog.Linq
     #endregion
 		
 		public DBCatalogDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["CatalogConnectionString1"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["CatalogConnectionString"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}

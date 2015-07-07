@@ -56,7 +56,7 @@ namespace Catalog.Webservices
 		public string listarProdutos(string dtoChave, string dtoLista)
 		{
 			ControllerLista cLista = new ControllerLista();
-			return cLista.listarProdutos(dtoChave, dtoLista);
+			return cLista.abrirLista(dtoChave, dtoLista);
 		}
 
 		[WebMethod]
