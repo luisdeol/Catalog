@@ -39,6 +39,7 @@ namespace Catalog.Controllers
                 retorno = new DtoRetornoErro(ex.Message);
             }
 
+			/*Objeto: DtoEnderecoEstabelecimento com DtoEstabelecimento*/
             return js.Serialize(retorno);
 		}
 
@@ -141,6 +142,38 @@ namespace Catalog.Controllers
 			}
 
 			/*Objeto: Array de DtoItem com DtoProduto*/
+			return js.Serialize(retorno);
+		}
+
+		public string abrirEstabelecimento(string dtoChave, string dtoEnderecoEstabelecimento)
+		{
+			JavaScriptSerializer js = new JavaScriptSerializer();
+			DtoRetorno retorno;
+			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
+			DtoEnderecoEstabelecimento enderecoEstabelecimento = js.Deserialize<DtoEnderecoEstabelecimento>(dtoEnderecoEstabelecimento);
+			DtoEnderecoEstabelecimento estabelecimento;
+
+			Chave mChave = new Chave();
+
+			try
+			{
+				mChave.validarChave(chave);
+				Estabelecimento mEstabelecimento = new Estabelecimento();
+				estabelecimento = mEstabelecimento.abrirEstabelecimento(enderecoEstabelecimento.id);
+				//estabelecimento.itens = mEstabelecimento.procurarProduto(estabelecimento, new DtoProduto());
+				chave = mChave.atualizarChave(chave);
+				retorno = new DtoRetornoObjeto(chave, estabelecimento);
+			}
+			catch (DtoExcecao ex)
+			{
+				retorno = ex.ToDto();
+			}
+			catch (Exception ex)
+			{
+				retorno = new DtoRetornoErro(ex.Message);
+			}
+
+			/*Objeto: DtoEnderecoEstabelecimento com DtoEstabelecimento e Array de DtoItem com DtoProduto*/
 			return js.Serialize(retorno);
 		}
     }

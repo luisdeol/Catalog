@@ -11,5 +11,6 @@ namespace Catalog.Models.Interfaces
 		DtoEnderecoEstabelecimento cadastrarEstabelecimento(DtoEnderecoEstabelecimento estabelecimento);
 		DtoItem[] procurarProduto(DtoEnderecoEstabelecimento enderecoEstabelecimento, DtoProduto parametros);
 		DtoEnderecoEstabelecimento[] procurarEstabelecimento(DtoEnderecoEstabelecimento parametros);
+		DtoEnderecoEstabelecimento abrirEstabelecimento(int idEnderecoEstabelecimento);
 	}
 }

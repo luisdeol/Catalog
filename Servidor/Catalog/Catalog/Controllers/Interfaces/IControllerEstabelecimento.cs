@@ -11,5 +11,6 @@ namespace Catalog.Controllers.Interfaces
 		string pesquisarEstabelecimentos(string dtoChave, string dtoEnderecoEstabelecimento);
 		string listarProdutos(string dtoChave, string dtoEnderecoEstabelecimento);
 		string pesquisarProdutos(string dtoChave, string dtoEnderecoEstabelecimento, string parametros);
+		string abrirEstabelecimento(string dtoChave, string dtoEnderecoEstabelecimento);
 	}
 }

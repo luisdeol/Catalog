@@ -139,5 +139,36 @@ namespace Catalog.Models
 
 			return estabelecimentos;
 		}
+
+		public DtoEnderecoEstabelecimento abrirEstabelecimento(int idEnderecoEstabelecimento)
+		{
+
+			DBCatalogDataContext dataContext = new DBCatalogDataContext();
+
+			if (idEnderecoEstabelecimento < 1)
+				throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado, "o estabelecimento solicitado");
+
+			tb_EnderecoEstabelecimento enderecoEstabelecimentoBanco;
+			try
+			{ enderecoEstabelecimentoBanco = dataContext.tb_EnderecoEstabelecimentos.First(ee => ee.id == idEnderecoEstabelecimento); }
+			catch
+			{ throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado, "o estabelecimento solicitado"); }
+
+			DtoEnderecoEstabelecimento enderecoEstabelecimento = new DtoEnderecoEstabelecimento();
+
+			enderecoEstabelecimento.cep = enderecoEstabelecimentoBanco.cep;
+			enderecoEstabelecimento.rua = enderecoEstabelecimentoBanco.rua;
+			enderecoEstabelecimento.cidade = enderecoEstabelecimentoBanco.cidade;
+			enderecoEstabelecimento.estado = enderecoEstabelecimentoBanco.estado;
+			//enderecoEstabelecimento.latitude = Convert.ToDouble(enderecoEstabelecimentoBanco.latitude);
+			//enderecoEstabelecimento.longitude = Convert.ToDouble(enderecoEstabelecimentoBanco.longitude);
+			enderecoEstabelecimento.numero = enderecoEstabelecimentoBanco.numero;
+			enderecoEstabelecimento.id = enderecoEstabelecimentoBanco.id;
+			enderecoEstabelecimento.estabelecimento = new DtoEstabelecimento();
+			enderecoEstabelecimento.estabelecimento.id = enderecoEstabelecimento.id;
+			enderecoEstabelecimento.estabelecimento.nome = enderecoEstabelecimentoBanco.tb_Estabelecimento.estabelecimento;
+
+			return enderecoEstabelecimento;
+		}
     }
 }

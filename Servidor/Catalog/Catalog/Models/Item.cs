@@ -12,7 +12,59 @@ namespace Catalog.Models
 	{
 		public DtoItem criarItem(int idProduto, double preco, int idEnderecoEstabelecimento)
 		{
-			return new DtoItem();
+			if (idProduto < 1)
+				throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado, "o produto solicitado");
+			if (idEnderecoEstabelecimento < 1)
+				throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado, "o estabelecimento solicitado");
+			if (preco < 1)
+				throw new DtoExcecao(DTO.Enum.CampoInvalido, "Preço do Produto");
+
+			DBCatalogDataContext dataContext = new DBCatalogDataContext();
+
+			tb_Produto produtoBanco;
+			try
+			{ produtoBanco = dataContext.tb_Produtos.First(p => p.id == idProduto); }
+			catch
+			{ throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado, "o produto solicitado"); }
+
+			tb_EnderecoEstabelecimento enderecoEstabelecimentoBanco;
+			try
+			{ enderecoEstabelecimentoBanco = dataContext.tb_EnderecoEstabelecimentos.First(ee => ee.id == idEnderecoEstabelecimento); }
+			catch
+			{ throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado, "o estabelecimento solicitado"); }
+
+			DateTime dataAtual = DateTime.Now;
+			tb_Item itemBanco;
+			try
+			{
+				itemBanco = dataContext.tb_Items.First(i => i.idProduto == idProduto && i.idEstabelecimento == idEnderecoEstabelecimento && i.preco == preco && i.compraRecente == dataAtual);
+				itemBanco.qualificacao++;
+			}
+			catch
+			{
+				itemBanco = new tb_Item();
+				itemBanco.idEstabelecimento = idEnderecoEstabelecimento;
+				itemBanco.idProduto = idProduto;
+				itemBanco.preco = preco;
+				itemBanco.qualificacao = 1;
+				dataContext.tb_Items.InsertOnSubmit(itemBanco);
+			}
+			itemBanco.compraRecente = dataAtual;
+			dataContext.SubmitChanges();
+
+			DtoItem item = new DtoItem();
+			item.id = (dataContext.tb_Items.First(i => i.idProduto == idProduto && i.idEstabelecimento == idEnderecoEstabelecimento && i.preco == preco && i.compraRecente == dataAtual)).id;
+			item.idProduto = idProduto;
+			item.idEstabelecimento = idEnderecoEstabelecimento;
+			item.preco = preco;
+			item.qualificacao = Convert.ToInt32(itemBanco.qualificacao);
+			item.data = dataAtual;
+			Produto mProduto = new Produto();
+			item.produto = mProduto.abrirProduto(idProduto);
+			Estabelecimento mEstabelecimento = new Estabelecimento();
+			item.estabelecimento = mEstabelecimento.abrirEstabelecimento(idEnderecoEstabelecimento);
+
+			return item;
 		}
 
 		public DtoItem abrirItem(int idProduto, int idEnderecoEstabelecimento)
