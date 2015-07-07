@@ -62,12 +62,12 @@ namespace Catalog.Models
 		public void recuperarSenha(string email)
 		{
             DBCatalogDataContext dataContext = new DBCatalogDataContext();
-            var usuarioBanco = dataContext.tb_Usuarios.FirstOrDefault(u => u.email == email); ;
+            var usuarioBanco = dataContext.tb_Usuarios.FirstOrDefault(u => u.email == email); 
 
             if(usuarioBanco != null)
             {
-                Random senhaAlternativa = new Random ();
-                senhaAlternativa.Next(999999);
+                Random rnd = new Random();
+                int senhaAlternativa = rnd.Next(999999); 
                 DateTime dataAtual = DateTime.Today;
 
                 //enviar email
@@ -80,17 +80,30 @@ namespace Catalog.Models
                 "Recuperar senha", "Sua senha alternativa é:" + senhaAlternativa.ToString());
 
                 //banco
-                var senhaAlternativaBanco = new Linq.tb_SenhaAlternativa();
-                senhaAlternativaBanco.senha = senhaAlternativa.ToString();
-                senhaAlternativaBanco.idUsuario = usuarioBanco.id;
-                senhaAlternativaBanco.dataDeCriacao = dataAtual;
+                var usuarioSenhaAlternativaBanco = from sa in dataContext.tb_SenhaAlternativas where sa.tb_Usuario.email == email select sa;
 
-                dataContext.tb_SenhaAlternativas.InsertOnSubmit(senhaAlternativaBanco);
+                foreach (var sa in usuarioSenhaAlternativaBanco)
+                {
+                    sa.senha = senhaAlternativa.ToString();
+                    sa.idUsuario = usuarioBanco.id;
+                    sa.dataDeCriacao = dataAtual;
+                }
+
+                if (usuarioSenhaAlternativaBanco.Count() == 0)
+                {
+                    var senhaAlternativaBanco = new Linq.tb_SenhaAlternativa();
+                    senhaAlternativaBanco.senha = senhaAlternativa.ToString();
+                    senhaAlternativaBanco.idUsuario = usuarioBanco.id;
+                    senhaAlternativaBanco.dataDeCriacao = dataAtual;
+
+                    dataContext.tb_SenhaAlternativas.InsertOnSubmit(senhaAlternativaBanco);
+                }
+
                 dataContext.SubmitChanges();
             }
             else
             {
-                throw new DtoExcecao(DTO.Enum.CampoInvalido, "E-mail não cadastrado!");
+                throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado, email);
             }
 		}
 
@@ -102,10 +115,15 @@ namespace Catalog.Models
             var usuarioBanco = dataContext.tb_Usuarios.FirstOrDefault(u => u.email == email && u.senha == senha);
             var usuarioSenhaAlternativaBanco = dataContext.tb_SenhaAlternativas.FirstOrDefault(u => u.tb_Usuario.email == email && u.senha == senha);
 
+            var verificarSenhaAlternativaBanco = dataContext.tb_SenhaAlternativas.FirstOrDefault(u => u.tb_Usuario.email == email);
+
             if (usuarioBanco != null)
             {
-                if (usuarioSenhaAlternativaBanco != null)
-                dataContext.tb_SenhaAlternativas.DeleteOnSubmit(usuarioSenhaAlternativaBanco);
+                if (verificarSenhaAlternativaBanco != null)
+                {
+                    dataContext.tb_SenhaAlternativas.DeleteOnSubmit(verificarSenhaAlternativaBanco);
+                    dataContext.SubmitChanges();
+                }
 
                 DtoChave chave = mChave.criarChave(usuarioBanco.id);
                 return chave;

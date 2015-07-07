@@ -23,19 +23,19 @@ angular.module('services.modalAlerta', ['ionic'])
 			callback(res);
 		});
 	}
-	
+
 	modalAlerta.sucesso = function(mensagem,subMensagem,destino)
 	{
-		var alertPopup = $ionicPopup.alert({
-			 title: mensagem,
-			 subTitle: subMensagem,
-			 template: '<p class="svg"><ion-spinner icon="android"></ion-spinner></p>'
+		var myPopup = $ionicPopup.show({
+		title: mensagem,
+		subTitle: subMensagem,
+		template: '<p class="svg"><ion-spinner icon="android"></ion-spinner></p>'
 		});
 		
-		 $timeout(function() 
+		$timeout(function() 
 		{
 		  window.location = destino;
-		  alertPopup.close();
+		   myPopup.close();
 		}, 3000);
 	}
 

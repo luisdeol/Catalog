@@ -1,0 +1,25 @@
+<ion-modal-view>
+  
+	<ion-header-bar class="bar bar-header bar-positive">
+	   <h1 class="title">Recuperar Senha</h1>
+	   <button class="button button-clear button-primary" ng-click="modal.hide()">Cancelar</button>
+	</ion-header-bar>
+	
+	<ion-content class="padding">
+	<img class="icon-user-atualizar" src="img/user.png" width="80px" height="80px">
+		<div class="list-user-atualizar">
+		
+			<div class="bloco">
+				<p class="nome-campos">Email:</p>
+					<span class="input-grupo"><span class="ion-ios-email"></span></span>
+					<input type="text" name="email" ng-model="usuario.email" class="input-form" placeholder="Email@catalog.com">
+				<br>
+			</div>
+			
+			<button class="button button-full button-positive botao" ng-click="recuperarSenha(usuario)" 
+				ng-disabled="(usuario.email == undefined || usuario.email == '')">
+				Enviar
+			</button>
+		</div>
+	</ion-content>
+</ion-modal-view>

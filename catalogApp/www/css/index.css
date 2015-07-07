@@ -206,7 +206,7 @@ p.nome-campos {
 }
 
 span.ion-ios-cart, span.ion-android-map, span.ion-map, span.ion-android-globe, span.ion-ios-compose, span.ion-home, span.ion-ios-list-outline,
-span.ion-at, span.ion-locked, span.ion-person, span.ion-unlocked, span.ion-lock-combination{
+span.ion-at, span.ion-locked, span.ion-person, span.ion-unlocked, span.ion-lock-combination, span.ion-ios-email{
   font-size: 20px;
   color: orange;
 }

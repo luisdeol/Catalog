@@ -21,7 +21,8 @@ var app = angular.module("UsuarioControllers",['ionic','services.verificarLogin'
 			url: '/menu',
 			templateUrl: 'principal.html',
 			controller: 'PrincipalController'
-		})
+		});
+		$urlRouterProvider.otherwise('/home');
 })
 .controller("UsuarioController",function($scope, $ionicModal, $http, $ionicPopup, $timeout, verificarLogin, modalAlerta, WebServices){
 
@@ -102,7 +103,7 @@ var app = angular.module("UsuarioControllers",['ionic','services.verificarLogin'
 				else //email inválido
 				{
 					$scope.erro = true;
-					modalAlerta.alerta("Ocorreu um erro","Email incorreto!");
+					document.getElementById("email").value = "Email incorreto!";
 					return false;
 				}
 			}
@@ -115,7 +116,6 @@ var app = angular.module("UsuarioControllers",['ionic','services.verificarLogin'
 		else
 		{
 			modalAlerta.alerta("Ocorreu um erro","Senha deve conter mais de 5 digitos!");
-			return false;
 		}
 	}	
 	
@@ -136,7 +136,7 @@ var app = angular.module("UsuarioControllers",['ionic','services.verificarLogin'
 	{
 		var senha = document.getElementById("senha").value;
 		var repetirSenha = document.getElementById("repetirSenha").value;
-		if(senha!="" && repetirSenha!="" && senha==repetirSenha)
+		if(senha!="" && repetirSenha!="" && senha==repetirSenha && repetirSenha.length>5)
 		{
 			document.getElementById("senha").className = "input-form senha-correta";
 			document.getElementById("repetirSenha").className = "input-form senha-correta";
@@ -148,4 +148,43 @@ var app = angular.module("UsuarioControllers",['ionic','services.verificarLogin'
 	{
 		verificarLogin.verificarUsuario(lugarPagina);	
 	};
+	
+	//_______________ ABRIR MODAL DE CADASTRO __________________//
+	$ionicModal.fromTemplateUrl('templates/recuperarSenha.html', {
+		scope: $scope
+	}).then(function(modal) {
+		$scope.modal = modal;
+	});
+	
+	//_______________ RECUPERAR SENHA __________________//
+	$scope.recuperarSenha = function(user)
+	{
+		if(user != undefined)
+		{
+			var email =  user.email;
+			var json = "{email:'"+email+"'}";
+			
+			modalAlerta.sucesso("Recuperar Senha","enviando...","#/logar");		
+			WebServices.recuperarSenha(json)
+			.success(function(data, status, headers, config)
+			{
+				var retorno = angular.fromJson(data.d);	
+				if(retorno.tipoRetorno == "ACK") 
+				{
+					$scope.modal.hide();	
+				}
+				else
+				{
+					modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
+				}
+			})
+			.error(function(data, status, headers, config) {
+				modalAlerta.alerta("Ocorreu um erro","Voce esta sem acesso a rede!");
+			});	
+		}
+		else
+		{
+			modalAlerta.alerta("Ocorreu um erro","Preencha todos os campos!");
+		}
+	}
 });

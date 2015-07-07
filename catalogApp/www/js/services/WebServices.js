@@ -45,6 +45,11 @@ angular.module('services.WebServices', ['ionic'])
 		return $http.post(host + '/WsLista.asmx/criarLista', {dtoChave:chave,dtoLista:dtoLista});
 	}
 	
+	WebServices.recuperarSenha = function(dtoUsuario)
+	{
+		return $http.post(host + '/WsUsuario.asmx/recuperarSenha', {dtoUsuario:dtoUsuario});
+	}
+	
 	
     return WebServices;
 }]);
