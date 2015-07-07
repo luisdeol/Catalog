@@ -102,7 +102,7 @@ var app = angular.module("UsuarioControllers",['ionic','services.verificarLogin'
 				else //email inválido
 				{
 					$scope.erro = true;
-					document.getElementById("email").value = "Email incorreto!";
+					modalAlerta.alerta("Ocorreu um erro","Email incorreto!");
 					return false;
 				}
 			}
@@ -115,6 +115,7 @@ var app = angular.module("UsuarioControllers",['ionic','services.verificarLogin'
 		else
 		{
 			modalAlerta.alerta("Ocorreu um erro","Senha deve conter mais de 5 digitos!");
+			return false;
 		}
 	}	
 	
