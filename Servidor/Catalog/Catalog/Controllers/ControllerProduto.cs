@@ -47,8 +47,6 @@ namespace Catalog.Controllers
 			return js.Serialize(retorno);
 		}
 
-		/*---------------Não Implementados---------------*/
-
 		public string abrirProduto(string dtoChave, string dtoProduto)
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
@@ -123,19 +121,28 @@ namespace Catalog.Controllers
 			DtoRetorno retorno = new DtoRetorno("ACK");
 			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
 			DtoProduto produto = js.Deserialize<DtoProduto>(dtoProduto);
+			DtoEnderecoEstabelecimento enderecoEstabelecimento = js.Deserialize<DtoEnderecoEstabelecimento>(dtoEstabelecimento);
 
-			/*Objeto: */
-			return js.Serialize(retorno);
-		}
+			Chave mChave = new Chave();
 
-		public string buscarItens(string dtoChave, string dtoProduto)
-		{
-			JavaScriptSerializer js = new JavaScriptSerializer();
-			DtoRetorno retorno = new DtoRetorno("ACK");
-			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
-			DtoProduto produto = js.Deserialize<DtoProduto>(dtoProduto);
+			try
+			{
+				mChave.validarChave(chave);
+				Item mItem = new Item();
+				DtoItem item = mItem.abrirItem(produto.id, enderecoEstabelecimento.id);
+				chave = mChave.atualizarChave(chave);
+				retorno = new DtoRetornoObjeto(chave, item);
+			}
+			catch (DtoExcecao ex)
+			{
+				retorno = ex.ToDto();
+			}
+			catch (Exception ex)
+			{
+				retorno = new DtoRetornoErro(ex.Message);
+			}
 
-			/*Objeto: */
+			/*Objeto: DtoItem com DtoProduto com DtoTipoProduto e DtoFabricante*/
 			return js.Serialize(retorno);
 		}
 
@@ -146,7 +153,26 @@ namespace Catalog.Controllers
 			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
 			DtoProduto produto = js.Deserialize<DtoProduto>(dtoProduto);
 
-			/*Objeto: */
+			Chave mChave = new Chave();
+
+			try
+			{
+				mChave.validarChave(chave);
+				Produto mProduto = new Produto();
+				DtoItem[] itens = mProduto.estabelecimentosPossuidores(produto.id);
+				chave = mChave.atualizarChave(chave);
+				retorno = new DtoRetornoObjeto(chave, itens);
+			}
+			catch (DtoExcecao ex)
+			{
+				retorno = ex.ToDto();
+			}
+			catch (Exception ex)
+			{
+				retorno = new DtoRetornoErro(ex.Message);
+			}
+
+			/*Objeto: DtoItem com DtoProduto com DtoTipoProduto e DtoFabricante*/
 			return js.Serialize(retorno);
 		}
 	}

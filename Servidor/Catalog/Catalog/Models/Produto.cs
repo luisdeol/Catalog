@@ -80,7 +80,7 @@ namespace Catalog.Models
 		public DtoProduto abrirProduto(int idProduto)
 		{
 			if (idProduto < 1)
-				throw new DtoExcecao(DTO.Enum.CampoInvalido, "id do produto");
+				throw new DtoExcecao(DTO.Enum.CampoInvalido, "o produto socilitado");
 
 			DtoProduto produto;
 			try
@@ -165,24 +165,30 @@ namespace Catalog.Models
 			return produtos.ToArray();
 		}
 
-		public DtoItem buscarItem(int idProduto, int idEstabelecimento)
-		{
-			return new DtoItem();
-		}
-
-		public DtoItem[] buscarItem(int idProduto)
-		{
-			return new DtoItem[5];
-		}
-
 		public DtoItem itemMaisBarato(int idProduto)
 		{
 			return new DtoItem();
 		}
 
-		public DtoEnderecoEstabelecimento[] estabelecimentosPossuidores(int idProduto)
+		public DtoItem[] estabelecimentosPossuidores(int idProduto)
 		{
-			return new DtoEnderecoEstabelecimento[5];
+			if (idProduto < 1)
+				throw new DtoExcecao(DTO.Enum.CampoInvalido, "o produto socilitado");
+
+			DBCatalogDataContext dataContext = new DBCatalogDataContext();
+
+			var itensDoProdutoBranco = from i in dataContext.tb_Items where i.idProduto == idProduto select i;
+			if (itensDoProdutoBranco.Count() < 1)
+				throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado, "itens deste produto");
+			
+			itensDoProdutoBranco = itensDoProdutoBranco.GroupBy(i => i.idEstabelecimento).Select(g => g.FirstOrDefault());
+			List<DtoItem> itens = new List<DtoItem>();
+			Item mItem = new Item();
+
+			foreach(tb_Item itemBranco in itensDoProdutoBranco)
+				itens.Add(mItem.abrirItem(Convert.ToInt32(itemBranco.idProduto), Convert.ToInt32(itemBranco.idEstabelecimento)));
+
+			return itens.ToArray();
 		}
 
 	}
