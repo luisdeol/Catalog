@@ -1,0 +1,32 @@
+<ion-nav-view>
+	<ion-view ng-init="pesquisarProduto()">
+		<ion-header-bar class="bar-positive">
+			<h1 class="title">Produtos Encontrados</h1>
+		</ion-header-bar>
+
+		<div class="sem-lista-cadastrada" ng-show="produtos.length == 0">Nenhum Produto Encontrado</div>   
+		<ion-content class="ajuste-altura-lista">  
+			<ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
+				<ion-item ng-repeat="produto in produtos" 
+					 produto="produto" class="item-remove-animate" href="#/abrirProduto?{{produto.id}}"> 
+					{{ produto.nome }}	
+				</ion-item>
+			</ion-list>	
+		</ion-content>
+				
+		<!-- fotter -->
+		<div class="tabs-striped tabs-color-assertive">
+			<div class="tabs">
+				<a class="tab-item active" href="#">
+					<img class="icon-footer" src="img/check.png" width="35px" height="35px">
+				</a>
+				<a class="tab-item" href="#/menu">
+					<img class="icon-footer-secundario" src="img/logo.png" width="35px" height="35px">
+				</a>
+				<a class="tab-item" href="#/listas">
+					<img class="icon-footer-secundario" src="img/list.png" width="35px" height="35px">
+				</a>
+			</div>
+		</div>
+	</ion-view>
+</ion-nav-view>		

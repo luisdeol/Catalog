@@ -50,6 +50,11 @@ angular.module('services.WebServices', ['ionic'])
 		return $http.post(host + '/WsUsuario.asmx/recuperarSenha', {dtoUsuario:dtoUsuario});
 	}
 	
+	WebServices.pesquisarProduto = function(chave,dtoProduto)
+	{
+		return $http.post(host + '/WsLista.asmx/pesquisarProduto', {dtoChave:chave,dtoProduto:dtoProduto});
+	}
+	
 	
     return WebServices;
 }]);

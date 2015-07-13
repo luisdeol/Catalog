@@ -1,4 +1,9 @@
-var app = angular.module("UsuarioControllers",['ionic','services.verificarLogin','services.modalAlerta','services.WebServices'])
+var app = angular.module("UsuarioControllers",[
+'ionic',
+'services.verificarLogin',
+'services.modalAlerta',
+'services.WebServices'
+])
 .config(function($stateProvider, $urlRouterProvider) {
 	
     $stateProvider

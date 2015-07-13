@@ -1,5 +1,12 @@
-var app = angular.module("PrincipalControllers",['ionic','services.verificarLogin'])
-.controller("PrincipalController",function($scope,$ionicModal,$ionicPopup,$timeout,verificarLogin){
+var app = angular.module("PrincipalControllers",[
+'ionic',
+'services.verificarLogin',
+'services.WebServices',
+'services.modalAlerta'
+])
+.controller("PrincipalController",function($scope,$ionicModal,$ionicPopup,$timeout,verificarLogin, WebServices, modalAlerta)
+{
+	var chave = "{idUsuario:'"+window.localStorage.idUsuario+"',token:'"+window.localStorage.token+"',ultimoAcesso:'"+window.localStorage.ultimoAcesso+"'}";
 	
 	//___________ VERIFICAR LOGIN _____________//
 	$scope.verificarLogin = function(lugarPagina)
@@ -38,6 +45,47 @@ var app = angular.module("PrincipalControllers",['ionic','services.verificarLogi
 	}).then(function(modal) {
 		$scope.modal = modal;
 	});
+	
+	//_______________ PESQUISAR PRODUTO __________________//
+	$ionicModal.fromTemplateUrl('templates/pesquisarProduto.html', {
+		scope: $scope
+	}).then(function(modal) {
+		$scope.modalPesquisar = modal;
+	});
+	
+	$scope.pesquisarProduto = function(produto)
+	{
+		if(produto != undefined)//campos foram preenchidos
+		{
+			var nome = produto.nome;
+			var marca = produto.marca;
+			var tipo = produto.tipo;
+			
+			if(nome==undefined)
+			{
+				nome="";
+			}
+			if(marca==undefined)
+			{
+				marca="";
+			}
+			if(tipo==undefined)
+			{
+				tipo="";
+			}
+			
+			window.localStorage.dtoProduto = "{nome:'"+nome+"',marca:'"+marca+"',tipo:'"+tipo+"'}";
+					
+			modalAlerta.sucesso("Pesquisa","Pesquisando...","#/produtos-pesquisados");
+			$scope.modalPesquisar.hide();
+		}
+		else //campos vazios
+		{
+			modalAlerta.alerta("Ocorreu um erro","Preencha todos os campos!");
+			return false;
+		}
+	
+	}
 	
 });
 
