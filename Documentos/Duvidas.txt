@@ -1,0 +1,14 @@
+Duvidas:
+
+Detalhar melhor a pesquisa de itens em estabelecimentos UC 215, o usuário poderá pesquisar o item quando acessa a lista de compras? OU quando acessa o estabelecimento? Ou existirá um menu para selecionar a lista e depois os estabelecimentos? Serão listados os estabelecimentos do mundo inteiro? Usará o GPS para filtrar isso? 
+Não tem como pesquisar os itens de um produto sem atrelar a uma lista?
+
+UC 221 -> 5.1 
+Caso o usuário tenha criado o produto a partir de Adicionar Produto à Lista, será redirecionado para a tela referente a Adicionar Produto à lista, com o produto ja selecionado.
+
+Acho que precisa criar um UC para listar os produtos de uma lista
+
+UC 234 Como o usuári oterpa acesso ao formulário de pesquisa?
+
+
+
