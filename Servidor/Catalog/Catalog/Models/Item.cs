@@ -80,6 +80,8 @@ namespace Catalog.Models
 			DtoItem item = new DtoItem();
 			item.idProduto = idProduto;
 			item.idEstabelecimento = idEnderecoEstabelecimento;
+			Estabelecimento mEstabelecimento = new Estabelecimento();
+			item.estabelecimento = mEstabelecimento.abrirEstabelecimento(idEnderecoEstabelecimento);
 			item.produto = mProduto.abrirProduto(idProduto);
 			mProduto = null;
 
