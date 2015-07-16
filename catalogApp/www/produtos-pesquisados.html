@@ -8,7 +8,7 @@
 		<ion-content class="ajuste-altura-lista">  
 			<ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
 				<ion-item ng-repeat="produto in produtos" 
-					 produto="produto" class="item-remove-animate" href="#/abrirProduto?{{produto.id}}"> 
+					 produto="produto" class="item-remove-animate" href="#/abrirProduto?{{produto.idProduto}}"> 
 					{{ produto.nome }}	
 				</ion-item>
 			</ion-list>	

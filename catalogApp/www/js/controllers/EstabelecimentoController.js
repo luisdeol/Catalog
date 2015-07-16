@@ -17,6 +17,7 @@ angular.module("EstabelecimentoControllers",[
 })
 .controller("EstabelecimentoController",function($scope,$http,$ionicModal,$ionicLoading,$compile,verificarLogin,googleMaps,estabelecimento,modalAlerta,WebServices){
 	$scope.estabelecimentos = [];
+	var chave = "{idUsuario:'"+window.localStorage.idUsuario+"',token:'"+window.localStorage.token+"',ultimoAcesso:'"+window.localStorage.ultimoAcesso+"'}";
 	window.localStorage.idUltimoEstabelecimentoCriado = 0;
 	
 	//___________ VERIFICAR LOGIN _____________//
@@ -152,17 +153,28 @@ angular.module("EstabelecimentoControllers",[
 			
 			googleMaps.pegarLatitudeLongitude(estab.nome +" - "+ estab.rua +" - "+ estab.cidade +" - "+ estab.estado,function(){
 				
-				var json = "{nome: '"+estab.nome+"', rua: '"+estab.rua+"', cidade: '"+estab.cidade+"', estado: '"+estab.estado+"', numero: '"+estab.numero+"', cep: '"+estab.cep+"',latitude: '"+window.localStorage.latCadastroEstab+"',longitude: '"+window.localStorage.lonCadastroEstab+"'}";
+				var dtoEstab = "{estabelecimento:{nome:'"+estab.nome+"'}, rua: '"+estab.rua+"', cidade: '"+estab.cidade+"', estado: '"+estab.estado+"', numero: '"+estab.numero+"', cep: '"+estab.cep+"',latitude: '"+window.localStorage.latCadastroEstab+"',longitude: '"+window.localStorage.lonCadastroEstab+"'}";
 				
 				var id = window.localStorage.idUltimoEstabelecimentoCriado-1;
 				estabelecimento.insertInto(id, estab.nome, estab.rua, estab.cidade, estab.estado, estab.numero, estab.cep, window.localStorage.latCadastroEstab, window.localStorage.lonCadastroEstab, window.localStorage.estabImagem);
 				window.localStorage.idUltimoEstabelecimentoCriado--;
 				
-				// WebServices.cadastrarEstabelecimento(json)
-				// .success(function(data, status, headers, config)
-				// {
-					// var retorno = data.d;	
-				// });
+				WebServices.criarEstabelecimento(chave, dtoEstab)
+				.success(function(data, status, headers, config)
+				{
+					var retorno = angular.fromJson(data.d);	
+					if(retorno.tipoRetorno == "ACK")
+					{
+						modalAlerta.alerta("Estabelecimento","Estabelecimento cadastrado com sucesso!");
+					}
+					else //erro
+					{
+						modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
+					}
+				})
+				.error(function(data, status, headers, config) {
+					modalAlerta.alerta("Ocorreu um erro","Voce esta sem acesso a rede!");
+				});
 				
 				$scope.pesquisarEstabelecimento();
 				$scope.modal.hide();

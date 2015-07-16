@@ -58,23 +58,25 @@ var app = angular.module("PrincipalControllers",[
 		if(produto != undefined)//campos foram preenchidos
 		{
 			var nome = produto.nome;
-			var marca = produto.marca;
+			var fabricante = produto.fabricante;
 			var tipo = produto.tipo;
 			
 			if(nome==undefined)
 			{
 				nome="";
 			}
-			if(marca==undefined)
+			if(fabricante==undefined)
 			{
-				marca="";
+				fabricante="";
 			}
 			if(tipo==undefined)
 			{
 				tipo="";
 			}
 			
-			window.localStorage.dtoProduto = "{nome:'"+nome+"',marca:'"+marca+"',tipo:'"+tipo+"'}";
+			var fabricante = "{fabricante:'"+fabricante+"'}";
+			var tipo = "{tipo:'"+tipo+"'}";
+			window.localStorage.dtoProduto = "{nome:'"+nome+"',codigoDeBarras:'',tipoCodigoDeBarras:null,fabricante:"+fabricante+",tipo:"+tipo+"}";
 					
 			modalAlerta.sucesso("Pesquisa","Pesquisando...","#/produtos-pesquisados");
 			$scope.modalPesquisar.hide();

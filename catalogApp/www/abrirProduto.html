@@ -1,5 +1,5 @@
 <ion-nav-view>
-	<ion-view>
+	<ion-view ng-init="abrirProduto()">
 		<ion-header-bar class="bar-positive">
 			<h1 class="title">Produto aberto</h1>
 		</ion-header-bar>
@@ -8,22 +8,28 @@
 		<div class="list card">
 			  <div class="item item-avatar">
 				<img src="img/product.png">
-				<h2 style="margin-left:0px !important;">{{nomeProduto}}</h2>
-				<p>{{marcaProduto}}</p>
+				<h2 style="margin-left:0px !important;">{{nomeProdutoAberto}}</h2>
+				<p>{{fabricanteProdutoAberto}}</p>
 			  </div>
 
 			<div class="item item-body">
-				<img class="full-image" src="img/semImagem.png">
-				<h3>Codigo De Barras</h3>
-				<p>288127127127172</p>
-				
-				<h3>Tipo codigo de Barras</h3>
-				<p>282772</p>
-				
 				<h3>Fabricante</h3>
-				<p>Nescal</p>
+				<p>{{fabricanteProdutoAberto}}</p>
+				
+				<h3>Tipo</h3>
+				<p>{{tipoProdutoAberto}}</p>
 			</div>
 		</div>
+		
+		<button class="button button-block button-energized" ng-click="listarEstabelecimentosProssuidores()">
+						Listar Estabelecimentos Possuidores
+		</button>
+		
+		<ion-item ng-repeat="estabelecimento in estabelecimentos" 
+			 estabelecimento="estabelecimento" class="item-remove-animate">
+			{{ estabelecimento.idEstabelecimento}}	
+			<div class="quantidade">{{estabelecimento.preco}}Quant</div>	
+		</ion-item>
 	  
 		</ion-content>
 	</ion-view>

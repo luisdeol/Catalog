@@ -19,7 +19,7 @@
 				<div class="bloco">
 					<p class="nome-campos">Marca/Fabricante:</p>
 					<span class="input-grupo"><span class="ion-pricetags"></span></span>
-					<input type="text" ng-model="produto.marca" class="input-form" placeholder="Marca do Produto...">
+					<input type="text" ng-model="produto.fabricante" class="input-form" placeholder="Marca do Produto...">
 					<br>
 				</div>
 				
@@ -28,15 +28,15 @@
 					<span class="input-grupo"><span class="ion-ios-compose"></span></span>
 						<select ng-model="produto.tipo" class="select">
 						   <option value="0">Todos</option>
-						   <option value="1">Alaska</option>
-						   <option value="2">American Samoa</option>
+						   <option value="1">Eletronica</option>
+						   <option value="2">Supermercado</option>
 						</select>
 					<br>
 				</div>
 
 				<button class="button button-full button-positive botao" ng-click="pesquisarProduto(produto)"
 					ng-disabled="(produto.nome == undefined || produto.nome == '') &&
-								 (produto.marca == undefined || produto.marca == '') && 
+								 (produto.fabricante == undefined || produto.fabricante == '') && 
 								 (produto.tipo == undefined || produto.tipo == '')">
 								 Pesquisar</button>
 			</form>

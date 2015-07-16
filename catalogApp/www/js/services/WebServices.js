@@ -15,9 +15,9 @@ angular.module('services.WebServices', ['ionic'])
 		return $http.post(host + '/WsUsuario.asmx/realizarCadastro', {dtoUsuario:json});
 	}
 	
-	WebServices.cadastrarEstabelecimento = function(json)
+	WebServices.criarEstabelecimento = function(chave, dtoEstab)
 	{
-		return $http.post(host + '/WsEstabelecimento.asmx/criarEstabelecimento', {dtoEstabelecimento:json})
+		return $http.post(host + '/WsEstabelecimento.asmx/criarEstabelecimento', {dtoChave:chave, dtoEnderecoEstabelecimento:dtoEstab})
 	}
 	
 	WebServices.getCep = function(cep)
@@ -52,7 +52,17 @@ angular.module('services.WebServices', ['ionic'])
 	
 	WebServices.pesquisarProduto = function(chave,dtoProduto)
 	{
-		return $http.post(host + '/WsLista.asmx/pesquisarProduto', {dtoChave:chave,dtoProduto:dtoProduto});
+		return $http.post(host + '/WsProduto.asmx/pesquisarProduto', {dtoChave:chave,parametros:dtoProduto});
+	}
+	
+	WebServices.abrirProduto = function(chave,dtoProduto)
+	{
+		return $http.post(host + '/WsProduto.asmx/abrirProduto', {dtoChave:chave,dtoProduto:dtoProduto});
+	}
+	
+	WebServices.listarEstabelecimentosProssuidores = function(chave,dtoProduto)
+	{
+		return $http.post(host + '/WsProduto.asmx/listarEstabelecimentosProssuidores', {dtoChave:chave,dtoProduto:dtoProduto});
 	}
 	
 	
