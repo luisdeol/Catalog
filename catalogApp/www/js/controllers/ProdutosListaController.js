@@ -97,8 +97,9 @@ angular.module("ProdutosListaControllers",[
 					for(var l=0; retorno.objeto.length > l; l++)
 					{
 						var idEstabelecimento = retorno.objeto[l].idEstabelecimento;
+						var nome = retorno.objeto[l].estabelecimento.estabelecimento.nome;
 						var preco = retorno.objeto[l].preco;						
-						$scope.estabelecimentos[l] = {idEstabelecimento:idEstabelecimento, preco:preco};
+						$scope.estabelecimentos[l] = {idEstabelecimento:idEstabelecimento, nome:nome,preco:preco};
 					}	
 				}
 				else //erro

@@ -26,7 +26,6 @@ angular.module('ListaControllers',
 	//chave e listas
 	var idUsuario = window.localStorage.idUsuario;
 	var chave = "{idUsuario:'"+idUsuario+"',token:'"+window.localStorage.token+"',ultimoAcesso:'"+window.localStorage.ultimoAcesso+"'}";
-	window.localStorage.idUltimoListaCriada = 0;
 	$scope.listas = [];
 
 	//________________ EDITAR LISTAS _____________//
@@ -38,17 +37,18 @@ angular.module('ListaControllers',
 				var idLista = $scope.listas[i].idLista;
 				var idUsuario = $scope.listas[i].idUsuario;
 				var titulo = lista.nome;
-				listaModelo.update(0, lista.nome, idUsuario, $scope.listas[i].titulo);
+				var dtoLista = "{id:'"+idLista+"',idUsuario:'"+idUsuario+"',titulo:'"+titulo+"'}";
+			
+				WebServices.editarListas(chave,dtoLista)
+				.success(function(data, status, headers, config)
+				{
+					var retorno = angular.fromJson(data.d);		
+				});
+				
+				// listaModelo.update(0, lista.nome, idUsuario, $scope.listas[i].titulo);
 				$scope.listas[i].titulo = lista.nome;
 			}
 		}
-		// var dtoLista = "{idLista:'"+idLista+"',idUsuario:'"+idUsuario+"',titulo:'"+titulo+"'}";
-	
-		// WebServices.editarListas(chave,dtoLista)
-		// .success(function(data, status, headers, config)
-		// {
-			// var retorno = angular.fromJson(data.d);		
-		// });
 	};
 	
     //__________________ MOVER LISTA _________________//
@@ -65,15 +65,15 @@ angular.module('ListaControllers',
 		   if(res)
 		   {
 				$scope.listas.splice($scope.listas.indexOf(lista), 1);
-				var dtoLista = "{idLista:'"+lista.idLista+"',idUsuario:'"+lista.idUsuario+"',titulo:'"+lista.titulo+"'}";
+				var dtoLista = "{id:'"+lista.idLista+"',idUsuario:'"+lista.idUsuario+"',titulo:'"+lista.titulo+"'}";
 				
-				listaModelo.deletar(lista.titulo, idUsuario);
+				// listaModelo.deletar(lista.titulo, idUsuario);
 				
-				// $http.post('http://localhost:51786/Webservices/WsLista.asmx/excluirLista', {dtoChave:chave,dtoLista:dtoLista}).
-				// success(function(data, status, headers, config)
-				// {
-					// var retorno = angular.fromJson(data.d);	
-				// });
+				WebServices.excluirLista(chave,dtoLista)
+				.success(function(data, status, headers, config)
+				{
+					var retorno = angular.fromJson(data.d);		
+				});
 		   } 	   	   
 	   });
 	};
@@ -81,29 +81,29 @@ angular.module('ListaControllers',
 	//________________ PESQUISAR LISTAS _____________//
 	$scope.pesquisarLista = function()
 	{	
-		listaModelo.select(idUsuario, function(retorno){
-			for(var l=0; retorno.length > l; l++)
-			{
-				var idLista = retorno[l].id;
-				var idUsuario = retorno[l].id_usuario;
-				var titulo = retorno[l].nome;
-				
-				$scope.listas[l] = {idLista:idLista,idUsuario:idUsuario,titulo:titulo,indice:l};
-			}		
-		});	
-		// WebServices.pesquisarListas(chave)
-	    // .success(function(data, status, headers, config)
-		// {
-			// var retorno = angular.fromJson(data.d);	
-			// for(var l=0; retorno.objeto.length > l; l++)
+		// listaModelo.select(idUsuario, function(retorno){
+			// for(var l=0; retorno.length > l; l++)
 			// {
-				// var idLista = retorno.objeto[l].id;
-				// var idUsuario = retorno.objeto[l].idUsuario;
-				// var titulo = retorno.objeto[l].titulo;
+				// var idLista = retorno[l].id;
+				// var idUsuario = retorno[l].id_usuario;
+				// var titulo = retorno[l].nome;
 				
 				// $scope.listas[l] = {idLista:idLista,idUsuario:idUsuario,titulo:titulo,indice:l};
-			// }
-		// });
+			// }		
+		// });	
+		WebServices.pesquisarListas(chave)
+	    .success(function(data, status, headers, config)
+		{
+			var retorno = angular.fromJson(data.d);	
+			for(var l=0; retorno.objeto.length > l; l++)
+			{
+				var idLista = retorno.objeto[l].id;
+				var idUsuario = retorno.objeto[l].idUsuario;
+				var titulo = retorno.objeto[l].titulo;
+				
+				$scope.listas[l] = {id:idLista,idUsuario:idUsuario,titulo:titulo,indice:l};
+			}
+		});
 	} 
 
 	//________________ CRIAR LISTA _________________//
@@ -114,16 +114,16 @@ angular.module('ListaControllers',
 			$scope.listas.push({ titulo: lista.nome});
 			$scope.modal.hide();	
 			var dtoLista = "{idUsuario:'"+idUsuario+"',titulo:'"+lista.nome+"'}";
-			var id = window.localStorage.idUltimoListaCriada-1;
-			listaModelo.insertInto(id, lista.nome, idUsuario);
-			window.localStorage.idUltimoListaCriada--;
+			// var id = window.localStorage.idUltimoListaCriada-1;
+			// listaModelo.insertInto(id, lista.nome, idUsuario);
+			// window.localStorage.idUltimoListaCriada--;
 			
-			// WebServices.criarListas(chave,dtoLista)
-			// .success(function(data, status, headers, config)
-			// {
-				// var retorno = angular.fromJson(data.d);	
-				// modalAlerta.alerta("Lista","Lista criada com sucesso!");
-			// });
+			WebServices.criarListas(chave,dtoLista)
+			.success(function(data, status, headers, config)
+			{
+				var retorno = angular.fromJson(data.d);	
+				modalAlerta.alerta("lista","lista criada com sucesso!");
+			});
 		}
 		else
 		{
@@ -194,8 +194,9 @@ angular.module('ListaControllers',
 	}
 })
 //########################################################################################################//
-.controller('ProdutosListaController', function($scope, $ionicModal, produto, verificarLogin)
+.controller('ProdutosListaController', function($scope, $ionicModal, produto, verificarLogin, WebServices)
 {
+	var chave = "{idUsuario:'"+window.localStorage.idUsuario+"',token:'"+window.localStorage.token+"',ultimoAcesso:'"+window.localStorage.ultimoAcesso+"'}";
 	$scope.produtos = [];
 	
 	var url = window.location.href.toString();
@@ -211,34 +212,45 @@ angular.module('ListaControllers',
 	//________________ VERIFICAR LOGIN _________________//
 	$scope.verificarLogin = function(lugarPagina)
 	{
-		$scope.pesquisarProdutos();
+		$scope.abrirLista();
 		produto.openDataBase();
-		console.log($scope.produtos);
 		verificarLogin.verificarProduto(lugarPagina);
 	}
 	
-	//________________ ADICIONAR PRODUTOS _______________//
-	$scope.adicionarProduto = function(prod)
-	{
-		$scope.produtos.push({ nome: prod.nome, quantidade: prod.quantidade});
-		$scope.modal.hide();	
-		produto.insertInto(1,prod.nome,prod.quantidade,"Alimenticia",$scope.idLista);
-	}
-	
-	//_________________ PESQUISAR PRODUTOS _________________//
-	$scope.pesquisarProdutos = function()
+	//_________________ ABRIR LISTA _________________//
+	$scope.abrirLista = function()
 	{	
-		produto.select($scope.idLista, function(retorno){
-			for(var l=0; retorno.length > l; l++)
+		var dtoLista = "{id:'"+$scope.idLista+"',idUsuario:'"+window.localStorage.idUsuario+"',titulo:''}";
+		
+		WebServices.abrirLista(chave,dtoLista)
+		.success(function(data, status, headers, config)
+		{
+			var retorno = angular.fromJson(data.d);	
+			for(var l=0; retorno.objeto.produtosDaLista.length > l; l++)
 			{
-				var id = retorno[l].id;
-				var nome = retorno[l].nome;
-				var quantidade = retorno[l].quantidade;
-				var categoria = retorno[l].categoria;
-				var idLista = retorno[l].idLista;
+				var idLista = retorno.objeto.id;
+				$scope.titulo = retorno.objeto.titulo;
+				var precoTotal = retorno.objeto.precoTotal;
+				var idProduto = retorno.objeto.produtosDaLista[l].idProduto;
+				var quantidade = retorno.objeto.produtosDaLista[l].quantidade;
+				var nomeProduto = retorno.objeto.produtosDaLista[l].produto.nome;
 				
-				$scope.produtos[l] = {id:id, nome:nome, quantidade:quantidade ,categoria:categoria, idLista:idLista};
+				$scope.produtos[l] = {idProduto:idProduto, idLista:idLista, titulo:$scope.titulo, precoTotal:precoTotal, quantidade:quantidade, nomeProduto:nomeProduto};
 			}		
-		});	
+		});
+		
+	}	
+	
+	//_________________ PESQUISAR PRODUTO _________________//
+	$scope.pesquisarProduto = function(produto)
+	{	
+		var dtoProduto = "{nome:'"+produto.nome+"',codigoDeBarras:'',tipoCodigoDeBarras:null,fabricante:{fabricante:''},tipo:{tipo:''}}";
+		
+		WebServices.pesquisarProduto(chave,dtoProduto)
+		.success(function(data, status, headers, config)
+		{
+			var retorno = angular.fromJson(data.d);	
+		});
+		
 	}	
 });

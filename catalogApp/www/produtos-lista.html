@@ -4,7 +4,7 @@
 			<div class="buttons">
 				<button class="button button-icon icon ion-ios-minus-outline" ng-click="data.showDelete = !data.showDelete; data.showReorder = false"></button>
 			</div>
-			<h1 class="title">Produtos da Lista</h1>
+			<h1 class="title">{{titulo}}</h1>
 			<div class="buttons">
 				<button class="button" ng-click="data.showDelete = false; data.showReorder = !data.showReorder">
 					Ordenar
@@ -16,7 +16,7 @@
 			<ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
 				<ion-item ng-repeat="produto in produtos" 
 					 produto="produto" class="item-remove-animate">
-					{{ produto.nome }}	
+					{{ produto.nomeProduto }}	
 					<div class="quantidade">{{produto.quantidade}}Quant</div>	
 					<ion-delete-button class="ion-minus-circled" 
 								 ng-click="onItemDelete(produto)">
@@ -31,7 +31,7 @@
 		</ion-content>
 		
 		<div class="botao-flutuante" ng-click="modal.show()">
-			<div class="ion-plus-round"></div>
+			<div class="ion-search"></div>
 		</div>
 				
 		<!-- fotter -->

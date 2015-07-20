@@ -24,7 +24,7 @@
 		<ion-content class="ajuste-altura-lista">      
 			<ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
 				<div class="sem-lista-cadastrada" ng-show="listas.length == 0">Nenhuma Lista Cadastrada</div>   
-				<ion-item ng-repeat="lista in listas | filter:obj.teste" lista="lista" href="#/produtos-lista?{{lista.idLista}}" class="item-remove-animate">
+				<ion-item ng-repeat="lista in listas | filter:obj.teste" lista="lista" href="#/produtos-lista?{{lista.id}}" class="item-remove-animate">
 					{{ lista.titulo}}
 					<ion-delete-button class="ion-close-round" 
 						ng-click="deletarLista(lista)">

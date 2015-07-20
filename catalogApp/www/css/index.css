@@ -26,6 +26,10 @@ h1.titulo{
   margin-left: 10px;
 }
 
+input.face {
+  margin-left: 41% !important;
+}
+
 img.icone-login {
   margin-top: 90px;
   margin-left: 40%;
@@ -206,9 +210,14 @@ p.nome-campos {
 }
 
 span.ion-ios-cart, span.ion-android-map, span.ion-map, span.ion-android-globe, span.ion-ios-compose, span.ion-home, span.ion-ios-list-outline,
-span.ion-at, span.ion-locked, span.ion-person, span.ion-unlocked, span.ion-lock-combination, span.ion-ios-email, span.ion-pricetags{
+span.ion-at, span.ion-locked, span.ion-person, span.ion-unlocked, span.ion-lock-combination, span.ion-ios-email, span.ion-pricetags, span.ion-search{
   font-size: 20px;
   color: orange;
+}
+
+.ion-search {
+  font-size: 20px;
+  color: white;
 }
 
 .botao {

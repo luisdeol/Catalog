@@ -46,12 +46,12 @@ namespace Catalog.Webservices
 			return cProduto.buscarItem(dtoChave, dtoProduto, dtoEstabelecimento);
 		}
 
-		[WebMethod]
-		public string buscarItens(string dtoChave, string dtoProduto)
-		{
-			ControllerProduto cProduto = new ControllerProduto();
-			return cProduto.buscarItens(dtoChave, dtoProduto);
-		}
+        //[WebMethod]
+        //public string buscarItens(string dtoChave, string dtoProduto)
+        //{
+        //    ControllerProduto cProduto = new ControllerProduto();
+        //    return cProduto.buscarItens(dtoChave, dtoProduto);
+        //}
 
 		[WebMethod]
 		public string listarEstabelecimentosProssuidores(string dtoChave, string dtoProduto)

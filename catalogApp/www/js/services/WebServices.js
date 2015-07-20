@@ -30,7 +30,7 @@ angular.module('services.WebServices', ['ionic'])
 		return $http.post(host + '/WsLista.asmx/editarLista', {dtoChave:chave,dtoLista:dtoLista});
 	}
 
-	WebServices.deletarListas = function(chave,dtoLista)
+	WebServices.excluirLista = function(chave,dtoLista)
 	{
 		return $http.post(host + '/WsLista.asmx/excluirLista', {dtoChave:chave,dtoLista:dtoLista});
 	}
@@ -43,6 +43,11 @@ angular.module('services.WebServices', ['ionic'])
 	WebServices.criarListas = function(chave,dtoLista)
 	{
 		return $http.post(host + '/WsLista.asmx/criarLista', {dtoChave:chave,dtoLista:dtoLista});
+	}
+	
+	WebServices.abrirLista = function(chave,dtoLista)
+	{
+		return $http.post(host + '/WsLista.asmx/abrirLista', {dtoChave:chave,dtoLista:dtoLista});
 	}
 	
 	WebServices.recuperarSenha = function(dtoUsuario)
