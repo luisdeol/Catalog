@@ -15,13 +15,15 @@ namespace Catalog.Models
 		{
             DBCatalogDataContext dataContext = new DBCatalogDataContext();
             var estabelecimentoBanco = new tb_Estabelecimento();
-            var ultimoEstabelecimentoSalvo = new tb_Estabelecimento(); 
+            var ultimoEstabelecimentoSalvo = new tb_Estabelecimento();
 
 			var enderecoEstabelecimentoBanco = dataContext.tb_EnderecoEstabelecimentos.FirstOrDefault(u => 
                 u.rua ==  enderecoEstabelecimento.rua && 
                 u.numero ==  enderecoEstabelecimento.numero);
 
-            if (enderecoEstabelecimentoBanco == null)
+            var estabBanco = (from est in dataContext.tb_Estabelecimentos where est.estabelecimento == enderecoEstabelecimento.estabelecimento.nome select est).First();
+
+            if (enderecoEstabelecimentoBanco == null && estabBanco == null)
             {
                 enderecoEstabelecimentoBanco = new tb_EnderecoEstabelecimento();
                 estabelecimentoBanco.estabelecimento = enderecoEstabelecimento.estabelecimento.nome;
@@ -42,14 +44,27 @@ namespace Catalog.Models
                 dataContext.tb_EnderecoEstabelecimentos.InsertOnSubmit(enderecoEstabelecimentoBanco);
                 dataContext.SubmitChanges();
             }
+            else if (enderecoEstabelecimentoBanco == null && estabBanco != null)
+            {
+                enderecoEstabelecimentoBanco = new tb_EnderecoEstabelecimento();
+                enderecoEstabelecimentoBanco.idEstabelecimento = estabBanco.id;
+                enderecoEstabelecimentoBanco.rua = enderecoEstabelecimento.rua;
+                enderecoEstabelecimentoBanco.cidade = enderecoEstabelecimento.cidade;
+                enderecoEstabelecimentoBanco.estado = enderecoEstabelecimento.estado;
+                enderecoEstabelecimentoBanco.numero = enderecoEstabelecimento.numero;
+                enderecoEstabelecimentoBanco.cep = enderecoEstabelecimento.cep;
+                enderecoEstabelecimentoBanco.latitude = enderecoEstabelecimento.latitude;
+                enderecoEstabelecimentoBanco.longitude = enderecoEstabelecimento.longitude;
+
+                dataContext.tb_EnderecoEstabelecimentos.InsertOnSubmit(enderecoEstabelecimentoBanco);
+                dataContext.SubmitChanges();
+            }
             else
             {
 				throw new DtoExcecao(DTO.Enum.CampoInvalido, "Estabelecimento ja existente");
             }
 
             var estabelecimentoRetorno = new DtoEnderecoEstabelecimento();
-            estabelecimentoRetorno.estabelecimento.id = ultimoEstabelecimentoSalvo.id;
-            estabelecimentoRetorno.estabelecimento.nome = ultimoEstabelecimentoSalvo.estabelecimento;
             estabelecimentoRetorno.cep = enderecoEstabelecimento.cep;
             estabelecimentoRetorno.cidade = enderecoEstabelecimento.cidade;
             estabelecimentoRetorno.estado = enderecoEstabelecimento.estado;
