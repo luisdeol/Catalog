@@ -16,7 +16,7 @@ namespace Catalog.Controllers
 
             JavaScriptSerializer js = new JavaScriptSerializer();
             DtoRetorno retorno;
-            DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
+			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
             DtoEnderecoEstabelecimento enderecoEstabelecimento = js.Deserialize<DtoEnderecoEstabelecimento>(dtoEnderecoEstabelecimento);
             DtoEnderecoEstabelecimento estabelecimento;
 

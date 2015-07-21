@@ -121,11 +121,11 @@ namespace Catalog.Models
 			DtoEnderecoEstabelecimento[] estabelecimentos;
 
 			var enderecosEstabelecimentosBanco = from ee in dataContext.tb_EnderecoEstabelecimentos
-												 where ee.cep == parametros.cep
+												 where (parametros.cep == "" || ee.cep == parametros.cep)
 													&& ee.estado.StartsWith(parametros.estado)
 													&& ee.cidade.StartsWith(parametros.cidade)
 													&& ee.rua.StartsWith(parametros.rua)
-													&& ee.numero == parametros.numero
+													&& (parametros.numero == "" || ee.numero == parametros.numero)
 													&& ee.tb_Estabelecimento.estabelecimento.StartsWith(parametros.estabelecimento.nome)
 												 orderby ee.tb_Estabelecimento.estabelecimento
 												 select ee;
