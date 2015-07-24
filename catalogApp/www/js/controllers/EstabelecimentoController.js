@@ -14,6 +14,11 @@ angular.module("EstabelecimentoControllers",[
 			templateUrl: 'estabelecimentos.html',
 			controller: 'EstabelecimentoController'
 		})
+		.state('abrirEstabelecimento', {
+			url: '/produtos-estabelecimento',
+			templateUrl: 'produtos-estabelecimento.html',
+			controller: 'AbrirEstabelecimentoController'
+		})
 })
 .controller("EstabelecimentoController",function($scope,$http,$ionicModal,$ionicLoading,$compile,verificarLogin,googleMaps,estabelecimento,modalAlerta,WebServices){
 	$scope.estabelecimentos = [];
@@ -38,7 +43,7 @@ angular.module("EstabelecimentoControllers",[
 	//_______________ CHAMAR MAPA _________________// 
 	$scope.chamarMapa = function(latitudeEstabelecimento,longitudeEstabelecimento,nomeEstabelecimento)
 	{
-		if(latitudeEstabelecimento!="semLatitude" && longitudeEstabelecimento!="semLongitude")
+		if(latitudeEstabelecimento!=0 && longitudeEstabelecimento!=0)
 		{
 			window.localStorage.latitudeEstabelecimento = latitudeEstabelecimento;
 			window.localStorage.longitudeEstabelecimento = longitudeEstabelecimento;
@@ -100,23 +105,53 @@ angular.module("EstabelecimentoControllers",[
 	//________________ PESQUISAR ESTABELECIMENTO _____________//
 	$scope.pesquisarEstabelecimento = function()
 	{	
-		estabelecimento.select(function(retorno){
-			for(var l=0; retorno.length > l; l++)
+		WebServices.pesquisarEstabelecimento(chave, "")
+		.success(function(data, status, headers, config)
+		{
+			var retorno = angular.fromJson(data.d);	
+			if(retorno.tipoRetorno == "ACK")
 			{
-				var id = retorno[l].id;
-				var nome = retorno[l].nome;
-				var rua = retorno[l].rua;
-				var cidade = retorno[l].cidade;
-				var estado = retorno[l].estado;
-				var numero = retorno[l].numero;
-				var cep = retorno[l].cep;
-				var latitude = retorno[l].latitude;
-				var longitude = retorno[l].longitude; 
-				var imagem = retorno[l].imagem;
+				for(var l=0; retorno.objeto.length > l; l++)
+				{
+					var id = retorno.objeto[l].id;
+					var nome = retorno.objeto[l].estabelecimento.nome;
+					var rua = retorno.objeto[l].rua;
+					var cidade = retorno.objeto[l].cidade;
+					var estado = retorno.objeto[l].estado;
+					var numero = retorno.objeto[l].numero;
+					var cep = retorno.objeto[l].cep;
+					var latitude = retorno.objeto[l].latitude;
+					var longitude = retorno.objeto[l].longitude; 
+					var imagem = "";
+					
+					$scope.estabelecimentos[l] = {id:id, nome:nome, rua:rua, cidade:cidade, estado:estado, numero:numero, cep:cep, latitude:latitude, longitude:longitude, imagem:imagem};
+				}
+			}
+			else
+			{
+				modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
+			}
+		})
+		.error(function(data, status, headers, config) {
+			modalAlerta.alerta("Ocorreu um erro","Voce esta sem acesso a rede!");
+		});
+		// estabelecimento.select(function(retorno){
+			// for(var l=0; retorno.length > l; l++)
+			// {
+				// var id = retorno[l].id;
+				// var nome = retorno[l].nome;
+				// var rua = retorno[l].rua;
+				// var cidade = retorno[l].cidade;
+				// var estado = retorno[l].estado;
+				// var numero = retorno[l].numero;
+				// var cep = retorno[l].cep;
+				// var latitude = retorno[l].latitude;
+				// var longitude = retorno[l].longitude; 
+				// var imagem = retorno[l].imagem;
 				
-				$scope.estabelecimentos[l] = {id:id, nome:nome, rua:rua, cidade:cidade, estado:estado, numero:numero, cep:cep, latitude:latitude, longitude:longitude, imagem:imagem};
-			}		
-		});	
+				// $scope.estabelecimentos[l] = {id:id, nome:nome, rua:rua, cidade:cidade, estado:estado, numero:numero, cep:cep, latitude:latitude, longitude:longitude, imagem:imagem};
+			// }		
+		// });	
 	} 
 
 	//_______________ CADASTRAR ESTABELECIMENTO _________________// 
@@ -185,4 +220,67 @@ angular.module("EstabelecimentoControllers",[
 			modalAlerta.alerta('ERRO!','Existem campos inválidos!');
 		}
 	}	
-});
+})
+
+.controller("AbrirEstabelecimentoController",function($scope,$http,$ionicModal,$ionicLoading,$compile,verificarLogin,googleMaps,estabelecimento,modalAlerta,WebServices){
+	
+	var chave = "{idUsuario:'"+window.localStorage.idUsuario+"',token:'"+window.localStorage.token+"',ultimoAcesso:'"+window.localStorage.ultimoAcesso+"'}";
+	$scope.produtos = [];
+	
+	var url = window.location.href.toString();
+	$scope.idEstabelecimento = url.split("?")[1];
+	
+	//________________ PESQUISAR PRODUTO ESTABELECIMENTO _____________//
+	$scope.pesquisarProdutosEstabelecimento = function()
+	{	
+		var dtoEstab = "{id:'"+ $scope.idEstabelecimento +"'}";
+		var dtoProd = "{nome:'',codigoDeBarras:'',tipoCodigoDeBarras:null,fabricante:{fabricante:''},tipo:{tipo:''}}";
+	
+		WebServices.pesquisarProdutosEstabelecimento(chave,dtoEstab,dtoProd)
+		.success(function(data, status, headers, config)
+		{
+			var retorno = angular.fromJson(data.d);	
+			if(retorno.tipoRetorno == "ACK")
+			{
+				for(var l=0; retorno.objeto.length > l; l++)
+				{
+					var id = retorno.objeto[l].id;
+					$scope.nome = retorno.objeto[l].estabelecimento.estabelecimento.nome;
+					var nomeProduto = retorno.objeto[l].produto.nome;
+					var preco = retorno.objeto[l].preco;
+					$scope.latitude = retorno.objeto[l].estabelecimento.latitude;
+					$scope.longitude = retorno.objeto[l].estabelecimento.longitude;
+					
+					console.log($scope.latitude);
+					
+					$scope.produtos[l] = {id:id, nome:$scope.nome, nomeProduto:nomeProduto, preco:preco};
+				}
+				$scope.mapaEstabelecimento($scope.latitude, $scope.longitude);
+			}
+			else //erro
+			{
+				modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
+			}
+		})
+		.error(function(data, status, headers, config) {
+			modalAlerta.alerta("Ocorreu um erro","Voce esta sem acesso a rede!");
+		});
+	} 
+	
+	$scope.mapaEstabelecimento = function(latitude, longitude) 
+	{
+	  var mapProp = {
+		center:new google.maps.LatLng(latitude,longitude),
+		zoom:17,
+		mapTypeId:google.maps.MapTypeId.ROADMAP
+	  };
+	  var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+	  
+	  var myLatlng = new google.maps.LatLng(latitude,longitude);
+	  var marker = new google.maps.Marker({
+      position: myLatlng,
+      map: map,
+	  });
+	}
+	
+})

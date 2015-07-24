@@ -19,8 +19,8 @@ angular.module('services.googleMaps', [])
 			} 
 			else 
 			{
-				window.localStorage.latCadastroEstab = "semLatitude";
-				window.localStorage.lonCadastroEstab = "semLongitude";		
+				window.localStorage.latCadastroEstab = 0;
+				window.localStorage.lonCadastroEstab = 0		
 			}
 			
 			callback();

@@ -1,16 +1,20 @@
 <ion-nav-view>
-	<ion-view ng-init="pesquisarProduto()">
+	<ion-view ng-init="pesquisarProdutosEstabelecimento()">
 		<ion-header-bar class="bar-positive">
-			<img src="img/back.png" onclick="location.href='#/menu'" height="30px" width="30px">
-			<h1 class="title">Produtos Encontrados</h1>
+			<img src="img/back.png" onclick="location.href='#/estabelecimentos'" height="30px" width="30px">
+			<h1 class="title">{{nome}}</h1>
 		</ion-header-bar>
+		
+		<div id="googleMap" style="width:500px;height:380px;"></div>
 
-		<div class="sem-lista-cadastrada" ng-show="produtos.length == 0">Nenhum Produto Encontrado</div>   
-		<ion-content class="ajuste-altura-lista">  
+		<ion-content class="ajuste-altura-produto-estabelecimento ">  
+			<h2 class="produtos-do-estabelecimento">Produtos do Estabelecimento</h2>
 			<ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
+				<div class="sem-lista-cadastrada" ng-show="produtos.length == 0">Nenhum produto Cadastrado</div>
 				<ion-item ng-repeat="produto in produtos" 
-					 produto="produto" class="item-remove-animate" href="#/abrirProduto?{{produto.idProduto}}"> 
-					{{ produto.nome }}	
+					 produto="produto" class="item-remove-animate" href="">
+					{{ produto.nomeProduto }}	
+					<div class="quantidade">R$ {{produto.preco}}</div>	
 				</ion-item>
 			</ion-list>	
 		</ion-content>

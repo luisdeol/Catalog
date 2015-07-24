@@ -9,7 +9,7 @@
 		 <ion-content>
 		<div class="list">
 			<div class="sem-lista-cadastrada" ng-show="estabelecimentos.length == 0">Nenhum Estabelecimento Cadastrado</div>   
-			<a class="item item-avatar" href="#/estabelecimentos" ng-repeat="estab in estabelecimentos">
+			<a class="item item-avatar" href="#/produtos-estabelecimento?{{estab.id}}" ng-repeat="estab in estabelecimentos">
 				<img src="{{estab.imagem || 'img/semImagem.png'}}">
 				<h2 class="titulo-estab">{{estab.nome}}</h2>
 				<p>{{estab.rua}}</p>

@@ -151,6 +151,19 @@ img.icone-mapa{
   margin-top: -40px;
 }
 
+.ajuste-altura-produto-estabelecimento {
+  top: 385px;
+}
+
+h2.produtos-do-estabelecimento {
+  top: -25px;
+  position: absolute;
+  font-size: 18px;
+  color: #005BB3;
+  margin-left: 3px;
+  font-weight: bold;
+}
+
 p.nome-campos.img {
   margin-top: 15px;
 }

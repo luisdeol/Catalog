@@ -242,7 +242,7 @@ angular.module('ListaControllers',
 	}	
 	
 	//_________________ PESQUISAR PRODUTO _________________//
-	$scope.pesquisarProdutoLista = function(produto)
+	$scope.pesquisarProduto = function(produto)
 	{	
 		var dtoProduto = "{nome:'"+produto.nome+"',codigoDeBarras:'',tipoCodigoDeBarras:null,fabricante:{fabricante:''},tipo:{tipo:''}}";
 		

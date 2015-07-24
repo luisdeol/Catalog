@@ -21,7 +21,7 @@ namespace Catalog.Models
                 u.rua ==  enderecoEstabelecimento.rua && 
                 u.numero ==  enderecoEstabelecimento.numero);
 
-            var estabBanco = (from est in dataContext.tb_Estabelecimentos where est.estabelecimento == enderecoEstabelecimento.estabelecimento.nome select est).First();
+            var estabBanco = dataContext.tb_Estabelecimentos.FirstOrDefault(u => u.estabelecimento == enderecoEstabelecimento.estabelecimento.nome);
 
             if (enderecoEstabelecimentoBanco == null && estabBanco == null)
             {
@@ -93,13 +93,13 @@ namespace Catalog.Models
 
 			Item mItem = new Item();
 
-			if (parametros.idTipo == 0)
-			{
-				foreach (tb_Item itemBanco in estabelecimentoBanco.tb_Items)
-					itensEncontrados.Add(mItem.abrirItem(Convert.ToInt32(itemBanco.idProduto), Convert.ToInt32(itemBanco.idEstabelecimento)));
-			}
-			else
-			{
+            if (parametros.idTipo == 0)
+            {
+                foreach (tb_Item itemBanco in estabelecimentoBanco.tb_Items)
+                    itensEncontrados.Add(mItem.abrirItem(Convert.ToInt32(itemBanco.idProduto), Convert.ToInt32(itemBanco.idEstabelecimento)));
+            }
+            else
+            {
 				foreach (tb_Item itemBanco in estabelecimentoBanco.tb_Items)
 					if (itemBanco.tb_Produto.nome.StartsWith(parametros.nome) &&
 						itemBanco.tb_Produto.idTipo == parametros.idTipo &&
@@ -107,7 +107,7 @@ namespace Catalog.Models
 					{
 						itensEncontrados.Add(mItem.abrirItem(Convert.ToInt32(itemBanco.idProduto), Convert.ToInt32(itemBanco.idEstabelecimento)));
 					}
-			}
+            }
 
 			if (itensEncontrados.Count < 1)
 				throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado, "Item");
@@ -121,17 +121,11 @@ namespace Catalog.Models
 			DtoEnderecoEstabelecimento[] estabelecimentos;
 
 			var enderecosEstabelecimentosBanco = from ee in dataContext.tb_EnderecoEstabelecimentos
-												 where (parametros.cep == "" || ee.cep == parametros.cep)
-													&& ee.estado.StartsWith(parametros.estado)
-													&& ee.cidade.StartsWith(parametros.cidade)
-													&& ee.rua.StartsWith(parametros.rua)
-													&& (parametros.numero == "" || ee.numero == parametros.numero)
-													&& ee.tb_Estabelecimento.estabelecimento.StartsWith(parametros.estabelecimento.nome)
 												 orderby ee.tb_Estabelecimento.estabelecimento
 												 select ee;
 
-			if (enderecosEstabelecimentosBanco.Count() < 1)
-				throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado, "estabelecimentos");
+			//if (enderecosEstabelecimentosBanco.Count() < 1)
+			//	throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado, "estabelecimentos");
 
 			estabelecimentos = new DtoEnderecoEstabelecimento[enderecosEstabelecimentosBanco.Count()];
 			int i = 0;
@@ -142,8 +136,8 @@ namespace Catalog.Models
 				estabelecimentos[i].rua = enderecoEstabelecimentoBanco.rua;
 				estabelecimentos[i].cidade = enderecoEstabelecimentoBanco.cidade;
 				estabelecimentos[i].estado = enderecoEstabelecimentoBanco.estado;
-				//estabelecimentos[i].latitude = Convert.ToDouble(enderecoEstabelecimentoBanco.latitude);
-				//estabelecimentos[i].longitude = Convert.ToDouble(enderecoEstabelecimentoBanco.longitude);
+                estabelecimentos[i].latitude = Convert.ToDouble(enderecoEstabelecimentoBanco.latitude);
+				estabelecimentos[i].longitude = Convert.ToDouble(enderecoEstabelecimentoBanco.longitude);
 				estabelecimentos[i].numero = enderecoEstabelecimentoBanco.numero;
 				estabelecimentos[i].id = enderecoEstabelecimentoBanco.id;
 				estabelecimentos[i].estabelecimento = new DtoEstabelecimento();
@@ -175,8 +169,8 @@ namespace Catalog.Models
 			enderecoEstabelecimento.rua = enderecoEstabelecimentoBanco.rua;
 			enderecoEstabelecimento.cidade = enderecoEstabelecimentoBanco.cidade;
 			enderecoEstabelecimento.estado = enderecoEstabelecimentoBanco.estado;
-			//enderecoEstabelecimento.latitude = Convert.ToDouble(enderecoEstabelecimentoBanco.latitude);
-			//enderecoEstabelecimento.longitude = Convert.ToDouble(enderecoEstabelecimentoBanco.longitude);
+			enderecoEstabelecimento.latitude = Convert.ToDouble(enderecoEstabelecimentoBanco.latitude);
+			enderecoEstabelecimento.longitude = Convert.ToDouble(enderecoEstabelecimentoBanco.longitude);
 			enderecoEstabelecimento.numero = enderecoEstabelecimentoBanco.numero;
 			enderecoEstabelecimento.id = enderecoEstabelecimentoBanco.id;
 			enderecoEstabelecimento.estabelecimento = new DtoEstabelecimento();

@@ -20,6 +20,16 @@ angular.module('services.WebServices', ['ionic'])
 		return $http.post(host + '/WsEstabelecimento.asmx/criarEstabelecimento', {dtoChave:chave, dtoEnderecoEstabelecimento:dtoEstab})
 	}
 	
+	WebServices.pesquisarEstabelecimento = function(chave, dtoEstab)
+	{
+		return $http.post(host + '/WsEstabelecimento.asmx/pesquisarEstabelecimentos', {dtoChave:chave, dtoEnderecoEstabelecimento:dtoEstab})
+	}
+	
+	WebServices.pesquisarProdutosEstabelecimento = function(chave, dtoEstab, parametros)
+	{
+		return $http.post(host + '/WsEstabelecimento.asmx/pesquisarProdutos', {dtoChave:chave, dtoEnderecoEstabelecimento:dtoEstab, parametros:parametros})
+	}
+	
 	WebServices.getCep = function(cep)
 	{
 		return $http.get('http://api.postmon.com.br/v1/cep/' +cep);
