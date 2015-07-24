@@ -14,10 +14,11 @@
 
 		<ion-content class="ajuste-altura-lista">  
 			<ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
+			<div class="sem-lista-cadastrada" ng-show="produtos.length == 0">Nenhum Produto</div> 
 				<ion-item ng-repeat="produto in produtos" 
 					 produto="produto" class="item-remove-animate">
 					{{ produto.nomeProduto }}	
-					<div class="quantidade">{{produto.quantidade}}Quant</div>	
+					<div class="quantidade">{{produto.quantidade}} Quant</div>	
 					<ion-delete-button class="ion-minus-circled" 
 								 ng-click="onItemDelete(produto)">
 					</ion-delete-button>
@@ -30,7 +31,7 @@
 			</ion-list>	
 		</ion-content>
 		
-		<div class="botao-flutuante" ng-click="modal.show()">
+		<div class="botao-flutuante" ng-click="abrirModalPesquisa()">
 			<div class="ion-search"></div>
 		</div>
 				

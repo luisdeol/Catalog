@@ -1,0 +1,25 @@
+<ion-modal-view>
+  
+	<ion-header-bar class="bar bar-header bar-positive">
+	   <h1 class="title">Pesquisar Produtos</h1>
+	   <button class="button button-clear button-primary" ng-click="modal.hide()">Cancelar</button>
+	</ion-header-bar>
+	
+	<ion-content class="padding">
+	<img class="icon-estab-atualizar" src="img/product.png" width="80px" height="80px">
+		<div class="list-estab-atualizar" id="blocoPesquisarProduto">
+			<form>
+				<div class="bloco">
+					<p class="nome-campos">Quantidade:</p>
+					<span class="input-grupo"><span class="ion-ios-browsers-outline"></span></span>
+					<input type="text" ng-model="produto.quantidade" class="input-form" placeholder="Quantidade...">
+					<br>
+				</div>
+				<button class="button button-full button-positive botao" ng-click="adicionarProdutoALista(produto)"
+					ng-disabled="(produto.quantidade == undefined || produto.quantidade == '')">
+								 Adicionar Produto a Lista</button>
+			</form>
+		</div>
+	</ion-content>
+	
+</ion-modal-view>

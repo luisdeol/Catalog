@@ -135,23 +135,6 @@ angular.module("EstabelecimentoControllers",[
 		.error(function(data, status, headers, config) {
 			modalAlerta.alerta("Ocorreu um erro","Voce esta sem acesso a rede!");
 		});
-		// estabelecimento.select(function(retorno){
-			// for(var l=0; retorno.length > l; l++)
-			// {
-				// var id = retorno[l].id;
-				// var nome = retorno[l].nome;
-				// var rua = retorno[l].rua;
-				// var cidade = retorno[l].cidade;
-				// var estado = retorno[l].estado;
-				// var numero = retorno[l].numero;
-				// var cep = retorno[l].cep;
-				// var latitude = retorno[l].latitude;
-				// var longitude = retorno[l].longitude; 
-				// var imagem = retorno[l].imagem;
-				
-				// $scope.estabelecimentos[l] = {id:id, nome:nome, rua:rua, cidade:cidade, estado:estado, numero:numero, cep:cep, latitude:latitude, longitude:longitude, imagem:imagem};
-			// }		
-		// });	
 	} 
 
 	//_______________ CADASTRAR ESTABELECIMENTO _________________// 
@@ -173,26 +156,14 @@ angular.module("EstabelecimentoControllers",[
 		    estab.numero!=""       &&
 		    estab.numero>0)
 		{
-			// $scope.estabelecimentos.push
-			// ({ 
-				// nome: estab.nome, 
-				// rua: estab.rua, 
-				// cidade: estab.cidade, 
-				// estado: estab.estado, 
-				// numero: estab.numero, 
-				// cep: estab.cep,
-				// latitude: window.localStorage.latCadastroEstab,
-				// longitude: window.localStorage.lonCadastroEstab,
-				// imagem: window.localStorage.estabImagem
-			// });
 			
 			googleMaps.pegarLatitudeLongitude(estab.nome +" - "+ estab.rua +" - "+ estab.cidade +" - "+ estab.estado,function(){
 				
 				var dtoEstab = "{estabelecimento:{nome:'"+estab.nome+"'}, rua: '"+estab.rua+"', cidade: '"+estab.cidade+"', estado: '"+estab.estado+"', numero: '"+estab.numero+"', cep: '"+estab.cep+"',latitude: '"+window.localStorage.latCadastroEstab+"',longitude: '"+window.localStorage.lonCadastroEstab+"'}";
 				
-				var id = window.localStorage.idUltimoEstabelecimentoCriado-1;
-				estabelecimento.insertInto(id, estab.nome, estab.rua, estab.cidade, estab.estado, estab.numero, estab.cep, window.localStorage.latCadastroEstab, window.localStorage.lonCadastroEstab, window.localStorage.estabImagem);
-				window.localStorage.idUltimoEstabelecimentoCriado--;
+				// var id = window.localStorage.idUltimoEstabelecimentoCriado-1;
+				// estabelecimento.insertInto(id, estab.nome, estab.rua, estab.cidade, estab.estado, estab.numero, estab.cep, window.localStorage.latCadastroEstab, window.localStorage.lonCadastroEstab, window.localStorage.estabImagem);
+				// window.localStorage.idUltimoEstabelecimentoCriado--;
 				
 				WebServices.criarEstabelecimento(chave, dtoEstab)
 				.success(function(data, status, headers, config)

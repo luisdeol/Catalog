@@ -1,18 +1,25 @@
 <ion-modal-view>
   
 	<ion-header-bar class="bar bar-header bar-positive">
-	   <h1 class="title">Pesquisar Produtos</h1>
-	   <button class="button button-clear button-primary" ng-click="pesquisa.hide()">Cancelar</button>
+	   <h1 class="title">Cadastrar Produtos</h1>
+	   <button class="button button-clear button-primary" ng-click="cadastro.hide()">Cancelar</button>
 	</ion-header-bar>
 	
 	<ion-content class="padding">
 	<img class="icon-estab-atualizar" src="img/product.png" width="80px" height="80px">
-		<div class="list-estab-atualizar">
-			<form ng-hide="{{formularioPesquisa}}" id="blocoPesquisarProduto">
+		<div class="list-estab-atualizar" id="blocoPesquisarProduto">
+			<form>
 				<div class="bloco">
 					<p class="nome-campos">Nome Do Produto:</p>
 					<span class="input-grupo"><span class="ion-ios-cart"></span></span>
 					<input type="text" ng-model="produto.nome" class="input-form" placeholder="Nome do Produto...">
+					<br>
+				</div>
+				
+				<div class="bloco">
+					<p class="nome-campos">Codigo de Barras:</p>
+					<span class="input-grupo"><span class="ion-ios-barcode-outline"></span></span>
+					<input type="text" ng-model="produto.codBarra" class="input-form" placeholder="Codigo de Barras...">
 					<br>
 				</div>
 				
@@ -34,23 +41,14 @@
 					<br>
 				</div>
 				
-				<button class="button button-full button-positive botao" ng-click="pesquisarProduto(produto)"
-					ng-disabled="(produto.nome == undefined || produto.nome == '') &&
-								 (produto.tipo == undefined || produto.tipo == '') &&
-								 (produto.fabricante == undefined || produto.fabricante == '')">
-								 Pesquisar</button>
+				<button class="button button-full button-positive botao" ng-click="criarProduto(produto)"
+					ng-disabled="(produto.nome == undefined || produto.nome == '')">
+								 Criar Produto</button>
 			</form>
 		</div>
-		<h2 class="texto-pesquisa-produto-lista">{{textoPesquisa}}</h2>
-		<div class="produtos-encontrados">
-			<ion-item ng-repeat="produtoEncontrado in produtosEncontrados" href="" ng-click="adicionarQuantidadeProdutoEncontrado(produtoEncontrado.id,produtoEncontrado.nome)" class="item-remove-animate">
-				{{ produtoEncontrado.nome}}
-			</ion-item>
-		</div>	
-		<p class="texto-explicativo-produto">{{textoExplicativo}}</p>
 	</ion-content>
 	
-	<div class="botao-flutuante" id="botaoAdd" ng-hide="{{botaoAdicionar}}" ng-click="cadastroProdutoModal(modal,cadastro)">
+	<div class="botao-flutuante" id="botaoAdd" ng-hide="{{botaoAdicionar}}" ng-click="modal.show()">
 		<div class="ion-plus-round" id="iconAdd"></div>
 	</div>
 </ion-modal-view>

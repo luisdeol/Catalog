@@ -4,6 +4,10 @@ img.logo-index {
   margin-left: 18%;
 }
 
+iframe {
+  border: 9px solid #005BB3 !important;
+}
+
 .inputs{
   color:orange !important;
   font-size:18px !important;
@@ -155,13 +159,17 @@ img.icone-mapa{
   top: 385px;
 }
 
-h2.produtos-do-estabelecimento {
+h2.produtos-do-estabelecimento , h2.texto-pesquisa-produto-lista{
   top: -25px;
   position: absolute;
   font-size: 18px;
   color: #005BB3;
   margin-left: 3px;
   font-weight: bold;
+}
+
+h2.texto-pesquisa-produto-lista{
+top: 100px !important;
 }
 
 p.nome-campos.img {
@@ -223,7 +231,8 @@ p.nome-campos {
 }
 
 span.ion-ios-cart, span.ion-android-map, span.ion-map, span.ion-android-globe, span.ion-ios-compose, span.ion-home, span.ion-ios-list-outline,
-span.ion-at, span.ion-locked, span.ion-person, span.ion-unlocked, span.ion-lock-combination, span.ion-ios-email, span.ion-pricetags, span.ion-search{
+span.ion-at, span.ion-locked, span.ion-person, span.ion-unlocked, span.ion-lock-combination, span.ion-ios-email, span.ion-pricetags, span.ion-search,
+span.ion-ios-barcode-outline, span.ion-ios-browsers-outline{
   font-size: 20px;
   color: orange;
 }
@@ -366,6 +375,19 @@ img.icon-lista-atualizar {
   color: blue;
   font-size: 100%;
   font-weight: bold;
+}
+
+p.texto-explicativo-produto {
+  color: orange;
+  top: 157px;
+  position: absolute;
+  font-size: 17px;
+}
+
+.produtos-encontrados {
+  top: 155px;
+  position: absolute;
+  width: 100%;
 }
 
 

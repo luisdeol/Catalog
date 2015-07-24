@@ -55,6 +55,16 @@ angular.module('services.WebServices', ['ionic'])
 		return $http.post(host + '/WsLista.asmx/criarLista', {dtoChave:chave,dtoLista:dtoLista});
 	}
 	
+	WebServices.adicionarProdutoALista = function(chave,dtoLista,dtoProdutoDaLista)
+	{
+		return $http.post(host + '/WsLista.asmx/adicionarProduto', {dtoChave:chave,dtoLista:dtoLista,dtoProdutoDaLista:dtoProdutoDaLista});
+	}
+	
+	WebServices.criarProduto = function(chave,dtoProduto)
+	{
+		return $http.post(host + '/WsProduto.asmx/criarProduto', {dtoChave:chave,dtoProduto:dtoProduto});
+	}
+	
 	WebServices.abrirLista = function(chave,dtoLista)
 	{
 		return $http.post(host + '/WsLista.asmx/abrirLista', {dtoChave:chave,dtoLista:dtoLista});
