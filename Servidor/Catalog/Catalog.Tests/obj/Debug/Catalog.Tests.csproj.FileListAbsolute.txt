@@ -1,1 +1,0 @@
-F:\GitHub\Catalog\Servidor\Catalog\Catalog.Tests\obj\Debug\Catalog.Tests.csprojResolveAssemblyReference.cache

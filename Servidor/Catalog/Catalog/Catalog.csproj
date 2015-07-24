@@ -40,6 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
@@ -113,6 +114,7 @@
     <Compile Include="Controllers\Interfaces\IControllerLista.cs" />
     <Compile Include="Controllers\Interfaces\IControllerProduto.cs" />
     <Compile Include="Controllers\Interfaces\IControllerUsuario.cs" />
+    <Compile Include="CriarProduto.cs" />
     <Compile Include="DTO\DtoExcecao.cs" />
     <Compile Include="DTO\Enum.cs" />
     <Compile Include="Linq\DBCatalog.designer.cs">
@@ -212,6 +214,7 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Linq\DBCatalog.dbml.layout">
