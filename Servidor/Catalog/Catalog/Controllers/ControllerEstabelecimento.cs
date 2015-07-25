@@ -194,6 +194,16 @@ namespace Catalog.Controllers
 				enderecoEstabelecimento = mEstabelecimento.abrirEstabelecimento(enderecoEstabelecimento.id);
 				chave = mChave.atualizarChave(chave);
 				retorno = new DtoRetornoObjeto(chave);
+
+				Produto mProduto = new Produto();
+				Item mItem = new Item();
+				foreach (DtoProdutoDaLista produtoDaLista in itensComprados)
+				{
+					if (produtoDaLista.item.produto.id == 0)
+						produtoDaLista.item.produto = mProduto.cadastrarProduto(produtoDaLista.item.produto);
+
+					produtoDaLista.item = mItem.criarItem(produtoDaLista.item.produto.id, produtoDaLista.item.preco, enderecoEstabelecimento.id);
+				}
 			}
 			catch (DtoExcecao ex)
 			{
@@ -202,16 +212,6 @@ namespace Catalog.Controllers
 			catch (Exception ex)
 			{
 				retorno = new DtoRetornoErro(ex.Message);
-			}
-
-			Produto mProduto = new Produto();
-			Item mItem = new Item();
-			foreach(DtoProdutoDaLista produtoDaLista in itensComprados)
-			{
-				if (produtoDaLista.item.produto.id == 0)
-					produtoDaLista.item.produto = mProduto.cadastrarProduto(produtoDaLista.item.produto);
-
-				produtoDaLista.item = mItem.criarItem(produtoDaLista.item.produto.id, produtoDaLista.item.preco, enderecoEstabelecimento.id);
 			}
 
 			/*Objeto: DtoRetorno com Ack*/
