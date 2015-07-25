@@ -45,5 +45,12 @@ namespace Catalog.Webservices
 			ControllerEstabelecimento cEstabelecimento = new ControllerEstabelecimento();
 			return cEstabelecimento.pesquisarProdutos(dtoChave, dtoEnderecoEstabelecimento, parametros);
 		}
+		
+		[WebMethod]
+		public string finalizarCheckin(string dtoChave, string dtoEnderecoEstabelecimento, string dtoItensComprados)
+		{
+			ControllerEstabelecimento cEstabelecimento = new ControllerEstabelecimento();
+			return cEstabelecimento.finalizarCheckin(dtoChave, dtoEnderecoEstabelecimento, dtoItensComprados);
+		}
     }
 }

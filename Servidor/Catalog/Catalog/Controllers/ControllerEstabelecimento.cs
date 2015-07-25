@@ -176,5 +176,46 @@ namespace Catalog.Controllers
 			/*Objeto: DtoEnderecoEstabelecimento com DtoEstabelecimento e Array de DtoItem com DtoProduto*/
 			return js.Serialize(retorno);
 		}
+
+		public string finalizarCheckin(string dtoChave, string dtoEnderecoEstabelecimento, string dtoItensComprados)
+		{
+			JavaScriptSerializer js = new JavaScriptSerializer();
+			DtoRetorno retorno;
+			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
+			DtoEnderecoEstabelecimento enderecoEstabelecimento = js.Deserialize<DtoEnderecoEstabelecimento>(dtoEnderecoEstabelecimento);
+			List<DtoProdutoDaLista> itensComprados = js.Deserialize<List<DtoProdutoDaLista>>(dtoItensComprados);
+
+			Chave mChave = new Chave();
+
+			try
+			{
+				mChave.validarChave(chave);
+				Estabelecimento mEstabelecimento = new Estabelecimento();
+				enderecoEstabelecimento = mEstabelecimento.abrirEstabelecimento(enderecoEstabelecimento.id);
+				chave = mChave.atualizarChave(chave);
+				retorno = new DtoRetornoObjeto(chave);
+			}
+			catch (DtoExcecao ex)
+			{
+				retorno = ex.ToDto();
+			}
+			catch (Exception ex)
+			{
+				retorno = new DtoRetornoErro(ex.Message);
+			}
+
+			Produto mProduto = new Produto();
+			Item mItem = new Item();
+			foreach(DtoProdutoDaLista produtoDaLista in itensComprados)
+			{
+				if (produtoDaLista.item.produto.id == 0)
+					produtoDaLista.item.produto = mProduto.cadastrarProduto(produtoDaLista.item.produto);
+
+				produtoDaLista.item = mItem.criarItem(produtoDaLista.item.produto.id, produtoDaLista.item.preco, enderecoEstabelecimento.id);
+			}
+
+			/*Objeto: DtoRetorno com Ack*/
+			return js.Serialize(retorno);
+		}
     }
 }
