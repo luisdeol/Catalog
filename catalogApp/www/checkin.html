@@ -1,0 +1,43 @@
+<ion-nav-view>
+	<ion-view ng-init="listarItens()">
+		<ion-header-bar class="bar-positive">
+			<img src="img/back.png" ng-show="flag == 'lista'" ng-click="voltarALista({{idLista}})" height="30px" width="30px">
+			<img src="img/back.png" ng-show="flag == 'principal'"onclick="location.href='#/menu'" height="30px" width="30px">
+			<img src="img/back.png" ng-show="flag == 'estabelecimento'"onclick="location.href='#/estabelecimentos'" height="30px" width="30px">
+			<h1 class="title">Check In</h1>
+		</ion-header-bar>
+		
+		<ion-content class="ajuste-altura-lista">  
+			<ul class="list">
+				<ion-checkbox ng-repeat="item in itens" ng-model="item.checked" ng-checked="item.checked" ng-click="checkItens(item)">	
+						{{ item.nome }}
+					<p class="quantidade-checkin">{{item.quantidade}} Quant</p>
+					<p id={{item.id}} class="preco">R{{item.preco | currency}}</p>
+				</ion-checkbox>
+			</ul>	
+			
+			<h2 class="total">Total: R{{total | currency}}</h2>
+		</ion-content>
+		
+
+		
+		<div class="botao-flutuante" ng-click="abrirModalPesquisa()">
+			<div class="ion-search"></div>
+		</div>
+				
+		<!-- fotter -->
+		<div class="tabs-striped tabs-color-assertive">
+			<div class="tabs">
+				<a class="tab-item active" href="#/checkin?{{idLista}}">
+					<img class="icon-footer" src="img/check.png" width="35px" height="35px">
+				</a>
+				<a class="tab-item" href="#/menu">
+					<img class="icon-footer-secundario" src="img/logo.png" width="35px" height="35px">
+				</a>
+				<a class="tab-item" href="#/listas">
+					<img class="icon-footer-secundario" src="img/list.png" width="35px" height="35px">
+				</a>
+			</div>
+		</div>
+	</ion-view>
+</ion-nav-view>		

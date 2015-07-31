@@ -188,7 +188,7 @@ var app = angular.module("UsuarioControllers",[
 			}
 			else //senhas nao conferem
 			{
-				modalAlerta.alerta("Ocorreu um erro","Senhas não conferem!");
+				modalAlerta.alerta("Ocorreu um erro","Senhas nao conferem!");
 				return false;
 			}	
 		}

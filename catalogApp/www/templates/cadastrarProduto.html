@@ -12,21 +12,21 @@
 				<div class="bloco">
 					<p class="nome-campos">Nome Do Produto:</p>
 					<span class="input-grupo"><span class="ion-ios-cart"></span></span>
-					<input type="text" ng-model="produto.nome" class="input-form" placeholder="Nome do Produto...">
+					<input type="text" ng-model="produto.nome" class="input-form" placeholder="Nome do Produto..." maxlength="20">
 					<br>
 				</div>
 				
 				<div class="bloco">
 					<p class="nome-campos">Codigo de Barras:</p>
 					<span class="input-grupo"><span class="ion-ios-barcode-outline"></span></span>
-					<input type="text" ng-model="produto.codBarra" class="input-form" placeholder="Codigo de Barras...">
+					<input type="number" ng-model="produto.codBarra" class="input-form" placeholder="Codigo de Barras..."  maxlength="20">
 					<br>
 				</div>
 				
 				<div class="bloco">
 					<p class="nome-campos">Marca/Fabricante:</p>
 					<span class="input-grupo"><span class="ion-pricetags"></span></span>
-					<input type="text" ng-model="produto.fabricante" class="input-form" placeholder="Marca do Produto...">
+					<input type="text" ng-model="produto.fabricante" class="input-form" placeholder="Marca do Produto..."  maxlength="20">
 					<br>
 				</div>
 				
@@ -34,6 +34,8 @@
 					<p class="nome-campos">Tipo:</p>
 					<span class="input-grupo"><span class="ion-ios-compose"></span></span>
 						<select ng-model="produto.tipo" class="select">
+						   <option value="">Escolha o tipo</option>
+						   <option value="">Escolha o tipo</option>
 						   <option value="0">Todos</option>
 						   <option value="1">Eletronica</option>
 						   <option value="2">Supermercado</option>
@@ -42,13 +44,11 @@
 				</div>
 				
 				<button class="button button-full button-positive botao" ng-click="criarProduto(produto)"
-					ng-disabled="(produto.nome == undefined || produto.nome == '')">
+					ng-disabled="(produto.nome == undefined || produto.nome == '') || 
+								 (produto.fabricante == undefined || produto.fabricante == '') ||
+								 (produto.codBarra == undefined || produto.codBarra == '')">
 								 Criar Produto</button>
 			</form>
 		</div>
 	</ion-content>
-	
-	<div class="botao-flutuante" id="botaoAdd" ng-hide="{{botaoAdicionar}}" ng-click="modal.show()">
-		<div class="ion-plus-round" id="iconAdd"></div>
-	</div>
 </ion-modal-view>

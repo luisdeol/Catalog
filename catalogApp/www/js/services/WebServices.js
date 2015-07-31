@@ -45,9 +45,19 @@ angular.module('services.WebServices', ['ionic'])
 		return $http.post(host + '/WsLista.asmx/excluirLista', {dtoChave:chave,dtoLista:dtoLista});
 	}
 	
+	WebServices.removerProduto = function(chave,dtoLista,dtoProduto)
+	{
+		return $http.post(host + '/WsLista.asmx/removerProduto', {dtoChave:chave,dtoLista:dtoLista,dtoProduto:dtoProduto});
+	}
+	
 	WebServices.pesquisarListas = function(chave)
 	{
 		return $http.post(host + '/WsLista.asmx/pesquisarLista', {dtoChave:chave,parametros:""});
+	}
+	
+	WebServices.listarItensEm = function(chave,dtoLista,dtoEnderecoEstabelecimento)
+	{
+		return $http.post(host + '/WsLista.asmx/listarItensEm', {dtoChave:chave,dtoLista:dtoLista,dtoEnderecoEstabelecimento:dtoEnderecoEstabelecimento});
 	}
 	
 	WebServices.criarListas = function(chave,dtoLista)

@@ -75,6 +75,7 @@ angular.module('ListaControllers',
 		   } 	   	   
 	   });
 	};
+	
   	
 	//________________ PESQUISAR LISTAS _____________//
 	$scope.pesquisarLista = function()
@@ -93,13 +94,21 @@ angular.module('ListaControllers',
 	    .success(function(data, status, headers, config)
 		{
 			var retorno = angular.fromJson(data.d);	
-			for(var l=0; retorno.objeto.length > l; l++)
+			if(retorno.tipoRetorno == "ACK") //logado
 			{
-				var idLista = retorno.objeto[l].id;
-				var idUsuario = retorno.objeto[l].idUsuario;
-				var titulo = retorno.objeto[l].titulo;
-				
-				$scope.listas[l] = {id:idLista,idUsuario:idUsuario,titulo:titulo,indice:l};
+				for(var l=0; retorno.objeto.length > l; l++)
+				{
+					$scope.idLista = retorno.objeto[l].id;
+					var idUsuario = retorno.objeto[l].idUsuario;
+					var titulo = retorno.objeto[l].titulo;
+					
+					$scope.listas[l] = {id:$scope.idLista,idUsuario:idUsuario,titulo:titulo,indice:l};
+					console.log($scope.listas);
+				}
+			}
+			else
+			{
+				modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
 			}
 		});
 	} 
@@ -128,23 +137,7 @@ angular.module('ListaControllers',
 			modalAlerta.alerta("Lista","Adicione um nome a lista");
 		}
 	}
-  
-	$scope.pesquisarClicado = false;
-    //________________ PESQUISAR POR LISTA _________________//
-	$scope.pesquisarPorLista = function()
-	{
-		if($scope.pesquisarClicado == false)
-		{
-			document.getElementById("titulo").className = "title animacao-titulo";
-			$scope.pesquisarClicado = !$scope.pesquisarClicado;
-		}
-		else
-		{
-			document.getElementById("titulo").className = "title";
-			$scope.pesquisarClicado = !$scope.pesquisarClicado;
-		}
-	}
-	
+
 	//________________ VERIFICAR LOGIN _________________//
 	$scope.verificarLogin = function(lugarPagina)
 	{
@@ -201,6 +194,25 @@ angular.module('ListaControllers',
 	var url = window.location.href.toString();
 	$scope.idLista = url.split("?")[1];
 	
+	 //___________________ REMOVER PRODUTO ______________//
+	$scope.removerProduto = function(produto) 
+	{
+	   var res = modalAlerta.confirmar("Deletar","Tem certeza que deseja deletar " + produto.nomeProduto + " ?",function(res){
+		   if(res)
+		   {
+				$scope.produtos.splice($scope.produtos.indexOf(produto), 1);
+				var dtoLista = "{id:'"+$scope.idLista+"',idUsuario:'"+window.localStorage.idUsuario+"',titulo:''}";
+				var dtoProduto = "{id:'"+produto.idProduto+"',nome:'"+produto.nomeProduto+"',codigoDeBarras:''}";	 	
+				
+				WebServices.removerProduto(chave,dtoLista, dtoProduto)
+				.success(function(data, status, headers, config)
+				{
+					var retorno = angular.fromJson(data.d);		
+				});
+		   } 	   	   
+	   });
+	};
+	
 	//_______________ ABRIR MODAL DE PESQUISA DO PRODUTO __________________//
 	$ionicModal.fromTemplateUrl('templates/adicionarProduto.html', {
 		scope: $scope
@@ -219,6 +231,59 @@ angular.module('ListaControllers',
 	}).then(function(quantidade) {
 		$scope.quantidade = quantidade;
 	});
+	
+	$ionicModal.fromTemplateUrl('templates/checkin-lista.html', {
+		scope: $scope
+	}).then(function(checkin) {
+		$scope.modalCheckin = checkin;
+	});
+	
+	//__________ INICIAR CHECKIN ___________//
+	$scope.iniciarCheckin = function(checkin)
+	{	
+		window.localStorage.flagCheckin = "lista";
+		window.localStorage.idEstabCheckin = checkin.estabelecimento;		
+		modalAlerta.sucesso("CheckIn","Efetuando...","#/checkin?"+$scope.idLista+"");
+		$scope.modalCheckin.hide();
+	}
+	
+	//__________ ESCOLHER ESTABELECIMENTO E LISTA _______________//
+	$scope.escolherEstabLista = function()
+	{	
+		$scope.estabelecimentos = [];	
+		
+		WebServices.pesquisarEstabelecimento(chave, "")
+		.success(function(data, status, headers, config)
+		{
+			var retorno = angular.fromJson(data.d);	
+			if(retorno.tipoRetorno == "ACK")
+			{
+				for(var l=0; retorno.objeto.length > l; l++)
+				{
+					var id = retorno.objeto[l].id;
+					var nome = retorno.objeto[l].estabelecimento.nome;
+					var rua = retorno.objeto[l].rua;
+					var cidade = retorno.objeto[l].cidade;
+					var estado = retorno.objeto[l].estado;
+					var numero = retorno.objeto[l].numero;
+					var cep = retorno.objeto[l].cep;
+					var latitude = retorno.objeto[l].latitude;
+					var longitude = retorno.objeto[l].longitude; 
+					var imagem = "";
+					
+					$scope.estabelecimentos[l] = {id:id, nome:nome, rua:rua, cidade:cidade, estado:estado, numero:numero, cep:cep, latitude:latitude, longitude:longitude, imagem:imagem};
+				}
+			}
+			else
+			{
+				modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
+			}
+		})
+		.error(function(data, status, headers, config) {
+			modalAlerta.alerta("Ocorreu um erro","Voce esta sem acesso a rede!");
+		});
+	}
+	
 	
 	//_______________ ABRIR MODAL DE CADASTRO DO PRODUTO __________________//
 	$scope.cadastroProdutoModal = function(modal, cadastro)
@@ -289,89 +354,96 @@ angular.module('ListaControllers',
 		var fabricante = produto.fabricante;
 		var tipo = produto.tipo;
 		
-		if(nome==undefined)
-		{
-			nome="";
-		}
-		if(fabricante==undefined)
-		{
-			fabricante="";
-		}
-		if(tipo==undefined)
-		{
-			tipo="";
-		}
 		
-		var fabricante = "{fabricante:'"+fabricante+"'}";
-		var tipo = "{tipo:'"+tipo+"'}";
+		if(nome==undefined) 		nome="";
+		if(fabricante==undefined)	fabricante="";
+		if(tipo==undefined)			tipo="";
+		
+		if(!isNaN(parseFloat(nome)) == false && !isNaN(parseFloat(fabricante)) == false )
+		{
+			var fabricante = "{fabricante:'"+fabricante+"'}";
+			var tipo = "{tipo:'"+tipo+"'}";
+				
+			var dtoProduto = "{nome:'"+nome+"',codigoDeBarras:'',tipoCodigoDeBarras:'',fabricante:"+fabricante+",tipo:"+tipo+"}";			
 			
-		var dtoProduto = "{nome:'"+nome+"',codigoDeBarras:'',tipoCodigoDeBarras:'',fabricante:"+fabricante+",tipo:"+tipo+"}";			
-		
-		WebServices.pesquisarProduto(chave,dtoProduto)
-		.success(function(data, status, headers, config)
-		{
-			var retorno = angular.fromJson(data.d);	
-			if(retorno.tipoRetorno == "ACK") //logado
+			WebServices.pesquisarProduto(chave,dtoProduto)
+			.success(function(data, status, headers, config)
 			{
-				if(retorno.objeto.length == 0)
+				var retorno = angular.fromJson(data.d);	
+				if(retorno.tipoRetorno == "ACK") //logado
 				{
-					$scope.formularioPesquisa = true;
-					document.getElementById("blocoPesquisarProduto").className = "ng-pristine ng-valid ng-hide";
-					$scope.textoPesquisa = "Produtos Encontrados!";
-					
-					$scope.botaoAdicionar = false;
-					document.getElementById("botaoAdd").className = "botao-flutuante";
-					$scope.textoExplicativo = "Desculpe, mas nao encontramos nenhum resultado para o produto pesquisado. Por favor, cadastre um produto!"
+					if(retorno.objeto.length == 0)
+					{
+						$scope.formularioPesquisa = true;
+						document.getElementById("blocoPesquisarProduto").className = "ng-pristine ng-valid ng-hide";
+						$scope.textoPesquisa = "Produtos Encontrados!";
+						
+						$scope.botaoAdicionar = false;
+						document.getElementById("botaoAdd").className = "botao-flutuante";
+						$scope.textoExplicativo = "Desculpe, mas nao encontramos nenhum resultado para o produto pesquisado. Por favor, cadastre um produto!"
+					}
+					else
+					{
+						$scope.formularioPesquisa = true;
+						document.getElementById("blocoPesquisarProduto").className = "ng-pristine ng-valid ng-hide";
+						$scope.textoPesquisa = "Produtos Encontrados!";
+						
+						for(var l=0; retorno.objeto.length > l; l++)
+						{
+							var id = retorno.objeto[l].id;
+							var nome = retorno.objeto[l].nome;
+							var marca = retorno.objeto[l].fabricante.fabricante;
+							
+							$scope.produtosEncontrados[l] = {id:id, nome:nome, marca:marca};
+						}
+					}
 				}
 				else
 				{
-					$scope.formularioPesquisa = true;
-					document.getElementById("blocoPesquisarProduto").className = "ng-pristine ng-valid ng-hide";
-					$scope.textoPesquisa = "Produtos Encontrados!";
-					
-					for(var l=0; retorno.objeto.length > l; l++)
-					{
-						var id = retorno.objeto[l].id;
-						var nome = retorno.objeto[l].nome;
-						var marca = retorno.objeto[l].fabricante.fabricante;
-						
-						$scope.produtosEncontrados[l] = {id:id, nome:nome, marca:marca};
-					}
-				}
-			}
-			else
-			{
-				modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
-			}	
-		});	
+					modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
+				}	
+			});	
+		}
+		else
+		{
+			modalAlerta.alerta("Ocorreu um erro","Formato invalido!");
+		}	
 	}	
 	
 	//_________________ CRIAR PRODUTO _________________//
 	$scope.criarProduto = function(produto)
 	{	
-		var fabricante = "{fabricante:'"+produto.fabricante+"'}";
-		var tipo = "{tipo:'"+produto.tipo+"'}";
-		var dtoProduto = "{nome:'"+produto.nome+"',codigoDeBarras:'"+produto.codBarra+"',idTipo:'"+produto.tipo+"',fabricante:"+fabricante+",tipo:"+tipo+"}";			
-		
-		WebServices.criarProduto(chave,dtoProduto)
-		.success(function(data, status, headers, config)
+		if(!isNaN(parseFloat(produto.nome)) == false && !isNaN(parseFloat(produto.fabricante)) == false)
 		{
-			var retorno = angular.fromJson(data.d);	
-			if(retorno.tipoRetorno == "ACK") //logado
+			var fabricante = "{fabricante:'"+produto.fabricante+"'}";
+			var tipo = "{tipo:'"+produto.tipo+"'}";
+			var dtoProduto = "{nome:'"+produto.nome+"',codigoDeBarras:'"+produto.codBarra+"',idTipo:'"+produto.tipo+"',fabricante:"+fabricante+",tipo:"+tipo+"}";			
+			
+			WebServices.criarProduto(chave,dtoProduto)
+			.success(function(data, status, headers, config)
 			{
-				$scope.dtoLista = "{id:'"+$scope.idLista+"',titulo:'',idUsuario:'"+window.localStorage.idUsuario+"'}";		
-				$scope.idProduto = retorno.objeto.id;	
-				$scope.nome = retorno.objeto.nome;
-				$scope.cadastro.hide();
-				$scope.quantidade.show();
-			}
-			else
-			{
-				modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
-			}
-		});	
+				var retorno = angular.fromJson(data.d);	
+				if(retorno.tipoRetorno == "ACK") //logado
+				{
+					$scope.dtoLista = "{id:'"+$scope.idLista+"',titulo:'',idUsuario:'"+window.localStorage.idUsuario+"'}";		
+					$scope.idProduto = retorno.objeto.id;	
+					$scope.nome = retorno.objeto.nome;
+					$scope.cadastro.hide();
+					$scope.quantidade.show();
+				}
+				else
+				{
+					modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
+				}
+			});	
+		}
+		else
+		{
+			modalAlerta.alerta("Ocorreu um erro","Formato invalido!");
+		}	
 	}	
 	
+	//________________ ADICIONAR QUANT PRODUTO ENCONTRADO ______________//
 	$scope.adicionarQuantidadeProdutoEncontrado = function(idProduto,nome)
 	{
 		$scope.quantidade.show();

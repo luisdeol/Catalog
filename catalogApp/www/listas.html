@@ -1,17 +1,11 @@
 <ion-nav-view>
 	<ion-view ng-init="verificarLogin('listas.html')">
 		<ion-header-bar class="bar-positive">
+			<img src="img/back.png" onclick="location.href='#/menu'" height="30px" width="30px">
 			<div class="buttons">
 				<button class="button button-icon icon ion-gear-b"
 					ng-click="data.showDelete = !data.showDelete; data.showReorder = false">
 				</button>
-				
-				<button id="lupa" class="button button-icon icon ion-search" ng-click="pesquisarPorLista()">
-				</button>
-				
-				<div ng-show="pesquisarClicado == true">
-					<input type="text" ng-model="obj.teste" ng-class="{'pesquisar-aberto': pesquisarClicado == true}" class="pesquisar-fechado" placeholder="Pesquisar..."> 
-			    </div>
 			</div>
 			<h1 class="title" id="titulo">Listas</h1>
 			<div class="buttons">

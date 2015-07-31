@@ -4,25 +4,25 @@
 			<img src="img/back.png" onclick="location.href='#/estabelecimentos'" height="30px" width="30px">
 			<h1 class="title">{{nome}}</h1>
 		</ion-header-bar>
-		
+
 		<div id="googleMap" style="width:100%;height:380px;"></div>
+		<img class="sem-localizacao-img" id="imgSemLocalizacao">
 
 		<ion-content class="ajuste-altura-produto-estabelecimento ">  
 			<h2 class="produtos-do-estabelecimento">Produtos do Estabelecimento</h2>
-			<ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
+			<ion-list>
 				<div class="sem-lista-cadastrada" ng-show="produtos.length == 0">Nenhum produto Cadastrado</div>
-				<ion-item ng-repeat="produto in produtos" 
-					 produto="produto" class="item-remove-animate" href="">
+				<ion-item ng-repeat="produto in produtos" class="item-remove-animate" href="">
 					{{ produto.nomeProduto }}	
-					<div class="quantidade">R$ {{produto.preco}}</div>	
+					<span class="quantidade">R{{produto.preco | currency}}</span>	
 				</ion-item>
 			</ion-list>	
 		</ion-content>
-				
+
 		<!-- fotter -->
 		<div class="tabs-striped tabs-color-assertive">
 			<div class="tabs">
-				<a class="tab-item active" href="#">
+				<a class="tab-item active" ng-click="modalCheckin.show()">
 					<img class="icon-footer" src="img/check.png" width="35px" height="35px">
 				</a>
 				<a class="tab-item" href="#/menu">

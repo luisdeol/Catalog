@@ -12,14 +12,14 @@
 				<div class="bloco">
 					<p class="nome-campos">Nome Do Produto:</p>
 					<span class="input-grupo"><span class="ion-ios-cart"></span></span>
-					<input type="text" ng-model="produto.nome" class="input-form" placeholder="Nome do Produto...">
+					<input type="text" ng-model="produto.nome" class="input-form" placeholder="Nome do Produto..." maxlength="20">
 					<br>
 				</div>
 				
 				<div class="bloco">
 					<p class="nome-campos">Marca/Fabricante:</p>
 					<span class="input-grupo"><span class="ion-pricetags"></span></span>
-					<input type="text" ng-model="produto.fabricante" class="input-form" placeholder="Marca do Produto...">
+					<input type="text" ng-model="produto.fabricante" class="input-form" placeholder="Marca do Produto..."  maxlength="20">
 					<br>
 				</div>
 				
@@ -27,6 +27,7 @@
 					<p class="nome-campos">Tipo:</p>
 					<span class="input-grupo"><span class="ion-ios-compose"></span></span>
 						<select ng-model="produto.tipo" class="select">
+						   <option value="">Escolha o tipo</option>
 						   <option value="0">Todos</option>
 						   <option value="1">Eletronica</option>
 						   <option value="2">Supermercado</option>

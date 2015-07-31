@@ -46,6 +46,83 @@ var app = angular.module("PrincipalControllers",[
 		$scope.modal = modal;
 	});
 	
+	//_______________ CHECKIN __________________//
+	$ionicModal.fromTemplateUrl('templates/checkin-principal.html', {
+		scope: $scope
+	}).then(function(checkin) {
+		$scope.modalCheckin = checkin;
+	});
+	
+	//__________ INICIAR CHECKIN ___________//
+	$scope.iniciarCheckin = function(checkin)
+	{	
+		window.localStorage.flagCheckin = "principal";
+		window.localStorage.idEstabCheckin = checkin.estabelecimento;		
+		modalAlerta.sucesso("CheckIn","Efetuando...","#/checkin?"+checkin.lista+"");
+		$scope.modalCheckin.hide();
+	}
+	
+	//__________ ESCOLHER ESTABELECIMENTO E LISTA _______________//
+	$scope.escolherEstabLista = function()
+	{	
+	
+		$scope.estabelecimentos = [];
+		$scope.listas = []
+		
+		WebServices.pesquisarEstabelecimento(chave, "")
+		.success(function(data, status, headers, config)
+		{
+			var retorno = angular.fromJson(data.d);	
+			if(retorno.tipoRetorno == "ACK")
+			{
+				for(var l=0; retorno.objeto.length > l; l++)
+				{
+					var id = retorno.objeto[l].id;
+					var nome = retorno.objeto[l].estabelecimento.nome;
+					var rua = retorno.objeto[l].rua;
+					var cidade = retorno.objeto[l].cidade;
+					var estado = retorno.objeto[l].estado;
+					var numero = retorno.objeto[l].numero;
+					var cep = retorno.objeto[l].cep;
+					var latitude = retorno.objeto[l].latitude;
+					var longitude = retorno.objeto[l].longitude; 
+					var imagem = "";
+					
+					$scope.estabelecimentos[l] = {id:id, nome:nome, rua:rua, cidade:cidade, estado:estado, numero:numero, cep:cep, latitude:latitude, longitude:longitude, imagem:imagem};
+				}
+			}
+			else
+			{
+				modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
+			}
+		})
+		.error(function(data, status, headers, config) {
+			modalAlerta.alerta("Ocorreu um erro","Voce esta sem acesso a rede!");
+		});
+		
+		WebServices.pesquisarListas(chave)
+	    .success(function(data, status, headers, config)
+		{
+			var retorno = angular.fromJson(data.d);	
+			if(retorno.tipoRetorno == "ACK") //logado
+			{
+				for(var l=0; retorno.objeto.length > l; l++)
+				{
+					$scope.idLista = retorno.objeto[l].id;
+					var idUsuario = retorno.objeto[l].idUsuario;
+					var titulo = retorno.objeto[l].titulo;
+					
+					$scope.listas[l] = {id:$scope.idLista,idUsuario:idUsuario,titulo:titulo,indice:l};
+				}
+			}
+			else
+			{
+				modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
+			}
+		});
+		
+	}
+	
 	//_______________ PESQUISAR PRODUTO __________________//
 	$ionicModal.fromTemplateUrl('templates/pesquisarProduto.html', {
 		scope: $scope

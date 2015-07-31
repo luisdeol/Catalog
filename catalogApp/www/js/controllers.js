@@ -3,5 +3,6 @@ angular.module('catalogApp.controllers', [
 'PrincipalControllers', 
 'EstabelecimentoControllers',
 'ProdutosListaControllers',
-'ListaControllers'
+'ListaControllers',
+'CheckinControllers'
 ]);
