@@ -33,10 +33,10 @@ namespace Catalog.Webservices
         }
 
         [WebMethod]
-        public string alterarDadosCadastrais(string email, string novaSenha)
+        public string alterarDadosCadastrais(string senha, string novaSenha)
         {
             ControllerUsuario cUsuario = new ControllerUsuario();
-            return cUsuario.alterarDadosCadastrais(email, novaSenha);
+            return cUsuario.alterarDadosCadastrais(senha, novaSenha);
         }
 
         [WebMethod]

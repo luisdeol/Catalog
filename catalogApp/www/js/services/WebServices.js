@@ -4,6 +4,8 @@ angular.module('services.WebServices', ['ionic'])
 
 	var WebServices = {};
 	var host = 'http://localhost:51786/Webservices';
+	
+	/*-- Serviços de Usuario--*/
 
 	WebServices.logar = function(json)
 	{
@@ -15,9 +17,25 @@ angular.module('services.WebServices', ['ionic'])
 		return $http.post(host + '/WsUsuario.asmx/realizarCadastro', {dtoUsuario:json});
 	}
 	
+	WebServices.alterarDadosCadastrais = function(senha,novaSenha)
+	{
+		return $http.post(host + '/WsUsuario.asmx/alterarDadosCadastrais', {senha:senha, novaSenha:novaSenha});
+	}
+	
+	WebServices.recuperarSenha = function(dtoUsuario)
+	{
+		return $http.post(host + '/WsUsuario.asmx/recuperarSenha', {dtoUsuario:dtoUsuario});
+	}
+	/*-- Serviços de Estabelecimento --*/
+	
 	WebServices.criarEstabelecimento = function(chave, dtoEstab)
 	{
 		return $http.post(host + '/WsEstabelecimento.asmx/criarEstabelecimento', {dtoChave:chave, dtoEnderecoEstabelecimento:dtoEstab})
+	}
+	
+	WebServices.finalizarCheckin = function(chave, dtoEstab, dtoItens)
+	{
+		return $http.post(host + '/WsEstabelecimento.asmx/finalizarCheckin', {dtoChave:chave, dtoEnderecoEstabelecimento:dtoEstab,dtoItensComprados:dtoItens})
 	}
 	
 	WebServices.pesquisarEstabelecimento = function(chave, dtoEstab)
@@ -34,6 +52,8 @@ angular.module('services.WebServices', ['ionic'])
 	{
 		return $http.get('http://api.postmon.com.br/v1/cep/' +cep);
 	}
+	
+	/*-- Serviços de Lista --*/
 	
 	WebServices.editarListas = function(chave,dtoLista)
 	{
@@ -70,19 +90,17 @@ angular.module('services.WebServices', ['ionic'])
 		return $http.post(host + '/WsLista.asmx/adicionarProduto', {dtoChave:chave,dtoLista:dtoLista,dtoProdutoDaLista:dtoProdutoDaLista});
 	}
 	
-	WebServices.criarProduto = function(chave,dtoProduto)
-	{
-		return $http.post(host + '/WsProduto.asmx/criarProduto', {dtoChave:chave,dtoProduto:dtoProduto});
-	}
 	
 	WebServices.abrirLista = function(chave,dtoLista)
 	{
 		return $http.post(host + '/WsLista.asmx/abrirLista', {dtoChave:chave,dtoLista:dtoLista});
 	}
 	
-	WebServices.recuperarSenha = function(dtoUsuario)
+	/*-- Serviços de Lista --*/
+	
+	WebServices.criarProduto = function(chave,dtoProduto)
 	{
-		return $http.post(host + '/WsUsuario.asmx/recuperarSenha', {dtoUsuario:dtoUsuario});
+		return $http.post(host + '/WsProduto.asmx/criarProduto', {dtoChave:chave,dtoProduto:dtoProduto});
 	}
 	
 	WebServices.pesquisarProduto = function(chave,dtoProduto)

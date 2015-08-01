@@ -183,6 +183,7 @@ var app = angular.module("UsuarioControllers",[
 				{
 					$scope.erro = true;
 					document.getElementById("email").value = "Email incorreto!";
+					document.getElementById("email").className = "input-form erro-email";
 					return false;
 				}
 			}
@@ -195,6 +196,7 @@ var app = angular.module("UsuarioControllers",[
 		else
 		{
 			modalAlerta.alerta("Ocorreu um erro","Senha deve conter mais de 5 digitos!");
+			return false;
 		}
 	}	
 	

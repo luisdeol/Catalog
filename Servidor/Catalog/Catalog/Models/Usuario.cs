@@ -40,11 +40,11 @@ namespace Catalog.Models
 		}
 
 
-        public DtoChave alterarDadosCadastrais(string email, string novaSenha)
+        public DtoChave alterarDadosCadastrais(string senha, string novaSenha)
 		{
             Chave mChave = new Chave();
             DBCatalogDataContext dataContext = new DBCatalogDataContext();
-            var usuarios = dataContext.tb_Usuarios.FirstOrDefault(u => u.email == email);
+            var usuarios = dataContext.tb_Usuarios.FirstOrDefault(u => u.senha == senha);
             if (usuarios != null)
             {
                 DtoChave chave = mChave.criarChave(usuarios.id);
@@ -54,7 +54,7 @@ namespace Catalog.Models
             }
             else
             {
-                throw new DtoExcecao(DTO.Enum.CampoInvalido, "Email incorreto!");
+                throw new DtoExcecao(DTO.Enum.CampoInvalido, "Senha incorreto!");
             }
 		}
 

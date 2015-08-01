@@ -62,6 +62,32 @@ var app = angular.module("PrincipalControllers",[
 		$scope.modalCheckin.hide();
 	}
 	
+	//__________ ATUALIZAR SENHA ___________//
+	$scope.atualizarSenha = function(usuario)
+	{	
+		WebServices.alterarDadosCadastrais(usuario.senha,usuario.novaSenha)
+		.success(function(data, status, headers, config)
+		{
+			var retorno = angular.fromJson(data.d);	
+			if(retorno.tipoRetorno == "ACK") //logado
+			{
+				modalAlerta.alerta("Sucesso","Senha alterada com sucesso!");
+				$scope.modal.hide();
+			}
+			else
+			{
+				modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
+			}
+		});	
+	}
+	
+	//_________ ABRIR MODAL CHECKIN ________________//
+	$scope.abrirModalCheckin = function()
+	{
+		$scope.modalCheckin.show();
+		$scope.escolherEstabLista();
+	}
+	
 	//__________ ESCOLHER ESTABELECIMENTO E LISTA _______________//
 	$scope.escolherEstabLista = function()
 	{	
@@ -138,18 +164,9 @@ var app = angular.module("PrincipalControllers",[
 			var fabricante = produto.fabricante;
 			var tipo = produto.tipo;
 			
-			if(nome==undefined)
-			{
-				nome="";
-			}
-			if(fabricante==undefined)
-			{
-				fabricante="";
-			}
-			if(tipo==undefined)
-			{
-				tipo="";
-			}
+			if(nome==undefined)			nome="";
+			if(fabricante==undefined)	fabricante="";
+			if(tipo==undefined)			tipo="";
 			
 			var fabricante = "{fabricante:'"+fabricante+"'}";
 			var tipo = "{tipo:'"+tipo+"'}";

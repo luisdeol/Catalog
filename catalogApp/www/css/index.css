@@ -57,8 +57,9 @@ p.svg {
 
 /*-- ARQUIVO CADASTRAR.HTML --*/
 
-.erro-email{
-  border: 2px solid red !important;
+.erro-email {
+    color: red !important;
+    border: 1px solid red !important;
 }
 
 .senha-correta{

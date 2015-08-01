@@ -11,7 +11,7 @@
 				 <div class="bloco">
 					<p class="nome-campos">Usuario:</p>
 						<span class="input-grupo"><span class="ion-person"></span></span>
-						<input type="text" name="nome" ng-model="usuario.usuario" class="input-form" placeholder="Catalog">
+						<input type="text" name="nome" ng-model="usuario.usuario" class="input-form" placeholder="Catalog"  maxlength="20">
 					<br>
 				</div>
 				
@@ -25,14 +25,14 @@
 				<div class="bloco">
 					<p class="nome-campos">Senha:</p>
 						<span class="input-grupo"><span ng-class="{'ion-unlocked':usuario.senha == usuario.confirmarSenha && usuario.senha.length>5}" class="ion-locked"></span></span>
-						<input type="password" id="senha" name="senha" ng-model="usuario.senha" class="input-form" placeholder="senha">
+						<input type="password" id="senha" name="senha" ng-model="usuario.senha" class="input-form" placeholder="senha"  maxlength="20">
 					<br>
 				</div>
 				
 				<div class="bloco">
 					<p class="nome-campos">Repetir Senha:</p>
 						<span class="input-grupo"><span ng-class="{'ion-unlocked':usuario.senha == usuario.confirmarSenha && usuario.confirmarSenha.length>5}" class="ion-locked"></span></span>
-						<input type="password" ng-blur="confereSenhaErrada()" ng-change="confereSenhaCerta()" id="repetirSenha" name="repetirSenha" ng-model="usuario.confirmarSenha" class="input-form" placeholder="confirmar senha">
+						<input type="password" ng-blur="confereSenhaErrada()" ng-change="confereSenhaCerta()" id="repetirSenha" name="repetirSenha" ng-model="usuario.confirmarSenha" class="input-form" placeholder="confirmar senha" maxlength="20">
 					<br>
 				</div>	
 				

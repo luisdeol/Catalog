@@ -18,7 +18,7 @@
 				
 				<div class="bloco">
 					<p class="nome-campos">Senha:</p>
-						<span class="input-grupo"><span class="ion-locked"></span></span>
+						<span class="input-grupo"><span class="ion-locked" ng-class="{'ion-unlocked':usuario.senha.length>5}"></span></span>
 						<input type="password" name="senha" ng-model="usuario.senha" class="input-form">
 					<br>
 				</div>	

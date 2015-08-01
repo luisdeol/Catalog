@@ -19,6 +19,7 @@ angular.module('CheckinControllers',
 	var idUsuario = window.localStorage.idUsuario;
 	var chave = "{idUsuario:'"+idUsuario+"',token:'"+window.localStorage.token+"',ultimoAcesso:'"+window.localStorage.ultimoAcesso+"'}";
 	$scope.itens = [];
+	$scope.itensMarcado = [];
 	$scope.total = 0.00;
 	$scope.flag = window.localStorage.flagCheckin;
 	
@@ -44,7 +45,7 @@ angular.module('CheckinControllers',
 			{
 				for(var l=0; retorno.objeto.produtosDaLista.length > l; l++)
 				{
-					var idProduto = retorno.objeto.produtosDaLista[l].id;
+					var idProduto = retorno.objeto.produtosDaLista[l].idProduto;
 					var nome = retorno.objeto.produtosDaLista[l].item.produto.nome;
 					var quantidade = retorno.objeto.produtosDaLista[l].quantidade;
 					var preco = retorno.objeto.produtosDaLista[l].item.preco;
@@ -64,6 +65,7 @@ angular.module('CheckinControllers',
 	{
 		if(item.checked == true)
 		{
+			$scope.itensMarcado.push(item);
 			modalAlerta.confirmar("Voce deseja editar esse preco?","R$"+item.preco.toFixed(2), function(res){
 				var resposta = res;
 				if(resposta == true)
@@ -72,6 +74,11 @@ angular.module('CheckinControllers',
 					$scope.precoModal.show();
 					$scope.total -= item.preco*item.quantidade;
 					item.checked = false;
+					for(var i=0; i<$scope.itensMarcado.length; i++)
+					{
+						if($scope.itensMarcado[i].id == item.id)
+						$scope.itensMarcado.splice(i,1);
+					}
 				}
 			
 			})
@@ -79,6 +86,11 @@ angular.module('CheckinControllers',
 		}
 		else
 		{
+			for(var i=0; i<$scope.itensMarcado.length; i++)
+			{
+				if($scope.itensMarcado[i].id == item.id)
+				$scope.itensMarcado.splice(i,1);
+			}
 			$scope.total -= item.preco*item.quantidade;
 		}
 	}
@@ -191,6 +203,7 @@ angular.module('CheckinControllers',
 							var marca = retorno.objeto[l].fabricante.fabricante;
 							
 							$scope.produtosEncontrados[l] = {id:id, nome:nome, marca:marca};
+							console.log($scope.produtosEncontrados);
 						}
 					}
 				}
@@ -218,10 +231,72 @@ angular.module('CheckinControllers',
 	//_________________ ADICIONAR PRODUTO CHECKIN _________________//
 	$scope.adicionarProdutoCheckin = function(produto)
 	{			
-		$scope.itens.push({idProduto:$scope.idProduto, nome:$scope.nome,quantidade:produto.quantidade, preco:produto.preco});
+		$scope.itens.push({id:$scope.idProduto, nome:$scope.nome,quantidade:produto.quantidade, preco:produto.preco});
+		var dtoProdutoDaLista = "{idLista:'"+$scope.idLista+"',idProduto:'"+$scope.idProduto+"',quantidade:'"+produto.quantidade+"',produto:{nome:'"+$scope.nome +"'}}";			
+		
+		WebServices.adicionarProdutoALista(chave,$scope.dtoLista,dtoProdutoDaLista)
+		.success(function(data, status, headers, config)
+		{
+			var retorno = angular.fromJson(data.d);	
+			if(retorno.tipoRetorno == "ACK") //logado
+			{
+				modalAlerta.alerta("Sucesso","Produto adicionado!");
+			}
+			else
+			{
+				modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
+			}
+		});	
+		
 		$scope.quantidade.hide();
 		$scope.pesquisa.hide();
 	}	
+	
+	//________________ FINALIZAR CHECKIN __________________//
+	$scope.finalizarCheckin = function()
+	{
+		var stringItens = "[";
+		
+		for(var i=0; i<$scope.itensMarcado.length; i++)
+		{
+			if($scope.itensMarcado[i].preco != 0)
+			{
+				stringItens += "{id:"+$scope.itensMarcado[i].id+",item:{produto:{id:"+$scope.itensMarcado[i].id+"},preco:"+$scope.itensMarcado[i].preco+"}},";	
+			}
+			else
+			{
+				modalAlerta.alerta("Ocorreu um erro","Preco nao foi editado!");
+				return;
+			}	
+				
+		}
+		 
+		var stringSemVirgula = stringItens.substring(0,(stringItens.length - 1));
+		var itens = ""+stringSemVirgula+"]";
+		console.log(itens);
+		
+		modalAlerta.confirmar("CheckOut","Voce deseja finalizar compra?", function(resposta){
+			if(resposta == true)
+			{
+				var estab = "{id:"+window.localStorage.idEstabCheckin+"}";
+				WebServices.finalizarCheckin(chave,estab,itens)
+				.success(function(data, status, headers, config)
+				{
+					var retorno = angular.fromJson(data.d);	
+					if(retorno.tipoRetorno == "ACK") //logado
+					{
+						modalAlerta.sucesso("CheckOut","Finalizando...","#/menu");
+					}
+					else
+					{
+						modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
+					}
+				});	
+			}
+		});
+		
+	
+	}
 	
 	//_______________ ABRIR MODAL DE PESQUISA DO PRODUTO __________________//
 	$ionicModal.fromTemplateUrl('templates/adicionarProduto.html', {

@@ -30,10 +30,12 @@
 				<br>
 			</div>	
 			
-			<button class="button button-full button-positive botao" ng-click="createContact(usuario)" 
+			<button class="button button-full button-positive botao" ng-click="atualizarSenha(usuario)" 
 				ng-disabled="(usuario.senha == undefined || usuario.senha == '') || 
 							 (usuario.novaSenha == undefined || usuario.novaSenha == '') || 
-							 (usuario.confirmarNovaSenha == undefined || usuario.confirmarNovaSenha == '')">
+							 (usuario.confirmarNovaSenha == undefined || usuario.confirmarNovaSenha == '')||
+							 (usuario.novaSenha != usuario.confirmarNovaSenha) ||
+							 (usuario.novaSenha.length < 6)">
 				Atualizar
 			</button>
 		</div>
