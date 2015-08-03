@@ -183,18 +183,20 @@ var app = angular.module("UsuarioControllers",[
 				{
 					$scope.erro = true;
 					document.getElementById("email").value = "Email incorreto!";
+					document.getElementById("email").className = "input-form erro-email";
 					return false;
 				}
 			}
 			else //senhas nao conferem
 			{
-				modalAlerta.alerta("Ocorreu um erro","Senhas não conferem!");
+				modalAlerta.alerta("Ocorreu um erro","Senhas nao conferem!");
 				return false;
 			}	
 		}
 		else
 		{
 			modalAlerta.alerta("Ocorreu um erro","Senha deve conter mais de 5 digitos!");
+			return false;
 		}
 	}	
 	

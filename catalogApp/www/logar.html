@@ -1,5 +1,11 @@
 <ion-view view-title="Entrar">
-    <ion-content class="padding">		
+	<div class="bar bar-header bar-positive">
+		<img src="img/back.png" onclick="location.href='#/home'" height="30px" width="30px">
+		<h1 class="titulo">Login</h1>
+	</div>
+	
+    <ion-content class="padding">	
+		
 		<p class="logo"><img class="logo-index" src="img/CATALOG.png" width="300px" height="80px"></p>
 		<div data-ng-init="verificarLogin('login.html')">
 			<div class="list">
@@ -12,7 +18,7 @@
 				
 				<div class="bloco">
 					<p class="nome-campos">Senha:</p>
-						<span class="input-grupo"><span class="ion-locked"></span></span>
+						<span class="input-grupo"><span class="ion-locked" ng-class="{'ion-unlocked':usuario.senha.length>5}"></span></span>
 						<input type="password" name="senha" ng-model="usuario.senha" class="input-form">
 					<br>
 				</div>	

@@ -1,28 +1,30 @@
 <ion-nav-view>
 	<ion-view ng-init="verificarLogin('estabelecimentos.html')">
-		<!-- header -->	
+	
 		<div class="bar bar-header bar-positive">
 			<img src="img/back.png" onclick="location.href='#/menu'" height="30px" width="30px">
 			<h1 class="titulo">Catalog</h1>
 		</div>
-		<!-- conteudo -->
-		 <ion-content>
-		<div class="list">
-			<div class="sem-lista-cadastrada" ng-show="estabelecimentos.length == 0">Nenhum Estabelecimento Cadastrado</div>   
-			<a class="item item-avatar" href="#/produtos-estabelecimento?{{estab.id}}" ng-repeat="estab in estabelecimentos">
-				<img src="{{estab.imagem || 'img/semImagem.png'}}">
-				<h2 class="titulo-estab">{{estab.nome}}</h2>
-				<p>{{estab.rua}}</p>
-				<img class="icone-mapa" src="img/mapa.png" width="30px" height="30px" ng-click="chamarMapa('{{estab.latitude}}','{{estab.longitude}}','{{estab.nome}}')">
-			</a>
-		</div>
+		
+		<ion-content>
+			<div class="list">
+				<div class="sem-lista-cadastrada" ng-show="estabelecimentos.length == 0">
+					Nenhum Estabelecimento Cadastrado
+				</div>   
+				<a class="item item-avatar" href="" ng-click="abrirEstabelecimento(estab.id, estab.nome)" ng-repeat="estab in estabelecimentos">
+					<img src="{{estab.imagem || 'img/semImagem.png'}}">
+					<h2 class="titulo-estab">{{estab.nome}}</h2>
+					<p>{{estab.rua}}</p>
+					<img class="icone-mapa" src="img/mapa.png" width="30px" height="30px" ng-click="chamarMapa('{{estab.latitude}}','{{estab.longitude}}','{{estab.nome}}')">
+				</a>
+			</div>
 		</ion-content>
-		
-		
-		<div class="botao-flutuante" ng-click="modal.show()">
-			<div class="ion-plus-round" id="iconAdd"></div>
+
+		<div class="botao-flutuante" ng-click="estabelecimentoModal.show()">
+			<div class="ion-plus-round" id="iconAdd">
+			</div>
 		</div>
-		
+
 		<!-- fotter -->
 		<div class="tabs-striped tabs-color-assertive">
 			<div class="tabs">
@@ -32,11 +34,7 @@
 				<a class="tab-item active" href="#/menu">
 					<img class="icon-footer" src="img/logo.png" width="35px" height="35px">
 				</a>
-				<a class="tab-item" href="produtos.html">
-					<img class="icon-footer-secundario" src="img/product.png" width="35px" height="35px">
-				</a>
 			</div>
 		</div>	
-		
 	</ion-view>
 </ion-nav-view>	

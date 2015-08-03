@@ -25,6 +25,13 @@ angular.module("EstabelecimentoControllers",[
 	var chave = "{idUsuario:'"+window.localStorage.idUsuario+"',token:'"+window.localStorage.token+"',ultimoAcesso:'"+window.localStorage.ultimoAcesso+"'}";
 	window.localStorage.idUltimoEstabelecimentoCriado = 0;
 	
+	//_________________ ABRIR ESTABELECIMENTO _________________//
+	$scope.abrirEstabelecimento = function(idEstab, nomeEstab)
+	{
+		location.href="#/produtos-estabelecimento?"+idEstab+"";
+		window.localStorage.estabAberto = nomeEstab;
+	}
+	
 	//___________ VERIFICAR LOGIN _____________//
 	$scope.verificarLogin = function(lugarPagina)
 	{
@@ -36,8 +43,8 @@ angular.module("EstabelecimentoControllers",[
 	//_______________ ABRIR MODAL DE CADASTRO __________________//
 	 $ionicModal.fromTemplateUrl('templates/adicionarEstabelecimento.html', {
 		scope: $scope
-	  }).then(function(modal) {
-		$scope.modal = modal;
+	  }).then(function(estabelecimento) {
+		$scope.estabelecimentoModal = estabelecimento;
 	  });
 
 	//_______________ CHAMAR MAPA _________________// 
@@ -183,7 +190,7 @@ angular.module("EstabelecimentoControllers",[
 				});
 				
 				$scope.pesquisarEstabelecimento();
-				$scope.modal.hide();
+				$scope.estabelecimentoModal.hide();
 			});		
 		}
 		else
@@ -197,6 +204,7 @@ angular.module("EstabelecimentoControllers",[
 	
 	var chave = "{idUsuario:'"+window.localStorage.idUsuario+"',token:'"+window.localStorage.token+"',ultimoAcesso:'"+window.localStorage.ultimoAcesso+"'}";
 	$scope.produtos = [];
+	$scope.nome = window.localStorage.estabAberto;
 	
 	var url = window.location.href.toString();
 	$scope.idEstabelecimento = url.split("?")[1];
@@ -216,7 +224,6 @@ angular.module("EstabelecimentoControllers",[
 				for(var l=0; retorno.objeto.length > l; l++)
 				{
 					var id = retorno.objeto[l].id;
-					$scope.nome = retorno.objeto[l].estabelecimento.estabelecimento.nome;
 					var nomeProduto = retorno.objeto[l].produto.nome;
 					var preco = retorno.objeto[l].preco;
 					$scope.latitude = retorno.objeto[l].estabelecimento.latitude;
@@ -226,32 +233,84 @@ angular.module("EstabelecimentoControllers",[
 					
 					$scope.produtos[l] = {id:id, nome:$scope.nome, nomeProduto:nomeProduto, preco:preco};
 				}
-				$scope.mapaEstabelecimento($scope.latitude, $scope.longitude);
 			}
 			else //erro
 			{
 				modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
 			}
+			
+			$scope.mapaEstabelecimento($scope.latitude, $scope.longitude);
 		})
 		.error(function(data, status, headers, config) {
 			modalAlerta.alerta("Ocorreu um erro","Voce esta sem acesso a rede!");
 		});
 	} 
 	
+	//_____________ MAPA ESTABELECIMENTO ___________//
 	$scope.mapaEstabelecimento = function(latitude, longitude) 
 	{
-	  var mapProp = {
-		center:new google.maps.LatLng(latitude,longitude),
-		zoom:17,
-		mapTypeId:google.maps.MapTypeId.ROADMAP
-	  };
-	  var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
-	  
-	  var myLatlng = new google.maps.LatLng(latitude,longitude);
-	  var marker = new google.maps.Marker({
-      position: myLatlng,
-      map: map,
-	  });
+		if(latitude != undefined && longitude != undefined)
+		{
+			var mapProp = {
+				center:new google.maps.LatLng(latitude,longitude),
+				zoom:17,
+				mapTypeId:google.maps.MapTypeId.ROADMAP
+			};
+			var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+			var myLatlng = new google.maps.LatLng(latitude,longitude);
+			var marker = new google.maps.Marker({
+				position: myLatlng,
+				map: map,
+			});
+		}
+		else
+		{
+			document.getElementById("imgSemLocalizacao").src = "img/semLocalizacao.png";
+		}
+	}
+	
+	$ionicModal.fromTemplateUrl('templates/checkin-estabelecimento.html', {
+		scope: $scope
+	}).then(function(checkin) {
+		$scope.modalCheckin = checkin;
+	});
+	
+	//__________ INICIAR CHECKIN ___________//
+	$scope.iniciarCheckin = function(checkin)
+	{	
+		window.localStorage.flagCheckin = "estabelecimento";
+		window.localStorage.idEstabCheckin = $scope.idEstabelecimento;		
+		modalAlerta.sucesso("CheckIn","Efetuando...","#/checkin?"+checkin.lista+"");
+		$scope.modalCheckin.hide();
+	}
+	
+		//__________ ESCOLHER ESTABELECIMENTO E LISTA _______________//
+	$scope.escolherEstabLista = function()
+	{	
+		$scope.listas = []
+
+		WebServices.pesquisarListas(chave)
+	    .success(function(data, status, headers, config)
+		{
+			var retorno = angular.fromJson(data.d);	
+			if(retorno.tipoRetorno == "ACK") //logado
+			{
+				for(var l=0; retorno.objeto.length > l; l++)
+				{
+					$scope.idLista = retorno.objeto[l].id;
+					var idUsuario = retorno.objeto[l].idUsuario;
+					var titulo = retorno.objeto[l].titulo;
+					
+					$scope.listas[l] = {id:$scope.idLista,idUsuario:idUsuario,titulo:titulo,indice:l};
+				}
+			}
+			else
+			{
+				modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
+			}
+		});
+		
 	}
 	
 })

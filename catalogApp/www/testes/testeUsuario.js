@@ -29,24 +29,11 @@ describe("Testes de Usuario", function () {
             expect(retorno).toBe(false);
         });
 		
-		it("(Cadastro)Email inválido", function () {
-            controller("UsuarioController", {$scope: scope});
-			
-			var user = new Object();
-			user.nome = "jonnathan";
-			user.email = "jonnathangmail.com"; 
-			user.senha = "123456";
-			user.confirmarSenha = "123456";
-			
-			scope.cadastrar(user);
-			
-            expect(scope.erro).toBe(true);
-        });
-		
 		it("(Login)Preencha todos os campos", function () {
             controller("UsuarioController", {$scope: scope});
 			var retorno = scope.logar();
             expect(retorno).toBe(false);
         });
+		
     });
 });

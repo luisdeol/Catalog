@@ -112,7 +112,7 @@ namespace Catalog.Controllers
 		}
 
         //______________ ALTERAR DADOS CADASTRAIS ________________//
-        public string alterarDadosCadastrais(string email, string novaSenha)
+        public string alterarDadosCadastrais(string senha, string novaSenha)
         {
             JavaScriptSerializer js = new JavaScriptSerializer();
             Usuario mUsuario = new Usuario();
@@ -120,7 +120,7 @@ namespace Catalog.Controllers
 
             try
             {
-                DtoChave chave = mUsuario.alterarDadosCadastrais(email, novaSenha);
+                DtoChave chave = mUsuario.alterarDadosCadastrais(senha, novaSenha);
                 retorno = new DtoRetornoObjeto(chave, "#/menu");
             }
             catch (DtoExcecao ex)

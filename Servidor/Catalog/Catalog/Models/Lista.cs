@@ -217,10 +217,11 @@ namespace Catalog.Models
             tb_ProdutoDaLista produtoLista;
             try
             {
-                produtoLista = (dataContext.tb_ProdutoDaListas.First(p => p.id == idProduto));
+                produtoLista = (dataContext.tb_ProdutoDaListas.First(p => p.idProduto == idProduto));
             }
             catch { throw new DtoExcecao(DTO.Enum.ObjetoNaoEncontrado, "produto da lista"); }
             dataContext.tb_ProdutoDaListas.DeleteOnSubmit(produtoLista);
+            dataContext.SubmitChanges();
 		}
 	}
 }
