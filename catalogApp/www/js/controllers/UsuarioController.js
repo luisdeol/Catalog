@@ -2,10 +2,9 @@ var app = angular.module("UsuarioControllers",[
 'ionic',
 'services.verificarLogin',
 'services.modalAlerta',
-'services.WebServices',
-'facebook'
+'services.WebServices'
 ])
-.config(function($stateProvider, $urlRouterProvider, FacebookProvider) {
+.config(function($stateProvider, $urlRouterProvider) {
 	
     $stateProvider
 		.state('home', {
@@ -29,80 +28,80 @@ var app = angular.module("UsuarioControllers",[
 			controller: 'PrincipalController'
 		});
 		$urlRouterProvider.otherwise('/home');
-		FacebookProvider.init('1608644262725813');
+		// FacebookProvider.init('1608644262725813');
 })
-.controller("UsuarioController",function($scope, $ionicModal, $http, $ionicPopup, $timeout, verificarLogin, modalAlerta, WebServices, Facebook){
+.controller("UsuarioController",function($scope, $ionicModal, $http, $ionicPopup, $timeout, verificarLogin, modalAlerta, WebServices){
 
-	$scope.user = {};
-    $scope.logged = false;
-    $scope.byebye = false;
-    $scope.salutation = false;
-	var userIsConnected = false;
+	// $scope.user = {};
+    // $scope.logged = false;
+    // $scope.byebye = false;
+    // $scope.salutation = false;
+	// var userIsConnected = false;
       
       
-      Facebook.getLoginStatus(function(response) {
-        if (response.status == 'connected') {
-          userIsConnected = true;
-        }
-      });
+      // Facebook.getLoginStatus(function(response) {
+        // if (response.status == 'connected') {
+          // userIsConnected = true;
+        // }
+      // });
       
-	  $scope.IntentLogin = function() {
-		if(!userIsConnected) {
-		  $scope.login();
-		}
-	  } 
+	  // $scope.IntentLogin = function() {
+		// if(!userIsConnected) {
+		  // $scope.login();
+		// }
+	  // } 
       
-       $scope.login = function() {
-         Facebook.login(function(response) {
-          if (response.status == 'connected') {
-            $scope.logged = true;
-            $scope.me();
-          }
+       // $scope.login = function() {
+         // Facebook.login(function(response) {
+          // if (response.status == 'connected') {
+            // $scope.logged = true;
+            // $scope.me();
+          // }
         
-        });
-       };
+        // });
+       // };
        
 
-        $scope.me = function() {
-          Facebook.api('/me', function(response) {
-            $scope.$apply(function() {
-              $scope.user = response;
-            });
+        // $scope.me = function() {
+          // Facebook.api('/me', function(response) {
+            // $scope.$apply(function() {
+              // $scope.user = response;
+            // });
             
-          });
-        };
+          // });
+        // };
       
-      /**
-       * Logout
-       */
-      $scope.logout = function() {
-        Facebook.logout(function() {
-          $scope.$apply(function() {
-            $scope.user   = {};
-            $scope.logged = false;  
-          });
-        });
-      }
+      // /**
+       // * Logout
+       // */
+      // $scope.logout = function() {
+        // Facebook.logout(function() {
+          // $scope.$apply(function() {
+            // $scope.user   = {};
+            // $scope.logged = false;  
+          // });
+        // });
+      // }
       
-      $scope.$on('Facebook:statusChange', function(ev, data) {
-        console.log('Status: ', data);
-        if (data.status == 'connected') {
-          $scope.$apply(function() {
-            $scope.salutation = true;
-            $scope.byebye     = false;    
-          });
-        } else {
-          $scope.$apply(function() {
-            $scope.salutation = false;
-            $scope.byebye     = true;
+      // $scope.$on('Facebook:statusChange', function(ev, data) {
+        // console.log('Status: ', data);
+        // if (data.status == 'connected') {
+          // $scope.$apply(function() {
+            // $scope.salutation = true;
+            // $scope.byebye     = false;    
+          // });
+        // } else {
+          // $scope.$apply(function() {
+            // $scope.salutation = false;
+            // $scope.byebye     = true;
             
             // Dismiss byebye message after two seconds
-            $timeout(function() {
-              $scope.byebye = false;
-            }, 2000)
-          });
-        }   
-      });
+            // $timeout(function() {
+              // $scope.byebye = false;
+            // }, 2000)
+          // });
+        // }   
+      // });
 	
 
     //___________________ LOGAR__________________//

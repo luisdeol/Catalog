@@ -3,7 +3,7 @@ angular.module('services.WebServices', ['ionic'])
 .factory('WebServices', ['$http', function ($http) {
 
 	var WebServices = {};
-	var host = 'http://localhost:51786/Webservices';
+	var host = 'http://192.168.1.97/Webservices/';
 	
 	/*-- Serviços de Usuario--*/
 
