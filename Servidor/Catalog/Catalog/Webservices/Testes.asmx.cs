@@ -19,6 +19,13 @@ namespace Catalog.Webservices
 	[System.Web.Script.Services.ScriptService]
 	public class Testes : System.Web.Services.WebService
 	{
+		[WebMethod]
+		public string abrirItem(int idProduto, int idEstabelecimento)
+		{
+			Item mItem = new Item();
+			JavaScriptSerializer js = new JavaScriptSerializer();
+			return js.Serialize(mItem.abrirItem(idProduto, idEstabelecimento));
+		}
 
 		[WebMethod]
 		public string cadastrarFabricante(string fabricante)

@@ -88,24 +88,19 @@ namespace Catalog.Models
 			var itensBanco = from i in dataContext.tb_Items
 							 where i.idProduto == idProduto
 								&& i.idEstabelecimento == idEnderecoEstabelecimento
-							 orderby i.compraRecente descending
+							 orderby i.compraRecente descending, i.qualificacao descending
 							 select i;
 
+			tb_Item itemBanco;
 			if (itensBanco.Count() < 1)
 			{
 				item.id = 0;
 				return item;
 			}
-
-			if(itensBanco.Count() > 1)
-				itensBanco = from i in itensBanco
-							 where i.idProduto == idProduto
-								&& i.idEstabelecimento == idEnderecoEstabelecimento
-								&& i.compraRecente == itensBanco.First().compraRecente
-							 orderby i.qualificacao descending
-							 select i;
-
-			tb_Item itemBanco = itensBanco.First();
+			else
+			{
+				itemBanco = itensBanco.First();
+			}
 			item.id = itemBanco.id;
 			item.preco = Convert.ToDouble(itemBanco.preco);
 			item.qualificacao = Convert.ToInt32(itemBanco.qualificacao);
