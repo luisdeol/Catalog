@@ -13,7 +13,7 @@ img.logo-index {
 }
 
 iframe {
-  border: 9px solid #005BB3 !important;
+  border: 4px solid #005BB3 !important;
 }
 
 .inputs{
@@ -165,23 +165,20 @@ img.icone-mapa{
 }
 
 img#imgSemLocalizacao {
-    top: 44px;
     position: absolute;
     width: 100%;
     height: 336px;
 }
 
-.ajuste-altura-produto-estabelecimento {
-  top: 385px;
-}
-
 h2.produtos-do-estabelecimento , h2.texto-pesquisa-produto-lista{
-  top: -25px;
   position: absolute;
   font-size: 18px;
   color: #005BB3;
   margin-left: 3px;
   font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 h2.texto-pesquisa-produto-lista{
@@ -285,7 +282,7 @@ input.input-form:focus {
   width: 56px;
   height: 56px;
   position: fixed;
-  bottom: 8%;
+  bottom: 65px;
   left: 5%;
   border-radius: 50%;
   padding: 20px;

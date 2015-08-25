@@ -26,10 +26,12 @@ angular.module("EstabelecimentoControllers",[
 	window.localStorage.idUltimoEstabelecimentoCriado = 0;
 	
 	//_________________ ABRIR ESTABELECIMENTO _________________//
-	$scope.abrirEstabelecimento = function(idEstab, nomeEstab)
+	$scope.abrirEstabelecimento = function(idEstab, nomeEstab, latitude, longitude)
 	{
 		location.href="#/produtos-estabelecimento?"+idEstab+"";
 		window.localStorage.estabAberto = nomeEstab;
+		window.localStorage.latitudeEstabAberto = latitude;
+		window.localStorage.longitudeEstabAberto = longitude;
 	}
 	
 	//___________ VERIFICAR LOGIN _____________//
@@ -179,6 +181,7 @@ angular.module("EstabelecimentoControllers",[
 					if(retorno.tipoRetorno == "ACK")
 					{
 						modalAlerta.alerta("Estabelecimento","Estabelecimento cadastrado com sucesso!");
+						$scope.pesquisarEstabelecimento();
 					}
 					else //erro
 					{
@@ -189,7 +192,6 @@ angular.module("EstabelecimentoControllers",[
 					modalAlerta.alerta("Ocorreu um erro","Voce esta sem acesso a rede!");
 				});
 				
-				$scope.pesquisarEstabelecimento();
 				$scope.estabelecimentoModal.hide();
 			});		
 		}
@@ -228,9 +230,6 @@ angular.module("EstabelecimentoControllers",[
 					var preco = retorno.objeto[l].preco;
 					$scope.latitude = retorno.objeto[l].estabelecimento.latitude;
 					$scope.longitude = retorno.objeto[l].estabelecimento.longitude;
-					
-					console.log($scope.latitude);
-					
 					$scope.produtos[l] = {id:id, nome:$scope.nome, nomeProduto:nomeProduto, preco:preco};
 				}
 			}
@@ -239,7 +238,7 @@ angular.module("EstabelecimentoControllers",[
 				modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
 			}
 			
-			$scope.mapaEstabelecimento($scope.latitude, $scope.longitude);
+			$scope.mapaEstabelecimento(window.localStorage.latitudeEstabAberto,window.localStorage.longitudeEstabAberto);	
 		})
 		.error(function(data, status, headers, config) {
 			modalAlerta.alerta("Ocorreu um erro","Voce esta sem acesso a rede!");

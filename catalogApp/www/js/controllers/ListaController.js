@@ -106,19 +106,14 @@ angular.module('ListaControllers',
 					console.log($scope.listas);
 				}
 			}
-			else
-			{
-				modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
-			}
 		});
 	} 
 
 	//________________ CRIAR LISTA _________________//
 	$scope.criarLista = function(lista)
-	{
+	{	  
 		if(lista != undefined){
 			
-			$scope.listas.push({ titulo: lista.nome});
 			$scope.modal.hide();	
 			var dtoLista = "{idUsuario:'"+idUsuario+"',titulo:'"+lista.nome+"'}";
 			// var id = window.localStorage.idUltimoListaCriada-1;
@@ -129,6 +124,7 @@ angular.module('ListaControllers',
 			.success(function(data, status, headers, config)
 			{
 				var retorno = angular.fromJson(data.d);	
+				$scope.listas.push({id:retorno.objeto.id ,titulo: lista.nome});
 				modalAlerta.alerta("lista","lista criada com sucesso!");
 			});
 		}

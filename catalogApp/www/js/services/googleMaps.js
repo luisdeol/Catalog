@@ -14,6 +14,11 @@ angular.module('services.googleMaps', [])
 			{
 				var latitude = results[0].geometry.location.A;
 				var longitude = results[0].geometry.location.F;
+				if(latitude == undefined && longitude == undefined)
+				{
+					var latitude = results[0].geometry.location.G;
+					var longitude = results[0].geometry.location.K;
+				}
 				window.localStorage.latCadastroEstab = latitude;
 				window.localStorage.lonCadastroEstab = longitude;		
 			} 

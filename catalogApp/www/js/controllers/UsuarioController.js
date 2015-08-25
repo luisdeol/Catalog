@@ -194,7 +194,7 @@ var app = angular.module("UsuarioControllers",[
 		}
 		else
 		{
-			modalAlerta.alerta("Ocorreu um erro","Senha deve conter mais de 5 digitos!");
+			modalAlerta.alerta("Ocorreu um erro","Senha deve conter pelo menos 6 digitos!");
 			return false;
 		}
 	}	

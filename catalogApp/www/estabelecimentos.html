@@ -11,9 +11,9 @@
 				<div class="sem-lista-cadastrada" ng-show="estabelecimentos.length == 0">
 					Nenhum Estabelecimento Cadastrado
 				</div>   
-				<a class="item item-avatar" href="" ng-click="abrirEstabelecimento(estab.id, estab.nome)" ng-repeat="estab in estabelecimentos">
+				<a class="item item-avatar" href=""  ng-repeat="estab in estabelecimentos">
 					<img src="{{estab.imagem || 'img/semImagem.png'}}">
-					<h2 class="titulo-estab">{{estab.nome}}</h2>
+					<h2 class="titulo-estab" ng-click="abrirEstabelecimento(estab.id, estab.nome, estab.latitude, estab.longitude)">{{estab.nome}}</h2>
 					<p>{{estab.rua}}</p>
 					<img class="icone-mapa" src="img/mapa.png" width="30px" height="30px" ng-click="chamarMapa('{{estab.latitude}}','{{estab.longitude}}','{{estab.nome}}')">
 				</a>

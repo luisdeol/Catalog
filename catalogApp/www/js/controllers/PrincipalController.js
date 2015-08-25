@@ -117,10 +117,6 @@ var app = angular.module("PrincipalControllers",[
 					$scope.estabelecimentos[l] = {id:id, nome:nome, rua:rua, cidade:cidade, estado:estado, numero:numero, cep:cep, latitude:latitude, longitude:longitude, imagem:imagem};
 				}
 			}
-			else
-			{
-				modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
-			}
 		})
 		.error(function(data, status, headers, config) {
 			modalAlerta.alerta("Ocorreu um erro","Voce esta sem acesso a rede!");
@@ -140,10 +136,6 @@ var app = angular.module("PrincipalControllers",[
 					
 					$scope.listas[l] = {id:$scope.idLista,idUsuario:idUsuario,titulo:titulo,indice:l};
 				}
-			}
-			else
-			{
-				modalAlerta.alerta("Ocorreu um erro",retorno.mensagem);
 			}
 		});
 		
