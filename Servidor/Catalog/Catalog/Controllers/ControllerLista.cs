@@ -11,11 +11,11 @@ namespace Catalog.Controllers
 {
 	public class ControllerLista : IControllerLista
 	{
-		public string criarLista(string dtoChave, string dtoLista)
+		public string criarLista(string dtoLista)
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
 			DtoRetorno retorno;
-			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
+			DtoChave chave = new DtoChave();
 			DtoLista lista = js.Deserialize<DtoLista>(dtoLista);
 
 			Chave mChave = new Chave();
@@ -26,7 +26,6 @@ namespace Catalog.Controllers
 				Lista mLista = new Lista();
 				lista.idUsuario = chave.idUsuario;
 				lista = mLista.criarLista(lista);
-				chave = mChave.atualizarChave(chave);
 				retorno = new DtoRetornoObjeto(chave, lista);
 			}
 			catch (DtoExcecao ex)
@@ -42,11 +41,11 @@ namespace Catalog.Controllers
 			return js.Serialize(retorno);
 		}
 
-		public string abrirLista(string dtoChave, string dtoLista)
+		public string abrirLista(string dtoLista)
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
 			DtoRetorno retorno;
-			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
+			DtoChave chave = new DtoChave();
 			DtoLista lista = js.Deserialize<DtoLista>(dtoLista);
 
 			Chave mChave = new Chave();
@@ -56,7 +55,6 @@ namespace Catalog.Controllers
 				mChave.validarChave(chave);
 				Lista mLista = new Lista();
 				lista = mLista.abrirLista(lista.id);
-				chave = mChave.atualizarChave(chave);
 				retorno = new DtoRetornoObjeto(chave, lista);
 			}
 			catch (DtoExcecao ex)
@@ -73,11 +71,11 @@ namespace Catalog.Controllers
 		}
 
 
-		public string editarLista(string dtoChave, string dtoLista) 
+		public string editarLista(string dtoLista) 
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
 			DtoRetorno retorno;
-			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
+			DtoChave chave = new DtoChave();
             DtoLista lista = js.Deserialize<DtoLista>(dtoLista);
 
             Chave mChave = new Chave();
@@ -87,7 +85,6 @@ namespace Catalog.Controllers
                 mChave.validarChave(chave);
                 Lista mLista = new Lista();
                 mLista.editarLista(lista.id, lista.titulo);
-                chave = mChave.atualizarChave(chave);
                 retorno = new DtoRetornoObjeto(chave);
             }
             catch (DtoExcecao ex)
@@ -104,11 +101,11 @@ namespace Catalog.Controllers
 		}
 
 
-		public string excluirLista(string dtoChave, string dtoLista)
+		public string excluirLista(string dtoLista)
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
 			DtoRetorno retorno;
-			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
+			DtoChave chave = new DtoChave();
 			DtoLista lista = js.Deserialize<DtoLista>(dtoLista);
 
             Chave mChave = new Chave();
@@ -117,7 +114,6 @@ namespace Catalog.Controllers
                 mChave.validarChave(chave);
                 Lista mLista = new Lista();
                 mLista.excluirLista(lista.id);
-                chave = mChave.atualizarChave(chave);
                 retorno = new DtoRetornoObjeto(chave); 
             }
             catch (DtoExcecao ex)
@@ -137,7 +133,7 @@ namespace Catalog.Controllers
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
 			DtoRetorno retorno;
-			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
+            DtoChave chave = new DtoChave();
 			DtoLista[] listas;
 
 			Chave mChave = new Chave();
@@ -147,7 +143,6 @@ namespace Catalog.Controllers
 				mChave.validarChave(chave);
 				Lista mLista = new Lista();
 				listas = mLista.pesquisarListas(chave.idUsuario);
-				chave = mChave.atualizarChave(chave);
 				retorno = new DtoRetornoObjeto(chave, listas);
 			}
 			catch (DtoExcecao ex)
@@ -163,11 +158,11 @@ namespace Catalog.Controllers
 			return js.Serialize(retorno);
 		}
 
-		public string listarItensEm(string dtoChave, string dtoLista, string dtoEnderecoEstabelecimento)
+		public string listarItensEm(string dtoLista, string dtoEnderecoEstabelecimento)
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
 			DtoRetorno retorno;
-			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
+            DtoChave chave = new DtoChave();
 			DtoLista lista = js.Deserialize<DtoLista>(dtoLista);
 			DtoEnderecoEstabelecimento estabelecimento = js.Deserialize<DtoEnderecoEstabelecimento>(dtoEnderecoEstabelecimento);
 
@@ -178,7 +173,6 @@ namespace Catalog.Controllers
 				mChave.validarChave(chave);
 				Lista mLista = new Lista();
 				lista = mLista.listarItensEm(lista.id, estabelecimento.id);
-				chave = mChave.atualizarChave(chave);
 				retorno = new DtoRetornoObjeto(chave, lista);
 			}
 			catch (DtoExcecao ex)
@@ -195,11 +189,11 @@ namespace Catalog.Controllers
 		}
 
 		/*Não Implementado*/
-		public string adicionarProduto(string dtoChave, string dtoLista, string dtoProdutoDaLista)
+		public string adicionarProduto(string dtoLista, string dtoProdutoDaLista)
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
 			DtoRetorno retorno;
-			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
+            DtoChave chave = new DtoChave();
 			DtoLista lista = js.Deserialize<DtoLista>(dtoLista);
 		
 
@@ -211,7 +205,6 @@ namespace Catalog.Controllers
                 DtoProdutoDaLista produtoDaLista = js.Deserialize<DtoProdutoDaLista>(dtoProdutoDaLista);
                 Lista mLista = new Lista();
                 produtoDaLista = mLista.adicionarProduto(produtoDaLista);
-                chave = mChave.atualizarChave(chave);
                 retorno = new DtoRetornoObjeto(chave, produtoDaLista);
             }
             catch (DtoExcecao ex)
@@ -227,11 +220,11 @@ namespace Catalog.Controllers
 			return js.Serialize(retorno);
 		}
 
-		public string removerProduto(string dtoChave, string dtoLista, string dtoProduto)
+		public string removerProduto(string dtoLista, string dtoProduto)
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
 			DtoRetorno retorno;
-			DtoChave chave = js.Deserialize<DtoChave>(dtoChave);
+            DtoChave chave = new DtoChave();
             DtoProdutoDaLista produtoDaLista = js.Deserialize<DtoProdutoDaLista>(dtoProduto);
 
             try
@@ -240,7 +233,6 @@ namespace Catalog.Controllers
                 mChave.validarChave(chave);
                 Lista mLista = new Lista();
                 mLista.removerProduto(produtoDaLista.id);
-                chave = mChave.atualizarChave(chave);
                 retorno = new DtoRetornoObjeto(chave);
             }
             catch (DtoExcecao ex)

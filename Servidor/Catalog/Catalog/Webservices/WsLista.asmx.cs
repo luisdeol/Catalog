@@ -18,66 +18,59 @@ namespace Catalog.Webservices
     public class WebService2 : System.Web.Services.WebService
 	{
 		[WebMethod]
-		public string criarLista(string dtoChave, string dtoLista)
+		public string criarLista(string dtoLista)
 		{
 			ControllerLista cLista = new ControllerLista();
-			return cLista.criarLista(dtoChave, dtoLista);
+			return cLista.criarLista(dtoLista);
 		}
 
 		[WebMethod]
-		public string abrirLista(string dtoChave, string dtoLista)
+		public string abrirLista(string dtoLista)
 		{
 			ControllerLista cLista = new ControllerLista();
-			return cLista.abrirLista(dtoChave, dtoLista);
+			return cLista.abrirLista(dtoLista);
 		}
 
 		[WebMethod]
-		public string editarLista(string dtoChave, string dtoLista)
+		public string editarLista(string dtoLista)
 		{
 			ControllerLista cLista = new ControllerLista();
-			return cLista.editarLista(dtoChave, dtoLista);
+			return cLista.editarLista(dtoLista);
 		}
 
 		[WebMethod]
-		public string excluirLista(string dtoChave, string dtoLista)
+		public string excluirLista(string dtoLista)
 		{
 			ControllerLista cLista = new ControllerLista();
-			return cLista.excluirLista(dtoChave, dtoLista);
+			return cLista.excluirLista(dtoLista);
 		}
 
 		[WebMethod]
-		public string pesquisarLista(string dtoChave)
+		public string listarProdutos(string dtoLista)
 		{
 			ControllerLista cLista = new ControllerLista();
-			return cLista.pesquisarLista(dtoChave);
+			return cLista.abrirLista(dtoLista);
 		}
 
 		[WebMethod]
-		public string listarProdutos(string dtoChave, string dtoLista)
+		public string listarItensEm(string dtoLista, string dtoEnderecoEstabelecimento)
 		{
 			ControllerLista cLista = new ControllerLista();
-			return cLista.abrirLista(dtoChave, dtoLista);
+			return cLista.listarItensEm(dtoLista, dtoEnderecoEstabelecimento);
 		}
 
 		[WebMethod]
-		public string listarItensEm(string dtoChave, string dtoLista, string dtoEnderecoEstabelecimento)
+		public string adicionarProduto(string dtoLista, string dtoProdutoDaLista)
 		{
 			ControllerLista cLista = new ControllerLista();
-			return cLista.listarItensEm(dtoChave, dtoLista, dtoEnderecoEstabelecimento);
+			return cLista.adicionarProduto(dtoLista, dtoProdutoDaLista);
 		}
 
 		[WebMethod]
-		public string adicionarProduto(string dtoChave, string dtoLista, string dtoProdutoDaLista)
+		public string removerProduto(string dtoLista, string dtoProduto)
 		{
 			ControllerLista cLista = new ControllerLista();
-			return cLista.adicionarProduto(dtoChave, dtoLista, dtoProdutoDaLista);
-		}
-
-		[WebMethod]
-		public string removerProduto(string dtoChave, string dtoLista, string dtoProduto)
-		{
-			ControllerLista cLista = new ControllerLista();
-			return cLista.removerProduto(dtoChave, dtoLista, dtoProduto);
+			return cLista.removerProduto(dtoLista, dtoProduto);
 		}
 	}
 }

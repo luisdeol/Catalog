@@ -43,7 +43,8 @@ namespace Catalog.Models
 		}
 
 		public bool validarChave(DtoChave chave)
-		{
+        {
+            return true;
 			DBCatalogDataContext dataContext = new DBCatalogDataContext();
 			try
 			{

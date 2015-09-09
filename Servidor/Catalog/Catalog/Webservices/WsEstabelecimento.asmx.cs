@@ -19,38 +19,38 @@ namespace Catalog.Webservices
     {
 
         [WebMethod]
-        public string criarEstabelecimento(string dtoChave, string dtoEnderecoEstabelecimento)
+        public string criarEstabelecimento(string dtoEnderecoEstabelecimento)
         {
             ControllerEstabelecimento cEstabelecimento = new ControllerEstabelecimento();
-            return cEstabelecimento.criarEstabelecimento(dtoChave, dtoEnderecoEstabelecimento);
+            return cEstabelecimento.criarEstabelecimento(dtoEnderecoEstabelecimento);
         }
 
 		[WebMethod]
-		public string pesquisarEstabelecimentos(string dtoChave, string dtoEnderecoEstabelecimento)
+		public string pesquisarEstabelecimentos(string dtoEnderecoEstabelecimento)
 		{
 			ControllerEstabelecimento cEstabelecimento = new ControllerEstabelecimento();
-			return cEstabelecimento.pesquisarEstabelecimentos(dtoChave, dtoEnderecoEstabelecimento);
+			return cEstabelecimento.pesquisarEstabelecimentos(dtoEnderecoEstabelecimento);
 		}
 		
 		[WebMethod]
-		public string listarProdutos(string dtoChave, string dtoEnderecoEstabelecimento)
+		public string listarProdutos(string dtoEnderecoEstabelecimento)
 		{
 			ControllerEstabelecimento cEstabelecimento = new ControllerEstabelecimento();
-			return cEstabelecimento.listarProdutos(dtoChave, dtoEnderecoEstabelecimento);
+			return cEstabelecimento.listarProdutos(dtoEnderecoEstabelecimento);
 		}
 			
 		[WebMethod]
-		public string pesquisarProdutos(string dtoChave, string dtoEnderecoEstabelecimento, string parametros)
+		public string pesquisarProdutos(string dtoEnderecoEstabelecimento, string parametros)
 		{
 			ControllerEstabelecimento cEstabelecimento = new ControllerEstabelecimento();
-			return cEstabelecimento.pesquisarProdutos(dtoChave, dtoEnderecoEstabelecimento, parametros);
+			return cEstabelecimento.pesquisarProdutos(dtoEnderecoEstabelecimento, parametros);
 		}
 		
 		[WebMethod]
-		public string finalizarCheckin(string dtoChave, string dtoEnderecoEstabelecimento, string dtoItensComprados)
+		public string finalizarCheckin(string dtoEnderecoEstabelecimento, string dtoItensComprados)
 		{
 			ControllerEstabelecimento cEstabelecimento = new ControllerEstabelecimento();
-			return cEstabelecimento.finalizarCheckin(dtoChave, dtoEnderecoEstabelecimento, dtoItensComprados);
+			return cEstabelecimento.finalizarCheckin(dtoEnderecoEstabelecimento, dtoItensComprados);
 		}
     }
 }
