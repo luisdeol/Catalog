@@ -1,0 +1,52 @@
+<html ng-app="CatalogApp" ng-controller="estabelecimentoController" ng-init="pesquisarEstabelecimento()">
+	<head>
+		<title>Catalog</title>
+		<meta charset="utf-8">
+
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+		<link href="css/style.css" rel="stylesheet">
+		<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+		
+		<script src="controllers/IndexController.js"></script>
+		<script src="services/IndexService.js"></script>
+		
+		<script src="http://maps.googleapis.com/maps/api/js"></script>
+	</head>
+
+	<body ng-controller="listaController" ng-init="abrirLista()">
+		<h1 class="titulo">
+			<img src="img/logo.png">
+		</h1>
+		
+		<div class="container menu">
+			<h2>Lista {{titulo}}</h2>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Produtos</th>
+						<th>Preço</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr ng-class="produto.classe" ng-repeat="produto in produtos">
+						<td class="nome-produto">{{produto.nomeProduto}}</td>
+						<td class="preco-produto">R{{produto.precoTotal | currency}}</td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<h3>Escolha o estabelecimento</h3>
+			<div class="list-group" ng-controller="listarItensController">
+				<h3 class="nome-supermercado">{{nomeEstabelecimento}}</h3>
+				<button type="button" class="list-group-item" ng-repeat="estab in estabelecimentos" ng-click="listarItensEm(estab)">
+					{{estab.nome}}
+				</button>
+			</div>
+			
+			<div class="mapa">
+				<div id="googleMap"></div>
+			</div>
+		</div>
+	</body>
+</html>

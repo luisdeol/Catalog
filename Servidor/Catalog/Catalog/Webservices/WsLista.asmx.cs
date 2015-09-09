@@ -31,6 +31,13 @@ namespace Catalog.Webservices
 			return cLista.abrirLista(dtoLista);
 		}
 
+        [WebMethod]
+        public string pesquisarLista(int idUsuario)
+        {
+            ControllerLista cLista = new ControllerLista();
+            return cLista.pesquisarLista(idUsuario);
+        }
+
 		[WebMethod]
 		public string editarLista(string dtoLista)
 		{

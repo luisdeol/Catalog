@@ -1,0 +1,56 @@
+body {
+    background-color: #DBDBD4 !important;
+}
+
+.titulo{
+	text-align: center;
+	background-color: #009688;
+    margin-top: 0px;
+    height: 130px;
+    padding-top: 18px;
+}
+
+.menu{
+    background-color: white;
+    border-radius: 5px;
+}
+
+.linha1{
+	background-color: #eee;
+}
+
+.linha2{
+	background-color: white;
+}
+
+.nome-produto{
+    font-weight: 400;
+    color: rgba(0,0,0,.6);
+	font-size: 18px;
+}
+
+.preco-produto{
+    color: rgba(0, 102, 204, 0.87);
+    font-size: 18px;
+}
+
+#googleMap{
+	float: right;
+    left: 0px;
+    margin-top: -125px;
+    width: 50%;
+    height: 40%;
+    position: relative;
+}
+
+h3.nome-supermercado {
+    float: right;
+    top: -55px;
+    left: 10px;
+    width: 50%;
+    position: relative;
+}
+
+button.list-group-item:hover {
+    background-color: rgba(128, 128, 128, 0.29);
+}

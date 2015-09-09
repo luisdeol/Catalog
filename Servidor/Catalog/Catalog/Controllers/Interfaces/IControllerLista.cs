@@ -11,7 +11,7 @@ namespace Catalog.Controllers.Interfaces
 		string abrirLista(string dtoLista);
 		string editarLista(string dtoLista);
 		string excluirLista(string dtoLista);
-		string pesquisarLista(string dtoChave);
+		string pesquisarLista(int idUsuario);
 		string listarItensEm(string dtoLista, string dtoEnderecoEstabelecimento);
 		string adicionarProduto(string dtoLista, string dtoProdutoDaLista);
 		string removerProduto(string dtoLista, string dtoProduto);

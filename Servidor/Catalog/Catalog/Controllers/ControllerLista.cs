@@ -129,7 +129,7 @@ namespace Catalog.Controllers
 			return js.Serialize(retorno);
 		}
 
-		public string pesquisarLista(string dtoChave)
+		public string pesquisarLista(int idUsuario)
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
 			DtoRetorno retorno;
@@ -142,7 +142,7 @@ namespace Catalog.Controllers
 			{
 				mChave.validarChave(chave);
 				Lista mLista = new Lista();
-				listas = mLista.pesquisarListas(chave.idUsuario);
+                listas = mLista.pesquisarListas(idUsuario);
 				retorno = new DtoRetornoObjeto(chave, listas);
 			}
 			catch (DtoExcecao ex)
