@@ -9,7 +9,7 @@ using System.Web.Script.Serialization;
 
 namespace Catalog.Controllers
 {
-	public class ControllerLista : IControllerLista
+	public class ControllerLista
 	{
 		public string criarLista(string dtoLista)
 		{
@@ -158,21 +158,19 @@ namespace Catalog.Controllers
 			return js.Serialize(retorno);
 		}
 
-		public string listarItensEm(string dtoLista, string dtoEnderecoEstabelecimento)
+		public string listarItensEm(int idLista, int idEstabelecimento)
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
 			DtoRetorno retorno;
             DtoChave chave = new DtoChave();
-			DtoLista lista = js.Deserialize<DtoLista>(dtoLista);
-			DtoEnderecoEstabelecimento estabelecimento = js.Deserialize<DtoEnderecoEstabelecimento>(dtoEnderecoEstabelecimento);
-
+			DtoLista lista;
 			Chave mChave = new Chave();
 
 			try
 			{
 				mChave.validarChave(chave);
 				Lista mLista = new Lista();
-				lista = mLista.listarItensEm(lista.id, estabelecimento.id);
+				lista = mLista.listarItensEm(idLista, idEstabelecimento);
 				retorno = new DtoRetornoObjeto(chave, lista);
 			}
 			catch (DtoExcecao ex)

@@ -9,7 +9,7 @@ using System.Web.Script.Serialization;
 
 namespace Catalog.Controllers
 {
-    public class ControllerEstabelecimento : IControllerEstabelecimento
+    public class ControllerEstabelecimento
 	{
 		public string criarEstabelecimento(string dtoEnderecoEstabelecimento)
 		{
@@ -42,12 +42,12 @@ namespace Catalog.Controllers
             return js.Serialize(retorno);
 		}
 
-		public string pesquisarEstabelecimentos(string dtoEnderecoEstabelecimento)
+		public string pesquisarEstabelecimentos()
 		{
 			JavaScriptSerializer js = new JavaScriptSerializer();
 			DtoRetorno retorno;
             DtoChave chave = new DtoChave();
-			DtoEnderecoEstabelecimento enderecoEstabelecimento = js.Deserialize<DtoEnderecoEstabelecimento>(dtoEnderecoEstabelecimento);
+			DtoEnderecoEstabelecimento enderecoEstabelecimento = new DtoEnderecoEstabelecimento();
 			DtoEnderecoEstabelecimento[] enderecosEstabelecimento;
 
 			Chave mChave = new Chave();

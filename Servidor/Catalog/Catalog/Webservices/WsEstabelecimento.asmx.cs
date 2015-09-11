@@ -26,10 +26,10 @@ namespace Catalog.Webservices
         }
 
 		[WebMethod]
-		public string pesquisarEstabelecimentos(string dtoEnderecoEstabelecimento)
+		public string pesquisarEstabelecimentos()
 		{
 			ControllerEstabelecimento cEstabelecimento = new ControllerEstabelecimento();
-			return cEstabelecimento.pesquisarEstabelecimentos(dtoEnderecoEstabelecimento);
+			return cEstabelecimento.pesquisarEstabelecimentos();
 		}
 		
 		[WebMethod]

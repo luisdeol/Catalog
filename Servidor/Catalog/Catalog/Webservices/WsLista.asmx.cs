@@ -60,10 +60,10 @@ namespace Catalog.Webservices
 		}
 
 		[WebMethod]
-		public string listarItensEm(string dtoLista, string dtoEnderecoEstabelecimento)
+		public string listarItensEm(int idLista, int idEstabelecimento)
 		{
 			ControllerLista cLista = new ControllerLista();
-			return cLista.listarItensEm(dtoLista, dtoEnderecoEstabelecimento);
+			return cLista.listarItensEm(idLista, idEstabelecimento);
 		}
 
 		[WebMethod]
